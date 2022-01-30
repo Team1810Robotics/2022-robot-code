@@ -1,10 +1,10 @@
 ### Configuring the code for your robot
 
 1. Set your team number.
-2. Read through and configure `frc.robot.Constants`. Parts of the code that need to be configured for your specific
+2. Read through and configure `org.usd232.robotics.rapidreact.Constants`. Parts of the code that need to be configured for your specific
 robot setup are marked with comments starting with `FIXME`.
 > Don't configure the `*_MODULE_STEER_OFFSET` constants yet. Those are configured after code is deployed.
-4. Read through and configure `frc.robot.subsystems.DrivetrainSubsystem`. Parts of the code that need to be configured
+4. Read through and configure `org.usd232.robotics.rapidreact.subsystems.DrivetrainSubsystem`. Parts of the code that need to be configured
 for your specific robot setup are marked with comments starting with `FIXME`.
 5. At this point deploy the code. If it endlessly crashes at startup make sure your CAN IDs are properly set and make
 sure you are using the proper swerve module configurations for your hardware.
