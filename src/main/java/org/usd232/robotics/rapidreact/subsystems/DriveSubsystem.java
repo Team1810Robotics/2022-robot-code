@@ -33,7 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
   // By default we use a Pigeon for our gyroscope. But if you use another gyroscope, like a NavX, you can change this.
   // The important thing about how you configure your gyroscope is that rotating the robot counter-clockwise should
   // cause the angle reading to increase until it wraps back over to zero.
-  private final PigeonIMU m_pigeon = new PigeonIMU(PigeonConstants.DRIVETRAIN_PIGEON_ID);
+  private final static PigeonIMU m_pigeon = new PigeonIMU(PigeonConstants.DRIVETRAIN_PIGEON_ID);
 
   private final SwerveModule m_frontLeftModule;
   private final SwerveModule m_frontRightModule;
@@ -57,7 +57,7 @@ public class DriveSubsystem extends SubsystemBase {
             // This is the ID of the steer motor
             DriveConstants.FRONT_LEFT_MODULE_STEER_MOTOR,
             // This is the ID of the steer encoder
-            DriveConstants.FRONT_LEFT_MODULE_STEER_ENCODER,
+            DriveConstants.FRONT_LEFT_MODULE_STEER_CANCODER,
             // This is how much the steer encoder is offset from true zero (In our case, zero is facing straight forward)
             DriveConstants.FRONT_LEFT_MODULE_STEER_OFFSET);
 
@@ -68,7 +68,7 @@ public class DriveSubsystem extends SubsystemBase {
             Mk4SwerveModuleHelper.GearRatio.L2,
             DriveConstants.FRONT_RIGHT_MODULE_DRIVE_MOTOR,
             DriveConstants.FRONT_RIGHT_MODULE_STEER_MOTOR,
-            DriveConstants.FRONT_RIGHT_MODULE_STEER_ENCODER,
+            DriveConstants.FRONT_RIGHT_MODULE_STEER_CANCODER,
             DriveConstants.FRONT_RIGHT_MODULE_STEER_OFFSET);
 
     m_backLeftModule = Mk4SwerveModuleHelper.createFalcon500(
@@ -78,7 +78,7 @@ public class DriveSubsystem extends SubsystemBase {
             Mk4SwerveModuleHelper.GearRatio.L2,
             DriveConstants.BACK_LEFT_MODULE_DRIVE_MOTOR,
             DriveConstants.BACK_LEFT_MODULE_STEER_MOTOR,
-            DriveConstants.BACK_LEFT_MODULE_STEER_ENCODER,
+            DriveConstants.BACK_LEFT_MODULE_STEER_CANCODER,
             DriveConstants.BACK_LEFT_MODULE_STEER_OFFSET);
 
     m_backRightModule = Mk4SwerveModuleHelper.createFalcon500(
@@ -88,7 +88,7 @@ public class DriveSubsystem extends SubsystemBase {
             Mk4SwerveModuleHelper.GearRatio.L2,
             DriveConstants.BACK_RIGHT_MODULE_DRIVE_MOTOR,
             DriveConstants.BACK_RIGHT_MODULE_STEER_MOTOR,
-            DriveConstants.BACK_RIGHT_MODULE_STEER_ENCODER,
+            DriveConstants.BACK_RIGHT_MODULE_STEER_CANCODER,
             DriveConstants.BACK_RIGHT_MODULE_STEER_OFFSET);
   }
 
@@ -102,6 +102,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   public Rotation2d getGyroscopeRotation() {
     return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
+  }
+
+  /** Smart Dashboard Variable */
+  public static double getGyro() {
+        return m_pigeon.getFusedHeading();
   }
 
   public void drive(ChassisSpeeds chassisSpeeds) {
