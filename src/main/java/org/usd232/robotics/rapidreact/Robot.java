@@ -1,6 +1,6 @@
 package org.usd232.robotics.rapidreact;
 
-//import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
+import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,6 +13,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  /**
+   * The logger.
+   * 
+   * @since 2018
+   */
+  //@SuppressWarnings("unused")
+  private static final Logger LOG = new Logger();
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -23,6 +31,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    LOG.enter("robotInit");
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
