@@ -1,10 +1,8 @@
 package org.usd232.robotics.rapidreact;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -16,7 +14,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private DriveSubsystem m_robotDrive;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -38,25 +35,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    /* Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    commands, running already-scheduled commands, removing finished or interrupted commands,
-    and running subsystem periodic() methods.  This must be called from the robot's periodic
-    block in order for anything in the Command-based framework to work. */
-
-    // read values periodically
-    double gyroAngle = m_robotDrive.getGyroAngle();
-    double frontLeftCanCoder = m_robotDrive.getCanCoderPosition(0);
-    double frontRightCanCoder = m_robotDrive.getCanCoderPosition(1);
-    double backLeftCanCoder = m_robotDrive.getCanCoderPosition(2);
-    double backRightCanCoder = m_robotDrive.getCanCoderPosition(3);
-
-    // post to smart dashboard periodically
-    SmartDashboard.putNumber("Pigeon IMU angle", gyroAngle);
-    SmartDashboard.putNumber("Front Left CANCoder Position", frontLeftCanCoder);
-    SmartDashboard.putNumber("Front Right CANCoder Position", frontRightCanCoder);
-    SmartDashboard.putNumber("Back Left CANCoder Position", backLeftCanCoder);
-    SmartDashboard.putNumber("Back Right CANCoder Position", backRightCanCoder);
-
+    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
 
@@ -71,20 +53,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); 
-     * switch(autoSelected) { 
-     * 
-     * case "My Auto": 
-     * autonomousCommand = new MyAutoCommand(); 
-     * break; 
-     * 
-     * case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); 
-     * break; }
-     */
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

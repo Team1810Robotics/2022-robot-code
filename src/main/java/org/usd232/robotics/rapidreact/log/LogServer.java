@@ -24,6 +24,7 @@ public class LogServer implements Runnable {
      * 
      */
     private static final Logger LOG = new Logger();
+    
     /**
      * The port number for the logger.
      * 
