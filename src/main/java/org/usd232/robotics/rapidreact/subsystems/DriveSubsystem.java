@@ -8,8 +8,10 @@ import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.PigeonIMUConstants;
 import org.usd232.robotics.rapidreact.log.Logger;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -69,6 +71,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     private PigeonIMU gyro = new PigeonIMU(PigeonIMUConstants.ID);
 
+    private final SwerveDriveOdometry m_odometer = new SwerveDriveOdometry(DriveConstants.DRIVE_KINEMATICS,
+            new Rotation2d(0));
+
     public DriveSubsystem() {
         new Thread(() -> {
             try {
@@ -91,9 +96,20 @@ public class DriveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(getHeading());
     }
 
+    public Pose2d getPose() {
+        return m_odometer.getPoseMeters();
+    }
+
+    public void resetOdometry(Pose2d pose) {
+        m_odometer.resetPosition(pose, getRotation2d());
+    }
+
     @Override
     public void periodic() {
+        m_odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(),
+                            backLeft.getState(), backRight.getState());
         SmartDashboard.putNumber("Robot Heading", getHeading());
+        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
     }
 
     public void stopModules() {

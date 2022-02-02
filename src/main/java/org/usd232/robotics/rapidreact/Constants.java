@@ -2,6 +2,7 @@ package org.usd232.robotics.rapidreact;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -111,7 +112,20 @@ public final class Constants {
     }
 
 
-    public static final class AutoConstants {}
+    public static final class AutoConstants {
+        public static final double MAX_AUTO_SPEED_PER_SEC = ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND / 3;
+        public static final double MAX_AUTO_RADIANS_PER_SEC = ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 10;
+        public static final double MAX_AUTO_ACCELERATION_RADIANS = 3;
+
+        public static final double kp_X_CONTROLLER = 1.2; // TODO: Calculate (https://youtu.be/jIKBWO7ps0w)
+        public static final double kp_Y_CONTROLLER = 1.2; // TODO: Calculate
+        public static final double kp_THETA_CONTROLLER = 2.8; // TODO: Calculate
+
+        public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = 
+                new TrapezoidProfile.Constraints(
+                        MAX_AUTO_RADIANS_PER_SEC,
+                        MAX_AUTO_ACCELERATION_RADIANS);
+    }
 
     public static final class OIConstants {
         public static final int MOVEMENT_JOYSTICK_PORT = 0;
