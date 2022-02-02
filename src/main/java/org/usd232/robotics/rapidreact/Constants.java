@@ -132,7 +132,7 @@ public final class Constants {
         public static final int ROTATION_JOYSTICK_PORT = 1;
         public static final int MANIPULATOR_CONTROLLER_PORT = 3;
 
-        public static final double DEADBAND = 0.25;
+        public static final double DEADBAND = 0.3;
     }
 
     public static final class CANCoderConstants {

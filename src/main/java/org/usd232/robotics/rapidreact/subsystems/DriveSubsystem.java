@@ -126,4 +126,6 @@ public class DriveSubsystem extends SubsystemBase {
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
     }
+
+    public void blank() { return; }
 }
