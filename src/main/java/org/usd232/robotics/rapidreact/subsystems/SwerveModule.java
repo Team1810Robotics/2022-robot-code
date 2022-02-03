@@ -2,11 +2,11 @@ package org.usd232.robotics.rapidreact.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
@@ -14,10 +14,9 @@ import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 public class SwerveModule {
 
 
-    private final TalonFX m_driveMotor;
-    private final TalonFX m_steerMotor;
+    private final WPI_TalonFX m_driveMotor;
+    private final WPI_TalonFX m_steerMotor;
 
-    private final Encoder m_driveEncoder;
     private final CANCoder m_steerCANCoder;
 
     private final PIDController m_turningPidController;
@@ -27,28 +26,27 @@ public class SwerveModule {
 
     public SwerveModule(int driveMotorId, int steerMotorId,
                         boolean driveMotorReversed, boolean turningMotorReversed,
-                        int driveEncoderChannelA, int driveEncoderChannelB, double moduleOffset,
+                        double moduleOffset,
                         int CANCoderID, boolean CANCoderReversed) {
         this.m_moduleOffset = moduleOffset;
         m_steerCANCoder = new CANCoder(CANCoderID);
         m_CANCoderReversed = CANCoderReversed;
 
-        m_driveMotor = new TalonFX(driveMotorId);
-        m_steerMotor = new TalonFX(steerMotorId);
+        m_driveMotor = new WPI_TalonFX(driveMotorId);
+        m_steerMotor = new WPI_TalonFX(steerMotorId);
 
         m_driveMotor.setInverted(driveMotorReversed);
         m_steerMotor.setInverted(turningMotorReversed);
 
-        m_driveEncoder = new Encoder(driveEncoderChannelA, driveEncoderChannelB);
-
         m_turningPidController = new PIDController(ModuleConstants.kp_TURNING, 0, 0.1);
         m_turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-        m_driveEncoder.reset();
+        m_driveMotor.configFactoryDefault();
+        m_driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     }
 
     public double getDrivePosition() {
-        return m_driveEncoder.getDistance();
+        return m_driveMotor.getSelectedSensorPosition();
     }
 
     public double getSteerPosition() {
@@ -56,7 +54,7 @@ public class SwerveModule {
     }
 
     public double getDriveVelocity() {
-        return m_driveEncoder.getRate();
+        return m_driveMotor.getSelectedSensorVelocity();
     }
 
     public double getSteerVelocity() {

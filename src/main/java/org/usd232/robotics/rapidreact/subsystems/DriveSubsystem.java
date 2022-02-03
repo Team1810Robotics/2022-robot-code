@@ -30,8 +30,6 @@ public class DriveSubsystem extends SubsystemBase {
             DriveConstants.FRONT_LEFT_TURNING_MOTOR_PORT,
             DriveConstants.FRONT_LEFT_DRIVE_MOTOR_REVERSED,
             DriveConstants.FRONT_LEFT_STEER_MOTOR_REVERSED,
-            DriveConstants.FRONT_LEFT_DRIVE_ENCODER[0],
-            DriveConstants.FRONT_LEFT_DRIVE_ENCODER[1],
             DriveConstants.FRONT_LEFT_MODULE_STEER_OFFSET,
             CANCoderConstants.FRONT_LEFT_MODULE_CANCODER,
             CANCoderConstants.FRONT_LEFT_CANCODER_REVERSED);
@@ -41,8 +39,6 @@ public class DriveSubsystem extends SubsystemBase {
         DriveConstants.FRONT_RIGHT_TURNING_MOTOR_PORT,
         DriveConstants.FRONT_RIGHT_DRIVE_MOTOR_REVERSED,
         DriveConstants.FRONT_RIGHT_STEER_MOTOR_REVERSED,
-        DriveConstants.FRONT_RIGHT_DRIVE_ENCODER[0],
-        DriveConstants.FRONT_RIGHT_DRIVE_ENCODER[1],
         DriveConstants.FRONT_RIGHT_MODULE_STEER_OFFSET,
         CANCoderConstants.FRONT_RIGHT_MODULE_CANCODER,
         CANCoderConstants.FRONT_RIGHT_CANCODER_REVERSED);
@@ -52,8 +48,6 @@ public class DriveSubsystem extends SubsystemBase {
         DriveConstants.BACK_LEFT_TURNING_MOTOR_PORT,
         DriveConstants.BACK_LEFT_DRIVE_MOTOR_REVERSED,
         DriveConstants.BACK_LEFT_STEER_MOTOR_REVERSED,
-        DriveConstants.BACK_LEFT_DRIVE_ENCODER[0],
-        DriveConstants.BACK_LEFT_DRIVE_ENCODER[1],
         DriveConstants.BACK_LEFT_MODULE_STEER_OFFSET,
         CANCoderConstants.BACK_LEFT_MODULE_CANCODER,
         CANCoderConstants.BACK_LEFT_CANCODER_REVERSED);
@@ -63,8 +57,6 @@ public class DriveSubsystem extends SubsystemBase {
         DriveConstants.BACK_RIGHT_TURNING_MOTOR_PORT,
         DriveConstants.BACK_RIGHT_DRIVE_MOTOR_REVERSED,
         DriveConstants.BACK_RIGHT_STEER_MOTOR_REVERSED,
-        DriveConstants.BACK_RIGHT_DRIVE_ENCODER[0],
-        DriveConstants.BACK_RIGHT_DRIVE_ENCODER[1],
         DriveConstants.BACK_RIGHT_MODULE_STEER_OFFSET,
         CANCoderConstants.BACK_RIGHT_MODULE_CANCODER,
         CANCoderConstants.BACK_RIGHT_CANCODER_REVERSED);
@@ -81,7 +73,6 @@ public class DriveSubsystem extends SubsystemBase {
                 zeroHeading();
             } catch (Exception e) {}
         }).start();
-        
     }
 
     public void zeroHeading() {

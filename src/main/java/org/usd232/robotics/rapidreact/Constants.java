@@ -37,17 +37,7 @@ public final class Constants {
         public static final int FRONT_RIGHT_TURNING_MOTOR_PORT = 4;
         public static final int BACK_RIGHT_TURNING_MOTOR_PORT = 6;
         public static final int BACK_LEFT_TURNING_MOTOR_PORT = 8;
-
-        public static final int[] FRONT_LEFT_DRIVE_ENCODER = {0, 1}; // FIXME
-        public static final int[] FRONT_RIGHT_DRIVE_ENCODER = {2, 3}; // FIXME
-        public static final int[] BACK_LEFT_DRIVE_ENCODER = {4, 5}; // FIXME
-        public static final int[] BACK_RIGHT_DRIVE_ENCODER = {6, 7}; // FIXME
-
-        public static final boolean FRONT_LEFT_DRIVE_ENCODER_REVERSED = false;  //FIXME
-        public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = false; //FIXME
-        public static final boolean BACK_LEFT_DRIVE_ENCODER_REVERSED = false;  //FIXME
-        public static final boolean BACK_RIGHT_DRIVE_ENCODER_REVERSED= false;  //FIXME
-
+        
         public static final boolean FRONT_LEFT_DRIVE_MOTOR_REVERSED = false;  //FIXME
         public static final boolean FRONT_RIGHT_DRIVE_MOTOR_REVERSED = false; //FIXME
         public static final boolean BACK_LEFT_DRIVE_MOTOR_REVERSED = false;  //FIXME

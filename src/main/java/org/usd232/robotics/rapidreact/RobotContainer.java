@@ -50,17 +50,17 @@ public class RobotContainer {
 
     // Xbox Controls
     private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipController));
-    private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipController));
+    // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipController));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipController, 1));
-    private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipController, 2));
-    private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipController, 3));
-    private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipController, 4));
-    private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipController, 5));
-    private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipController, 6));
-    private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipController, 7));
-    private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipController, 8));
-    private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipController, 9));
-    private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipController, 10));
+    // private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipController, 2));
+    // private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipController, 3));
+    // private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipController, 4));
+    // private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipController, 5));
+    // private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipController, 6));
+    // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipController, 7));
+    // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipController, 8));
+    // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipController, 9));
+    // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipController, 10));
 
     public RobotContainer() {
         configureButtonBindings();
@@ -79,6 +79,7 @@ public class RobotContainer {
         new Button(rotJoystick::getTrigger).whenPressed(() -> m_driveSubsystem.zeroHeading());
 
         ManipulatorXbox_TriggerL.whenActive(() -> m_driveSubsystem.zeroHeading());
+        ManipulatorXbox_A.whenActive(() -> m_driveSubsystem.zeroHeading());
     }
 
     public Command getAutonomousCommand() {
