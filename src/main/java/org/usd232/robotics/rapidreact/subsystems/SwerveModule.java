@@ -58,7 +58,7 @@ public class SwerveModule {
         this(driveMotorId, steerMotorId,
              driveMotorReversed, turningMotorReversed,
              moduleOffset, CANCoderID,
-             CANCoderReversed, "<No Name>");
+             CANCoderReversed, "");
     }
 
     /** @return the Drive encoder clicks */
@@ -112,7 +112,8 @@ public class SwerveModule {
                          state.speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
         m_steerMotor.set(ControlMode.PercentOutput,
                          m_turningPidController.calculate(getSteerPosition(), state.angle.getRadians()));
-        SmartDashboard.putString("Swerve[ " + m_moduleName + " ] state", state.toString());
+        SmartDashboard.putString("Swerve[ " + m_moduleName != "" ? m_moduleName
+                                : m_steerCANCoder.getDeviceID() + " ] state", state.toString());
     }
 
     /** Stops current Module */

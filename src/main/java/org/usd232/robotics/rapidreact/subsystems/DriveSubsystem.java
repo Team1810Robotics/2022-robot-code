@@ -70,8 +70,10 @@ public class DriveSubsystem extends SubsystemBase {
     public DriveSubsystem() {
         new Thread(() -> {
             try {
+                LOG.enter("Moved to Second Thread");
                 Thread.sleep(6000);
                 zeroHeading();
+                LOG.leave("Exiting Second Thread");
             } catch (Exception e) {}
         }).start();
     }
