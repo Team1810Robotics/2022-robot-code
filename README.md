@@ -41,8 +41,7 @@
 | 00   | Intake - Left Intake  | 2 JE             | Relay Spike    |
 | 01   | Intake - Right Intake | 2 JE             | Relay Spike    |
 | 02   | Hood - Hood Movement  | 1 Snowblower     | Relay Spike    |
-|      | Climb - Climb Servo   | 1 Servo          | Relay Spike    |
-|      | Climb - Climb Servo   | 1 Servo          | Relay Spike    |
+|      | Climb - Climb Servo   | 2 Servo          | Relay Spike    |
 
 **PWM**
 
