@@ -1,107 +1,124 @@
 package org.usd232.robotics.rapidreact.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usd232.robotics.rapidreact.Constants.*;
-import org.usd232.robotics.rapidreact.log.Logger;
+import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+public class SwerveModule {
 
-public class SwerveModule extends SubsystemBase{
-    @SuppressWarnings("unused")
-    /**
-     * The logger.
-     * 
-     * @since 2018
-     */
-    private static final Logger LOG = new Logger();
+    private final WPI_TalonFX m_driveMotor;
+    private final WPI_TalonFX m_steerMotor;
 
-    private final TalonFX m_driveMotor;
-    private final TalonFX m_turningMotor;
+    private final CANCoder m_steerCANCoder;
 
-    private final Encoder m_driveEncoder;
-    private final CANCoder m_turningCANCoder;
+    private final PIDController m_turningPidController;
+    
+    private final double m_moduleOffset;
+    private final boolean m_CANCoderReversed;
 
-    private final double MODULE_MAX_ANGULAR_VELOCITY = Math.PI;
-    private static final double MODULE_MAX_ANGULAR_ACCELERATION = 2 * Math.PI; // radians per second squared
+    private final String m_moduleName;
 
+    public SwerveModule(int driveMotorId, int steerMotorId,
+                        boolean driveMotorReversed, boolean turningMotorReversed,
+                        double moduleOffset, int CANCoderID, 
+                        boolean CANCoderReversed, String moduleName) {
+        this.m_moduleOffset = moduleOffset;
+        m_steerCANCoder = new CANCoder(CANCoderID);
+        m_CANCoderReversed = CANCoderReversed;
 
-  // Gains are for example purposes only - must be determined for your own robot!
-  private final PIDController m_drivePIDController = new PIDController(1, 0, 0);
+        m_driveMotor = new WPI_TalonFX(driveMotorId);
+        m_steerMotor = new WPI_TalonFX(steerMotorId);
 
-  // Gains are for example purposes only - must be determined for your own robot!
-  private final ProfiledPIDController m_turningPIDController =
-      new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(MODULE_MAX_ANGULAR_VELOCITY, 
-                                                                          MODULE_MAX_ANGULAR_ACCELERATION));
+        m_driveMotor.setInverted(driveMotorReversed);
+        m_steerMotor.setInverted(turningMotorReversed);
 
-  private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(1, 3);
-  private final SimpleMotorFeedforward m_turnFeedforward = new SimpleMotorFeedforward(1, 0.5);
+        m_turningPidController = new PIDController(ModuleConstants.kp_TURNING, 0, 0.1);
+        m_turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-/**
-   * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
-   *
-   * @param driveMotorChannel PWM output for the drive motor.
-   * @param turningMotorChannel PWM output for the turning motor.
-   * @param driveEncoderChannelA DIO input for the drive encoder channel A
-   * @param driveEncoderChannelB DIO input for the drive encoder channel B
-   * @param turningCANCoder CANCoder ID
-   */
-  public SwerveModule(int driveMotorChannel,    int turningMotorChannel,
-                      int driveEncoderChannelA, int driveEncoderChannelB,
-                      int turningCANCoder) {
-    m_driveMotor = new TalonFX(driveMotorChannel);
-    m_turningMotor = new TalonFX(turningMotorChannel);
+        m_moduleName = moduleName;
 
-    m_driveEncoder = new Encoder(driveEncoderChannelA, driveEncoderChannelB);
-    m_turningCANCoder = new CANCoder(turningCANCoder);
+        // Set up encoder access for integrated encoder
+        TalonFXConfiguration talonConfig = new TalonFXConfiguration();
+        talonConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+        m_driveMotor.configAllSettings(talonConfig);
+    }
 
-    m_driveEncoder.setDistancePerPulse(ModuleConstants.DRIVE_ENCODER_DISTANCE_PER_PULSE);
+    public SwerveModule(int driveMotorId, int steerMotorId,
+                        boolean driveMotorReversed, boolean turningMotorReversed,
+                        double moduleOffset,
+                        int CANCoderID, boolean CANCoderReversed) {
+        this(driveMotorId, steerMotorId,
+             driveMotorReversed, turningMotorReversed,
+             moduleOffset, CANCoderID,
+             CANCoderReversed, "");
+    }
 
-    m_turningPIDController.enableContinuousInput(-Math.PI / 2, Math.PI);
-  }
+    /** @return the Drive encoder clicks */
+    public double getDrivePosition() {
+        return m_driveMotor.getSelectedSensorPosition();
+    }
+    
+    /** @return the CANCoder position */
+    public double getSteerPosition() {
+        return m_steerCANCoder.getAbsolutePosition();
+    }
 
-  /**
-   * Returns the current state of the module.
-   *
-   * @return The current state of the module.
-   */
-  public SwerveModuleState getState() {
-    return new SwerveModuleState(m_driveEncoder.getRate(), new Rotation2d(m_turningCANCoder.getPosition()));
-  }
+    /** @return the drive encoder clicks per 100ms */
+    public double getDriveVelocity() {
+        return m_driveMotor.getSelectedSensorVelocity();
+    }
 
-  /**
-   * Sets the desired state for the module.
-   *
-   * @param desiredState Desired state with speed and angle.
-   */
-  public void setDesiredState(SwerveModuleState desiredState) {
-    // Optimize the reference state to avoid spinning further than 90 degrees
-    SwerveModuleState state =
-        SwerveModuleState.optimize(desiredState, new Rotation2d(m_turningCANCoder.getPosition()));
+    /** @return the CANCoder Velocity as a double */
+    public double getSteerVelocity() {
+        return m_steerCANCoder.getVelocity();
+    }
 
-    // Calculate the drive output from the drive PID controller.
-    final double driveOutput =
-        m_drivePIDController.calculate(m_driveEncoder.getRate(), state.speedMetersPerSecond);
+    /** @return the CANCoder position in radians */
+    public double getCANCoderRadians() {
+        double angle = Math.toRadians(m_steerCANCoder.getPosition());
+        angle -= m_moduleOffset;
+        return angle * (m_CANCoderReversed ? -1.0 : 1.0);
+    }
 
-    final double driveFeedforward = m_driveFeedforward.calculate(state.speedMetersPerSecond);
+    /** @return the module name */
+    public String getName() {
+        return m_moduleName;
+    }
 
-    // Calculate the turning motor output from the turning PID controller.
-    final double turnOutput =
-        m_turningPIDController.calculate(m_turningCANCoder.getPosition(), state.angle.getRadians());
+    /** retuns current module state as a {@link SwerveModuleState} */
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getSteerPosition()));
+    }
 
-    final double turnFeedforward =
-        m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
+    /** Takes in a desired state and applies it to the current object */
+    public void setDesiredState(SwerveModuleState state) {
+        // Allows the stopping to be much smoother
+        if (Math.abs(state.speedMetersPerSecond) < 0.01) {
+            stop();
+            return;
+        }
 
-    m_driveMotor.set(ControlMode.PercentOutput, driveOutput + driveFeedforward);
-    m_turningMotor.set(ControlMode.PercentOutput, turnOutput + turnFeedforward);
-  }
+        // Applies the desired state to the Modules
+        state = SwerveModuleState.optimize(state, getState().angle);
+        m_driveMotor.set(ControlMode.PercentOutput,
+                         state.speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
+        m_steerMotor.set(ControlMode.PercentOutput,
+                         m_turningPidController.calculate(getSteerPosition(), state.angle.getRadians()));
+        SmartDashboard.putString("Swerve[ " + m_moduleName != "" ? m_moduleName
+                                : m_steerCANCoder.getDeviceID() + " ] state", state.toString());
+    }
+
+    /** Stops current Module */
+    public void stop() {
+        m_driveMotor.set(ControlMode.PercentOutput, 0);
+        m_steerMotor.set(ControlMode.PercentOutput, 0);
+    }
 }
