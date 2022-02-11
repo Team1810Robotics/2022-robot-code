@@ -13,6 +13,9 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  *
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
+ * <p>
+ * For example:
+ * <pre> {@code import static org.usd232.robotics.rapidreact.Constants.*;} </pre>
  */
 public final class Constants {
     public static final class DriveConstants {
@@ -75,7 +78,7 @@ public final class Constants {
         // Freespeed: 4.96824 m/s^2
         // Calculated: 4.968230455 m/s^2
         // Real: TODO m/^2 (after whole robot is assembled)
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 2048.0 / 60.0 *
         SdsModuleConfigurations.MK4_L2.getDriveReduction() *
         SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
 
@@ -118,14 +121,19 @@ public final class Constants {
         public static final int MOVEMENT_JOYSTICK_PORT = 0;
         public static final int ROTATION_JOYSTICK_PORT = 1;
         public static final int MANIPULATOR_CONTROLLER_PORT = 3;
+
+        public static final double DEADBAND = 0.25;
     }
 
     public static final class PigeonConstants {
         public static final int ID = 0;
     }
 
-    public static final class CompressorConstants {
-        public static final int COMPRESSOR_MODULE_ID = 1; // FIXME
+    public static final class PneumaticConstants {
+        public static final int PH_CAN_ID = 1; // FIXME
+
+        public static final double MAX_TANK_PSI = 10; // FIXME
+        public static final double MIN_TANK_PSI = 0; // FIXME
     }
     
     public static final class IntakeConstants {
@@ -134,9 +142,6 @@ public final class Constants {
 
         public static final int LEFT_PNEUMATIC_PORT = 1; // FIXME
         public static final int RIGHT_PNEUMATIC_PORT = 2; // FIXME
-
-        public static final double MAX_TANK_PSI = 10; // FIXME
-        public static final double MIN_TANK_PSI = 0; // FIXME
     }
 
     public static final class ShooterConstants {

@@ -38,9 +38,9 @@ public class RobotContainer {
     // Contollers
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
     private final Joystick rotationJoystick = LOG.catchAll(() -> new Joystick(OIConstants.ROTATION_JOYSTICK_PORT));
-    private final XboxController manipulatorController = LOG.catchAll(() ->new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
-
+    
     // Xbox buttons
+    private final XboxController manipulatorController = LOG.catchAll(() ->new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Hand.kLeft));
     // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxTrigger.Hand.kRight));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
@@ -60,8 +60,6 @@ public class RobotContainer {
     private final Command m_blueRight = LOG.catchAll(() -> new BlueRightQuad(m_driveSubsystem));
     private final Command m_redLeft = LOG.catchAll(() -> new RedLeftQuad(m_driveSubsystem));
     private final Command m_redRight = LOG.catchAll(() -> new RedRightQuad(m_driveSubsystem));
-
-    private static final double DEADBAND = 0.25;
 
     /** Turns joystick inputs into speed variables */
     public RobotContainer() {
@@ -111,8 +109,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return null;
+        return pathChooser.getSelected();
     }
 
     /** Sets the deadzone for the controller/joystick */
@@ -131,7 +128,7 @@ public class RobotContainer {
     /** Applies deadband and Copies the sign */
     private static double modifyAxis(double value) {
         // Deadband
-        value = deadband(value, DEADBAND);
+        value = deadband(value, OIConstants.DEADBAND);
 
         // Square the axis
         value = Math.copySign(value * value, value);
