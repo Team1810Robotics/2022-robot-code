@@ -114,6 +114,12 @@ public final class Constants {
                         MAX_AUTO_ACCELERATION_RADIANS);
     }
 
+    public static final class OIConstants {
+        public static final int MOVEMENT_JOYSTICK_PORT = 0;
+        public static final int ROTATION_JOYSTICK_PORT = 1;
+        public static final int MANIPULATOR_CONTROLLER_PORT = 3;
+    }
+
     public static final class PigeonConstants {
         public static final int ID = 0;
     }
