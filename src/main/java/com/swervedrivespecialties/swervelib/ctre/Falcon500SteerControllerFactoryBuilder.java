@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.swervedrivespecialties.swervelib.*;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
+import static com.swervedrivespecialties.swervelib.ctre.CtreUtils.checkCtreError;
+
 public final class Falcon500SteerControllerFactoryBuilder {
     private static final int CAN_TIMEOUT_MS = 250;
     private static final int STATUS_FRAME_GENERAL_PERIOD_MS = 250;
@@ -99,7 +101,9 @@ public final class Falcon500SteerControllerFactoryBuilder {
                 if (hasVoltageCompensation()) {
                     motorConfiguration.slot0.kF = (1023.0 * sensorVelocityCoefficient / nominalVoltage) * velocityConstant;
                 }
-                
+                // TODO: What should be done if no nominal voltage is configured? Use a default voltage?
+
+                // TODO: Make motion magic max voltages configurable or dynamically determine optimal values
                 motorConfiguration.motionCruiseVelocity = 2.0 / velocityConstant / sensorVelocityCoefficient;
                 motorConfiguration.motionAcceleration = (8.0 - 2.0) / accelerationConstant / sensorVelocityCoefficient;
             }
@@ -112,23 +116,26 @@ public final class Falcon500SteerControllerFactoryBuilder {
             }
 
             TalonFX motor = new TalonFX(steerConfiguration.getMotorPort());
-            motor.configAllSettings(motorConfiguration, CAN_TIMEOUT_MS);
+            checkCtreError(motor.configAllSettings(motorConfiguration, CAN_TIMEOUT_MS), "Failed to configure Falcon 500 settings");
 
             if (hasVoltageCompensation()) {
                 motor.enableVoltageCompensation(true);
             }
-            motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, CAN_TIMEOUT_MS);
+            checkCtreError(motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 feedback sensor");
             motor.setSensorPhase(moduleConfiguration.isSteerInverted());
             motor.setInverted(TalonFXInvertType.CounterClockwise);
             motor.setNeutralMode(NeutralMode.Brake);
 
-            motor.setSelectedSensorPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient, 0, CAN_TIMEOUT_MS);
+            checkCtreError(motor.setSelectedSensorPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 encoder position");
 
             // Reduce CAN status frame rates
-            motor.setStatusFramePeriod(
-                    StatusFrameEnhanced.Status_1_General,
-                    STATUS_FRAME_GENERAL_PERIOD_MS,
-                    CAN_TIMEOUT_MS
+            CtreUtils.checkCtreError(
+                    motor.setStatusFramePeriod(
+                            StatusFrameEnhanced.Status_1_General,
+                            STATUS_FRAME_GENERAL_PERIOD_MS,
+                            CAN_TIMEOUT_MS
+                    ),
+                    "Failed to configure Falcon status frame period"
             );
 
             return new ControllerImplementation(motor,
@@ -163,6 +170,16 @@ public final class Falcon500SteerControllerFactoryBuilder {
             this.motorEncoderVelocityCoefficient = motorEncoderVelocityCoefficient;
             this.motorControlMode = motorControlMode;
             this.absoluteEncoder = absoluteEncoder;
+        }
+
+        @Override
+        public Object getSteerMotor() {
+            return this.motor;
+        }
+
+        @Override
+        public AbsoluteEncoder getSteerEncoder() {
+            return this.absoluteEncoder;
         }
 
         @Override

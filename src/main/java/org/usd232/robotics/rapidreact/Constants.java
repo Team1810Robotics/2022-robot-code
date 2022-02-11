@@ -21,6 +21,7 @@ public final class Constants {
          * Should be measured from center to center.
          */
         public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.5;
+        
         /**
          * The front-to-back distance between the drive wheels.
          *
