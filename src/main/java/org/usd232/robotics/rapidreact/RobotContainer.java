@@ -26,7 +26,8 @@ public class RobotContainer {
             m_driveSubsystem,
                 () -> -modifyAxis(m_movJoystick.getY()) * ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(m_movJoystick.getX()) * ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis((m_rotJoystick.getX() / 1.25)) * ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+                () -> -modifyAxis((m_rotJoystick.getX() / 1.25)) * ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+                true
         ));
 
           // Configure the button bindings

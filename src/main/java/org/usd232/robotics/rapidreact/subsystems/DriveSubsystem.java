@@ -8,20 +8,34 @@ import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import org.usd232.robotics.rapidreact.log.Logger;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 import static org.usd232.robotics.rapidreact.Constants.DriveConstants;
 import static org.usd232.robotics.rapidreact.Constants.PigeonConstants;
+import static org.usd232.robotics.rapidreact.Constants.AutoConstants;
+
+import java.io.IOException;
+import java.nio.file.Paths;
+
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -33,7 +47,7 @@ public class DriveSubsystem extends SubsystemBase {
     //@SuppressWarnings("unused")
     private static final Logger LOG = new Logger();
 
-    private final static PigeonIMU m_pigeon = new PigeonIMU(PigeonConstants.DRIVETRAIN_PIGEON_ID);
+    private final static PigeonIMU m_pigeon = new PigeonIMU(PigeonConstants.ID);
 
     private final SwerveModule frontLeft;
     private final SwerveModule frontRight;
@@ -144,7 +158,7 @@ public class DriveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
     }
 
-    /** Smart Dashboard Variable */
+    /** @return the gyro angle as a double */
     public static double getGyro() {
         return m_pigeon.getFusedHeading();
     }
@@ -258,6 +272,15 @@ public class DriveSubsystem extends SubsystemBase {
         m_chassisSpeeds = chassisSpeeds;
     }
 
+    // TODO: Test This
+    public void setModuleStates(SwerveModuleState[] states) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
+        frontLeft.set(states[0].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[0].angle.getRadians());
+        frontRight.set(states[1].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[1].angle.getRadians());
+        backLeft.set(states[2].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[2].angle.getRadians());
+        backRight.set(states[3].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[3].angle.getRadians());
+    }
+
     /** Periodically does stuff */
     @Override
     public void periodic() {
@@ -286,4 +309,72 @@ public class DriveSubsystem extends SubsystemBase {
         backLeft.set(0, 0);
         backRight.set(0, 0);
     }
+
+        /** @return total traveled y distance (Hopefully) */
+        public double getTotalYTravel() {
+            return getPose().getY();
+        }
+        
+        /** @return total travled x distance (Hopefully) */
+        public double getTotalXTravel() {
+            return getPose().getX();
+        }
+        
+        /************************ PAth STuff ************************/
+    
+        /** Don't Call!
+         * <p>
+         * Gets the path of a PathPlanner json file
+         * @param trajectoryName the name of the PathPlanner path you want to call
+         * @throws IOException
+         */
+        protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
+            return TrajectoryUtil.fromPathweaverJson(
+                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("output", trajectoryName + ".wpilib.json")));
+        }
+          
+        /** 
+         * Loads the PathPlanner File 
+         * @param filename the name of the .json file
+         */
+        public Trajectory loadTrajectoryFromFile(String filename) {
+            try {
+                return loadTrajectory(filename);
+            } catch (IOException e) {
+                DriverStation.reportError("Failed to load auto trajectory: " + filename, false);
+                return new Trajectory();
+            }
+        }
+          
+        /**
+         * Creates a command to follow a Trajectory on the drivetrain.
+         * @param trajectory trajectory to follow
+         * @return command that will run the trajectory
+         */
+        public Command createCommandForTrajectory(Trajectory trajectory, Boolean initPose) {
+    
+            PIDController xController = new PIDController(AutoConstants.kp_X_CONTROLLER, 0, 0);
+            PIDController yController = new PIDController(AutoConstants.kp_Y_CONTROLLER, 0, 0);
+            ProfiledPIDController thetaController = new ProfiledPIDController(
+                AutoConstants.kp_THETA_CONTROLLER, 0.0, 0.1, AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
+            thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    
+            SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+                trajectory,
+                this::getPose,
+                DriveConstants.DRIVE_KINEMATICS,
+                xController,
+                yController,
+                thetaController,
+                this::setModuleStates,
+                this);
+    
+            if (initPose) {
+                var reset =  new InstantCommand(() -> this.resetOdometry(trajectory.getInitialPose()));
+                return reset.andThen(swerveControllerCommand.andThen(() -> stopModules()));
+            } else {
+                return swerveControllerCommand.andThen(() -> stopModules());
+            
+            }
+        }
 }

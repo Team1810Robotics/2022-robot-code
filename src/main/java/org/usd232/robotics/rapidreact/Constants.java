@@ -4,6 +4,7 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -98,8 +99,52 @@ public final class Constants {
         Math.hypot(DriveConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DriveConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0); // hypot is about 0.08116 meters
     }
 
+    public static final class AutoConstants {
+        public static final double MAX_AUTO_SPEED_PER_SEC = ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND / 1.5;
+        public static final double MAX_AUTO_RADIANS_PER_SEC = ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 1.5;
+        public static final double MAX_AUTO_ACCELERATION_RADIANS = 3;
+
+        public static final double kp_X_CONTROLLER = 1.2; // TODO: Calculate (https://youtu.be/jIKBWO7ps0w)
+        public static final double kp_Y_CONTROLLER = 1.2; // TODO: Calculate
+        public static final double kp_THETA_CONTROLLER = 2.8; // TODO: Calculate
+
+        public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = 
+                new TrapezoidProfile.Constraints(
+                        MAX_AUTO_RADIANS_PER_SEC,
+                        MAX_AUTO_ACCELERATION_RADIANS);
+    }
+
     public static final class PigeonConstants {
-        public static final int DRIVETRAIN_PIGEON_ID = 0;
+        public static final int ID = 0;
+    }
+
+    public static final class CompressorConstants {
+        public static final int COMPRESSOR_MODULE_ID = 1; // FIXME
+    }
+    
+    public static final class IntakeConstants {
+        public static final int RIGHT_MOTOR_PORT = 0;
+        public static final int LEFT_MOTOR_PORT = 1;
+
+        public static final int LEFT_PNEUMATIC_PORT = 1; // FIXME
+        public static final int RIGHT_PNEUMATIC_PORT = 2; // FIXME
+
+        public static final double MAX_TANK_PSI = 10; // FIXME
+        public static final double MIN_TANK_PSI = 0; // FIXME
+    }
+
+    public static final class ShooterConstants {
+        public static final int MOTOR_PORT = 3; // FIXME
+
+        public static final int[] SHOOTER_ENCODER = {1, 2}; // FIXME
+    }
+
+    public static final class HoodConstants {
+        public static final int MOTOR_PORT = 2;
+        public static final int HOOD_LIMIT_SWITCH_CHANNEL = 0; // FIXME
+        public static final int[] HOOD_ENCODER_CHANNEL = {1, 2}; // FIXME
+
+        public static double FORWARD_HOOD_LIMIT = 100.0; // FIXME
     }
 
     public static final class VisionConstants {

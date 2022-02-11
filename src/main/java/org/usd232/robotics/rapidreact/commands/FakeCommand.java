@@ -1,4 +1,4 @@
-package org.usd232.robotics.rapidreact.subsystems;
+package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.log.Logger;
 
@@ -15,15 +15,15 @@ public class FakeCommand extends CommandBase {
     //@SuppressWarnings("unused")
     private static final Logger LOG = new Logger();
     
-    /** the amount of times WaitCommand has been called */
+    /** the amount of times FakeCommand has been called */
     private static int callNumber = 0;
 
     /** Time In secs that you want to sleep the bot for */
     private static int sleepTimeSecs = 0;
 
-    FakeCommand(int SleepTimeSecs) {
+    public FakeCommand(int SleepTimeSecs) {
         callNumber++;
-        LOG.debug("WaitCommand Called [Call Number: %d]", callNumber);
+        LOG.debug("FakeCommand Called [Call Number: %d]", callNumber);
         SmartDashboard.putString("Fake command", "Call Number: " + callNumber);
 
         sleepTimeSecs = SleepTimeSecs;
@@ -32,8 +32,9 @@ public class FakeCommand extends CommandBase {
         }
     }
 
-    /** Call WaitCommand(int) first */
-    FakeCommand() {
+    /** @deprecated {@link FakeCommand#FakeCommand(int)} instead */
+    @Deprecated(forRemoval = true)
+    public FakeCommand() {
         this(sleepTimeSecs);
     }
 
@@ -52,7 +53,7 @@ public class FakeCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        LOG.debug("Exiting WaitCommand [CallNumber: %d]", callNumber);
+        LOG.debug("Exiting FakeCommand [CallNumber: %d]", callNumber);
     }
 
 }
