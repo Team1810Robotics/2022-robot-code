@@ -42,9 +42,11 @@ public class Robot extends TimedRobot {
     
         // read values periodically
         double gyroAngle = DriveSubsystem.getGyro();
+        boolean gyroZero = DriveSubsystem.ifGyroZero();
 
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", gyroAngle);
+        SmartDashboard.putBoolean("Gyro 0", gyroZero);
 
         CommandScheduler.getInstance().run();
     }

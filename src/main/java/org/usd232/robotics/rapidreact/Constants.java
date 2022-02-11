@@ -101,4 +101,14 @@ public final class Constants {
     public static final class PigeonConstants {
         public static final int DRIVETRAIN_PIGEON_ID = 0;
     }
+
+    public static final class VisionConstants {
+        /** Units in Meters */
+        public static final double TARGET_HEIGHT = 2.64;
+        /** Units in Meters */
+        public static final double ROBOT_HEIGHT = 1.0; // FIXME
+        /** Units in Degrees */
+        public static final double LIME_LIGHT_MOUNT_ANGLE = 45.0; // FIXME
+    }
+
 }

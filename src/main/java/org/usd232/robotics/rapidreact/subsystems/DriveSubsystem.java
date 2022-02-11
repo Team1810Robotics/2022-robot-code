@@ -1,8 +1,8 @@
 package org.usd232.robotics.rapidreact.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
@@ -45,10 +45,10 @@ public class DriveSubsystem extends SubsystemBase {
     private TalonFX backLeftDriveEncoder;
     private TalonFX backRightDriveEncoder;
 
-    private CANCoder frontLeftCANCoder;
-    private CANCoder frontRightCANCoder;
-    private CANCoder backLeftCANCoder;
-    private CANCoder backRightCANCoder;
+    private AbsoluteEncoder frontLeftCANCoder;
+    private AbsoluteEncoder frontRightCANCoder;
+    private AbsoluteEncoder backLeftCANCoder;
+    private AbsoluteEncoder backRightCANCoder;
 
     private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
@@ -120,10 +120,10 @@ public class DriveSubsystem extends SubsystemBase {
         backLeftDriveEncoder = (TalonFX)backLeft.getDriveMotor();
         backRightDriveEncoder = (TalonFX)backRight.getDriveMotor();
 
-        frontLeftCANCoder = (CANCoder)frontLeft.getSteerEncoder();
-        frontRightCANCoder = (CANCoder)frontRight.getSteerEncoder();
-        backLeftCANCoder = (CANCoder)backLeft.getSteerEncoder();
-        backRightCANCoder = (CANCoder)backRight.getSteerEncoder();
+        frontLeftCANCoder = frontLeft.getSteerEncoder();
+        frontRightCANCoder = frontRight.getSteerEncoder();
+        backLeftCANCoder = backLeft.getSteerEncoder();
+        backRightCANCoder = backRight.getSteerEncoder();
 
         m_odometer = new SwerveDriveOdometry(DriveConstants.DRIVE_KINEMATICS,
             new Rotation2d(0));
@@ -147,6 +147,13 @@ public class DriveSubsystem extends SubsystemBase {
     /** Smart Dashboard Variable */
     public static double getGyro() {
         return m_pigeon.getFusedHeading();
+    }
+
+    public static boolean ifGyroZero() {
+        if (getGyro() >= 0.1 || getGyro() <= -0.1) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -182,16 +189,16 @@ public class DriveSubsystem extends SubsystemBase {
         switch (modulePosition) {
             case kFL: // Intentional fall through
             case kFrontLeft:
-                return frontLeftCANCoder.getAbsolutePosition();
+                return frontLeftCANCoder.getAbsoluteAngle();
             case kFR:
             case kFrontRight:
-                return frontRightCANCoder.getAbsolutePosition();
+                return frontRightCANCoder.getAbsoluteAngle();
             case kBL:
             case kBackLeft:
-                return backLeftCANCoder.getAbsolutePosition();
+                return backLeftCANCoder.getAbsoluteAngle();
             case kBR:
             case kBackRight:
-                return backRightCANCoder.getAbsolutePosition();
+                return backRightCANCoder.getAbsoluteAngle();
             default:
                 LOG.warn("Module Position isnt recognized (Defaulting)");
                 return Double.NaN;
