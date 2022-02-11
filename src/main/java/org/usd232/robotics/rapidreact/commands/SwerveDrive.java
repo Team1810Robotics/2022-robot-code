@@ -24,7 +24,10 @@ public class SwerveDrive extends CommandBase {
     private final DoubleSupplier m_rotationSupplier;
     private final boolean fieldOriented;
 
-    /** Makes the robot drive. To use, do SwerveDrive([x-speed], [y-speed], [rotation-in-degrees]) */
+    /** Makes the robot drive.
+    * @param X speed
+    * @param Y speed
+    * @param Rotation in Degrees */
     public SwerveDrive(DriveSubsystem driveSubsystem,
                                DoubleSupplier translationXSupplier,
                                DoubleSupplier translationYSupplier,
