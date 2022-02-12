@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
     private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
 
     private Command m_autonomousCommand;
+    private VisionSubsystem visionSubsystem;
 
     private RobotContainer m_robotContainer;
 
@@ -31,7 +32,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        VisionSubsystem.limeLightOff();
+        visionSubsystem.limeLightOn();
         // Add buttons to enable/disable the compressor
         SmartDashboard.setDefaultBoolean("Enable Compressor Hybrid", false);
         SmartDashboard.setDefaultBoolean("Disable Compressor", false);
@@ -58,18 +59,17 @@ public class Robot extends TimedRobot {
         /**
      * Get digital pressure switch state and display on Shuffleboard.
      */
-    SmartDashboard.putBoolean("Digital Pressure Switch",
-    m_ph.getPressureSwitch());
+    // SmartDashboard.putBoolean("Digital Pressure Switch", m_ph.getPressureSwitch());
 
     /**
     * Get pressure from analog channel 0 and display on Shuffleboard.
     */
-    SmartDashboard.putNumber("Pressure", m_ph.getPressure(0));
+    // SmartDashboard.putNumber("Pressure", m_ph.getPressure(0));
 
     /**
     * Get compressor running status and display on Shuffleboard.
     */
-    SmartDashboard.putBoolean("Compressor Running", m_ph.getCompressor());
+    // SmartDashboard.putBoolean("Compressor Running", m_ph.getCompressor());
 
     // Enable Compressor Hybrid button
     if (SmartDashboard.getBoolean("Enable Compressor Hybrid", false)) {
@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
-        VisionSubsystem.limeLightOff();
+        visionSubsystem.limeLightOff();
     }
 
     @Override

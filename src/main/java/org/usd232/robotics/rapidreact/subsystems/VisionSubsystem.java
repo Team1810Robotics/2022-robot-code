@@ -37,14 +37,14 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
     /** Turns the LimeLight On */
-    public static void limeLightOn() {
+    public /*static*/ void limeLightOn() {
         llOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
         visOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
         OnOffLL = true;
     }
 
     /** Turns the LimeLight Off */
-    public static void limeLightOff() {
+    public /*static*/ void limeLightOff() {
         llOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
         visOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
         OnOffLL = false;

@@ -9,11 +9,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class Target extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
+    private final VisionSubsystem visionSubsystem;
 
-    public Target(DriveSubsystem driveSubsystem) {
+    public Target(DriveSubsystem driveSubsystem, VisionSubsystem visionSubsystem) {
         this.driveSubsystem = driveSubsystem;
-        
-        addRequirements(driveSubsystem);
+        this.visionSubsystem = visionSubsystem;
+
+        addRequirements(visionSubsystem, driveSubsystem);
+    }
+
+    // TODO: Remove after testing
+    @Override
+    public void initialize() {
+        // Turns the limelight LEDs on
+        visionSubsystem.limeLightOn();
     }
 
     /** Rotates the robot to target the goal using the limelight.
@@ -21,19 +30,16 @@ public class Target extends CommandBase {
      */
     @Override
     public void execute() {
+        visionSubsystem.limeLightOn();
         // Stops targeting if the limelight is off
-        if (VisionSubsystem.llOff) {
-            return;
-        }
+        //TODO if (VisionSubsystem.targetValid <= 1.0) { return; }
 
-        // Turns the limelight LEDs on
-        VisionSubsystem.limeLightOn();
 
         // Checks if the crosshair is more or less than 1 degree away from the target
-        if (VisionSubsystem.targetXOffset < -1 || VisionSubsystem.targetXOffset > 1) {
+        if (VisionSubsystem.targetXOffset < -1.0 || VisionSubsystem.targetXOffset > 1.0) {
 
             // Rotates the robot, with the speed proportional to how close it is to the target for more accuracy
-            driveSubsystem.drive(new ChassisSpeeds(0, 0, 0.5 * VisionSubsystem.targetXOffset));
+            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * VisionSubsystem.targetXOffset)));
         }
 
     }
@@ -49,6 +55,7 @@ public class Target extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        visionSubsystem.limeLightOff();
         driveSubsystem.drive(new ChassisSpeeds (0, 0, 0));
     }
     
