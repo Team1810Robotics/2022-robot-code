@@ -3,6 +3,7 @@ package org.usd232.robotics.rapidreact;
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        VisionSubsystem.limeLightOff();
         // Add buttons to enable/disable the compressor
         SmartDashboard.setDefaultBoolean("Enable Compressor Hybrid", false);
         SmartDashboard.setDefaultBoolean("Disable Compressor", false);
@@ -110,13 +112,16 @@ public class Robot extends TimedRobot {
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", gyroAngle);
         SmartDashboard.putBoolean("Gyro 0", gyroZero);
+        SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
 
         CommandScheduler.getInstance().run();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        VisionSubsystem.limeLightOff();
+    }
 
     @Override
     public void disabledPeriodic() {}
