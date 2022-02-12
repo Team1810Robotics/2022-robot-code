@@ -2,7 +2,6 @@
 
 ### Team 1810 Robotics Swerve drive code for the 2022 competition season
 **Named `Swiffer`**
- 
 ---
 
 * Uses Swerve Drive Specialties's MK4 with L2 gear ratio with falcons as the motors.
