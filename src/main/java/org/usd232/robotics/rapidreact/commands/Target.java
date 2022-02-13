@@ -9,20 +9,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class Target extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
-    private final VisionSubsystem visionSubsystem;
 
-    public Target(DriveSubsystem driveSubsystem, VisionSubsystem visionSubsystem) {
+    public Target(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
-        this.visionSubsystem = visionSubsystem;
 
-        addRequirements(visionSubsystem, driveSubsystem);
+        addRequirements(driveSubsystem);
     }
 
     // TODO: Remove after testing
     @Override
     public void initialize() {
         // Turns the limelight LEDs on
-        visionSubsystem.limeLightOn();
+        VisionSubsystem.limeLightOn();
     }
 
     /** Rotates the robot to target the goal using the limelight.
@@ -30,9 +28,9 @@ public class Target extends CommandBase {
      */
     @Override
     public void execute() {
-        visionSubsystem.limeLightOn();
-        // Stops targeting if the limelight is off
-        //TODO if (VisionSubsystem.targetValid <= 1.0) { return; }
+        VisionSubsystem.limeLightOn();
+        // Stops targeting if the limelight sees no target
+        if (VisionSubsystem.targetValid <= 1.0) { return; }
 
 
         // Checks if the crosshair is more or less than 1 degree away from the target
@@ -55,7 +53,7 @@ public class Target extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        visionSubsystem.limeLightOff();
+        VisionSubsystem.limeLightOff();
         driveSubsystem.drive(new ChassisSpeeds (0, 0, 0));
     }
     

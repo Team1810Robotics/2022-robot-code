@@ -2,20 +2,23 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.OIConstants;
-import static org.usd232.robotics.rapidreact.commands.XboxTrigger.Hand;
+import static org.usd232.robotics.rapidreact.commands.XboxTrigger.Hand;  
 
-import org.usd232.robotics.rapidreact.commands.Limelight;
+import org.usd232.robotics.rapidreact.commands.LimelightOn;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.commands.Target;
-import org.usd232.robotics.rapidreact.commands.XboxTrigger;
+// import org.usd232.robotics.rapidreact.commands.XboxTrigger;
+
+/* Paths */
 import org.usd232.robotics.rapidreact.commands.Autonomous.DriveDistance;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.BlueLeftQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.BlueRightQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedLeftQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedRightQuad;
+/* End of Paths */
+
 import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
-import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -23,6 +26,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
@@ -36,17 +40,16 @@ public class RobotContainer {
     SendableChooser<Command> pathChooser = new SendableChooser<>();
 
     private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-    private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
     private final Joystick rotationJoystick = LOG.catchAll(() -> new Joystick(OIConstants.ROTATION_JOYSTICK_PORT));
+    private final XboxController manipulatorController = LOG.catchAll(() ->new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    private final XboxController manipulatorController = LOG.catchAll(() ->new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
-    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Hand.kLeft));
-    // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Hand.kRight));
-    private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
+    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxTrigger.Hand.kLeft));
+    // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxTrigger.Hand.kRight));
+    // private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     // private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
     // private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
@@ -68,6 +71,7 @@ public class RobotContainer {
     // private final JoystickButton movementJoystick_Button9 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 9));
     // private final JoystickButton movementJoystick_Button10 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 10));
     // private final JoystickButton movementJoystick_Button11 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 11));
+    
     // private final JoystickButton rotationJoystick_Trigger = LOG.catchAll(() -> new JoystickButton(rotationJoystick, 1));
     // private final JoystickButton rotationJoystick_Button2 = LOG.catchAll(() -> new JoystickButton(rotationJoystick, 2));
     // private final JoystickButton rotationJoystick_Button3 = LOG.catchAll(() -> new JoystickButton(rotationJoystick, 3));
@@ -116,6 +120,28 @@ public class RobotContainer {
     }
 
     /**
+     * While an axis is greater than a certain value run a certain command.
+     * 
+     * @param joystick What joystick the axis is on.
+     * @param axis     What axis to look at.
+     * @param value    What value should the axis be greater than to run the command.
+     * @param command  The command that should be ran while the axis is greater than the specified value.
+     */
+    // Super Jank but might work?
+    // TODO: Move somewhere else if it work
+    public void whileGreaterThan(XboxController joystick, Hand axis, double value, Command command) {
+
+        if (axis == Hand.kRight && joystick.getRightTriggerAxis() > value) {
+            CommandScheduler.getInstance().schedule(command);
+        } else if (axis == Hand.kLeft && joystick.getLeftTriggerAxis() > value) {
+            CommandScheduler.getInstance().schedule(command);
+        } else {
+            command.cancel();
+        }
+    }
+
+
+    /**
      * Use this method to define your button->command mappings. Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
@@ -125,10 +151,9 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope()); // No requirements because we don't need to interrupt anything
 
-        ManipulatorXbox_X.whenHeld(new Limelight(m_visionSubsystem));
-        ManipulatorXbox_A.toggleWhenPressed(new Target(m_driveSubsystem, m_visionSubsystem));
-
-        //ManipulatorXbox_TriggerR.whenActive(new Target(m_driveSubsystem)); // TODO: Test
+        ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
+        
+        whileGreaterThan(manipulatorController, Hand.kLeft, 0.1, new LimelightOn()); // TODO: Test me
     }
 
     /**

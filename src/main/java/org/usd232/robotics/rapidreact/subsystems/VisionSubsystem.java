@@ -28,23 +28,21 @@ public class VisionSubsystem extends SubsystemBase {
 
     /** Does some cool math to get the distance between the robot and the target */
     public static double getTargetDistance() {
-        while (true) {
             targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
             m_distance = (VisionConstants.TARGET_HEIGHT - VisionConstants.ROBOT_HEIGHT)
                     / Math.abs(Math.tan(VisionConstants.LIME_LIGHT_MOUNT_ANGLE + targetYOffset));
             return m_distance;
-        }
     }
 
     /** Turns the LimeLight On */
-    public /*static*/ void limeLightOn() {
+    public static void limeLightOn() {
         llOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
         visOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
         OnOffLL = true;
     }
 
     /** Turns the LimeLight Off */
-    public /*static*/ void limeLightOff() {
+    public static void limeLightOff() {
         llOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
         visOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
         OnOffLL = false;

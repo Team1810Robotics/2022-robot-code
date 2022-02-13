@@ -4,21 +4,17 @@ import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Limelight extends CommandBase {
-
-    private VisionSubsystem visionSubsystem;
+public class LimelightOn extends CommandBase {
     
-    public Limelight(VisionSubsystem visionSubsystem) {
-        this.visionSubsystem = visionSubsystem;
-    }
+    public LimelightOn() {}
 
     @Override
     public void initialize() {
-        visionSubsystem.limeLightOn();
+        VisionSubsystem.limeLightOn();
     }
 
     @Override
     public void end(boolean inturrupted) {
-        visionSubsystem.limeLightOff();
+        VisionSubsystem.limeLightOff();
     }
 }
