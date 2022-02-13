@@ -3,7 +3,10 @@ package org.usd232.robotics.rapidreact.commands;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+// https://drive.google.com/file/d/1b3jYlQRw3vDhasCw-WSdM6FtWdolT9bM/view?usp=sharing
 
 /** Used to turn the Xbox LT & RT from analog to Digital */
 public class XboxTrigger extends Trigger {
@@ -15,36 +18,19 @@ public class XboxTrigger extends Trigger {
     private static final Logger LOG = new Logger();
     
     private XboxController xbox;
-    private static double minValue = 0.1;
-    private boolean right;
+    private final double minValue = 0.1;
+    private Axis hand;
 
-    public enum Hand {
-        kLeft,
-        kRight
-    }
-
-    public XboxTrigger(XboxController xbox, Hand hand) {
+    public XboxTrigger(XboxController xbox, Axis hand) {
         this.xbox = xbox;
-
-        switch (hand) {
-            case kRight:
-            this.right = true;
-
-            case kLeft:
-            this.right = false;
-
-            default:
-                LOG.error("INVALID HAND TYPE");
-        }
+        this.hand = hand;
     }
 
     @Override
     public boolean get() {
-        if (xbox.getRightTriggerAxis() > minValue && right) {
-            return true;
-        }
-
-        if (xbox.getLeftTriggerAxis() > minValue && !right) {
+        if (xbox.getRawAxis(hand.value) > minValue) {
+            // Left trigger is 2    Right Trigger is 3
+            LOG.debug("Xbox Trigger returning TRUE [%d]", hand.value);
             return true;
         }
 

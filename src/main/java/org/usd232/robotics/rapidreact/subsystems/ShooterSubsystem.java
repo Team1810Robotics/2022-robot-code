@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.usd232.robotics.rapidreact.Constants.ShooterConstants;
 
+// https://drive.google.com/file/d/1Big3GqA8ZGPYKn6hLIk1PlT94j46iKOF/view?usp=sharing
+
 public class ShooterSubsystem extends SubsystemBase {
     /**
      * The logger.
@@ -45,7 +47,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooter.set(0);
     }
 
-    public double getEncoderPosition() {
+    public static double getEncoderPosition() {
         return shooterEncoder.getPosition();
     }
 }

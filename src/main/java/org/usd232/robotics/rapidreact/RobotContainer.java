@@ -2,12 +2,11 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.OIConstants;
-import static org.usd232.robotics.rapidreact.commands.XboxTrigger.Hand;  
 
 import org.usd232.robotics.rapidreact.commands.LimelightOn;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.commands.Target;
-// import org.usd232.robotics.rapidreact.commands.XboxTrigger;
+import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 
 /* Paths */
 import org.usd232.robotics.rapidreact.commands.Autonomous.DriveDistance;
@@ -23,6 +22,7 @@ import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,11 +44,11 @@ public class RobotContainer {
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
     private final Joystick rotationJoystick = LOG.catchAll(() -> new Joystick(OIConstants.ROTATION_JOYSTICK_PORT));
-    private final XboxController manipulatorController = LOG.catchAll(() ->new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
+    private final XboxController manipulatorController = LOG.catchAll(() -> new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxTrigger.Hand.kLeft));
-    // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxTrigger.Hand.kRight));
+    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
+    private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
     // private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     // private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
@@ -122,19 +122,18 @@ public class RobotContainer {
     /**
      * While an axis is greater than a certain value run a certain command.
      * 
-     * @param joystick What joystick the axis is on.
-     * @param axis     What axis to look at.
+     * @param controller What controller to reference.
+     * @param hand     What axis to look at.
      * @param value    What value should the axis be greater than to run the command.
      * @param command  The command that should be ran while the axis is greater than the specified value.
      */
     // Super Jank but might work?
     // TODO: Move somewhere else if it work
-    public void whileGreaterThan(XboxController joystick, Hand axis, double value, Command command) {
+    public void whileGreaterThan(XboxController controller, Axis hand, double value, Command command) {
 
-        if (axis == Hand.kRight && joystick.getRightTriggerAxis() > value) {
+        if (controller.getRawAxis(hand.value) > value) {
             CommandScheduler.getInstance().schedule(command);
-        } else if (axis == Hand.kLeft && joystick.getLeftTriggerAxis() > value) {
-            CommandScheduler.getInstance().schedule(command);
+
         } else {
             command.cancel();
         }
@@ -153,7 +152,8 @@ public class RobotContainer {
 
         ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
         
-        whileGreaterThan(manipulatorController, Hand.kLeft, 0.1, new LimelightOn()); // TODO: Test me
+        whileGreaterThan(manipulatorController, Axis.kLeftTrigger, 0.1, new LimelightOn()); // TODO: Test me
+        ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
     }
 
     /**
