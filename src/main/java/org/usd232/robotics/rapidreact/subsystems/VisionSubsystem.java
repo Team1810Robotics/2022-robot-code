@@ -15,36 +15,38 @@ public class VisionSubsystem extends SubsystemBase {
     public static double targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     public static double targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-    // TODO: Simplify to only 2 NetworkTable grabs rather than 4
-    public static boolean llOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-    public static boolean llOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-    public static boolean visOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
-    public static boolean visOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+    public static boolean ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+    public static boolean camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
 
     private static double m_distance;
 
     /** For ShuffleBoard */
     public static boolean OnOffLL;
 
-    /** Does some cool math to get the distance between the robot and the target */
+    /** Uses the tangent to find the distance from the target plane */
     public static double getTargetDistance() {
             targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
             m_distance = (VisionConstants.TARGET_HEIGHT - VisionConstants.ROBOT_HEIGHT)
                     / Math.abs(Math.tan(VisionConstants.LIME_LIGHT_MOUNT_ANGLE + targetYOffset));
             return m_distance;
     }
+    
+    /** Returns the distance of the Limelight to the center of the target */
+    public static double getTargetDistanceOffset() {
+        return (getTargetDistance() + 0.678);
+    }
 
     /** Turns the LimeLight On */
     public static void limeLightOn() {
-        llOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-        visOn = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
         OnOffLL = true;
     }
 
     /** Turns the LimeLight Off */
     public static void limeLightOff() {
-        llOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-        visOff = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
         OnOffLL = false;
     }
 }

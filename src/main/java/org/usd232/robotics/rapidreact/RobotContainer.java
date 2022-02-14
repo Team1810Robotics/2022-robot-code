@@ -14,6 +14,7 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.BlueLeftQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.BlueRightQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedLeftQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedRightQuad;
+import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 /* End of Paths */
 
 import org.usd232.robotics.rapidreact.log.Logger;
@@ -91,6 +92,7 @@ public class RobotContainer {
     private final Command m_blueRight = LOG.catchAll(() -> new BlueRightQuad(m_driveSubsystem));
     private final Command m_redLeft = LOG.catchAll(() -> new RedLeftQuad(m_driveSubsystem));
     private final Command m_redRight = LOG.catchAll(() -> new RedRightQuad(m_driveSubsystem));
+    private final Command m_OneMeter = LOG.catchAll(() -> new OneMeterPath(m_driveSubsystem));
 
     /** Turns joystick inputs into speed variables */
     public RobotContainer() {
@@ -112,7 +114,8 @@ public class RobotContainer {
         pathChooser.addOption("Left Blue Tarmac", m_blueLeft);
         pathChooser.addOption("Right Blue Tarmac", m_blueRight);
         pathChooser.addOption("Left Blue Tarmac", m_redLeft);
-        pathChooser.addOption("Rightt Blue Tarmac", m_redRight);
+        pathChooser.addOption("Right Blue Tarmac", m_redRight);
+        pathChooser.addOption("One Meter Path", m_OneMeter);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
           // Configure the button bindings

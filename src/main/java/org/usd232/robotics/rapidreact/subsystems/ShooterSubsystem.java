@@ -24,27 +24,26 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final CANSparkMax shooter = new CANSparkMax(ShooterConstants.MOTOR_PORT, MotorType.kBrushless);
     private static final RelativeEncoder shooterEncoder = shooter.getEncoder();
 
-    private static final int minRotationCount = 10; // TODO: Find best value
-
     public void shooterOn() {
         // Zeros the encoder
         shooterEncoder.setPosition(0);
 
         // Checks if the motor has rotated past the minRotationCount then moves to full speed
         shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        if (shooterEncoder.getPosition() <= minRotationCount) {
+        if (shooterEncoder.getPosition() <= ShooterConstants.MIN_ROTATION_COUNT) {
             shooter.set(0.5);
 
-        } else if (shooterEncoder.getPosition() >= minRotationCount) {
+        } else if (shooterEncoder.getPosition() >= ShooterConstants.MIN_ROTATION_COUNT) {
             shooter.set(1.0);
         } else {
-            LOG.warn("Shooter On broke. (How did you get here)");
+            LOG.warn("shooterOn() broke. (How did you get here)");
         }
 
     }
 
     public void shooterOff() {
         shooter.set(0);
+        shooterEncoder.setPosition(0);
     }
 
     public static double getEncoderPosition() {

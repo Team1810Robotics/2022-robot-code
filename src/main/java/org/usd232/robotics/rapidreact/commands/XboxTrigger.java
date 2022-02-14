@@ -3,8 +3,8 @@ package org.usd232.robotics.rapidreact.commands;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import static edu.wpi.first.wpilibj.XboxController.Axis;
 
 // https://drive.google.com/file/d/1b3jYlQRw3vDhasCw-WSdM6FtWdolT9bM/view?usp=sharing
 
@@ -28,13 +28,13 @@ public class XboxTrigger extends Trigger {
 
     @Override
     public boolean get() {
+
+        /* Debug Stuff TODO: Remove Later */
         if (xbox.getRawAxis(hand.value) > minValue) {
-            // Left trigger is 2    Right Trigger is 3
-            LOG.debug("Xbox Trigger returning TRUE [%d]", hand.value);
-            return true;
+            LOG.debug("Xbox %s returning TRUE", hand.toString());
         }
 
-        return false;
+        return xbox.getRawAxis(hand.value) > minValue;
     }
     
 }

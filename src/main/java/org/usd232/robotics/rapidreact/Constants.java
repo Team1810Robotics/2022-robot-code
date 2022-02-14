@@ -147,7 +147,7 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 3; // FIXME
 
-        public static final int[] SHOOTER_ENCODER = {1, 2}; // FIXME
+        public static final int MIN_ROTATION_COUNT = 10; // TODO: Find good value
     }
 
     public static final class HoodConstants {
