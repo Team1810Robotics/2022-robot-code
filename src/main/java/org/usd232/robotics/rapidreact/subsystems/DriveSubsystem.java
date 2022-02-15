@@ -29,14 +29,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
-import static org.usd232.robotics.rapidreact.Constants.DriveConstants;
-import static org.usd232.robotics.rapidreact.Constants.PigeonConstants;
 import static org.usd232.robotics.rapidreact.Constants.AutoConstants;
+import static org.usd232.robotics.rapidreact.Constants.DriveConstants;
+import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
+import static org.usd232.robotics.rapidreact.Constants.PigeonConstants;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-
-import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 
 // https://drive.google.com/file/d/1jjWRu1KV4cwF8fZrVr89JhTrMbSx8Aeh/view?usp=sharing
 
@@ -332,7 +331,7 @@ public class DriveSubsystem extends SubsystemBase {
          */
         protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
             return TrajectoryUtil.fromPathweaverJson(
-                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("output", trajectoryName + ".wpilib.json"))); // FIXME: Change output to paths if it don't work
+                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("output", trajectoryName + ".wpilib.json"))); // FIXME: Change 'output' to 'paths' if it don't work
         }
           
         /** 

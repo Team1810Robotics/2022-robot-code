@@ -127,16 +127,16 @@ public class RobotContainer {
     /**
      * While an axis is greater than a certain value run a certain command.
      * 
-     * @param controller What controller to reference.
-     * @param hand     What axis to look at.
-     * @param value    What value should the axis be greater than to run the command.
-     * @param command  The command that should be ran while the axis is greater than the specified value.
+     * @param controller    What controller to reference.
+     * @param hand          What axis to look at.
+     * @param minAmount     What value should the axis be greater than to run the command.
+     * @param command       The command that should be ran while the axis is greater than the specified value.
      */
     // Super Jank but might work?
     // TODO: Move somewhere else if it work
-    public void whileGreaterThan(XboxController controller, Axis hand, double value, Command command) {
+    public void whileGreaterThan(XboxController controller, Axis hand, double minAmount, Command command) {
 
-        if (controller.getRawAxis(hand.value) > value) {
+        if (controller.getRawAxis(hand.value) > minAmount) {
             CommandScheduler.getInstance().schedule(command);
 
         } else {

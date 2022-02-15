@@ -29,7 +29,7 @@ public class XboxTrigger extends Trigger {
     @Override
     public boolean get() {
 
-        /* Debug Stuff TODO: Remove Later */
+        /* Debug Stuff */
         if (xbox.getRawAxis(hand.value) > minValue) {
             LOG.debug("Xbox %s returning TRUE", hand.toString());
         }

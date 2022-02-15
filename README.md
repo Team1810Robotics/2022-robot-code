@@ -19,20 +19,20 @@
 
 **CAN**
 
-| ID    | Mechanism                 | Being Controlled | Controller | Port  |
-| ----- | -----                     | -----            | -----      | ----- |
-| 01    | Drive - Front Left Drive  | 1 Falcon         | TalonFX    |       |
-| 02    | Drive - Front Left Steer  | 1 Falcon         | TalonFX    |       |
-| 03    | Drive - Front Right Drive | 1 Falcon         | TalonFX    |       |
-| 04    | Drive - Front Right Steer | 1 Falcon         | TalonFX    |       |
-| 05    | Drive - Back Right Drive  | 1 Falcon         | TalonFX    |       |
-| 06    | Drive - Back Right Steer  | 1 Falcon         | TalonFX    |       |
-| 07    | Drive - Back Left Drive   | 1 Falcon         | TalonFX    |       |
-| 08    | Drive - Back Left Steer   | 1 Falcon         | TalonFX    |       |
-|       | Turret - Turret Rotation  | 1 Neverest       | Talon      |       |
-|       | Shooter - Shooter On/Off  | 1 NEO            | SPARK MAX  |       |
-|       | Climb - Right Winch       | 1 NEO 550        | SPARK MAX  |       |
-|       | Climb - Left Winch        | 1 NEO 550        | SPARK MAX  |       |
+| ID    | Mechanism                   | Being Controlled | Controller | Port  |
+| ----- | -----                       | -----            | -----      | ----- |
+| 01    | Drive - Front Left Drive    | 1 Falcon         | TalonFX    |       |
+| 02    | Drive - Front Left Steer    | 1 Falcon         | TalonFX    |       |
+| 03    | Drive - Front Right Drive   | 1 Falcon         | TalonFX    |       |
+| 04    | Drive - Front Right Steer   | 1 Falcon         | TalonFX    |       |
+| 05    | Drive - Back Right Drive    | 1 Falcon         | TalonFX    |       |
+| 06    | Drive - Back Right Steer    | 1 Falcon         | TalonFX    |       |
+| 07    | Drive - Back Left Drive     | 1 Falcon         | TalonFX    |       |
+| 08    | Drive - Back Left Steer     | 1 Falcon         | TalonFX    |       |
+|       |~~Turret - Turret Rotation~~ |~~1 Neverest~~    |~~Talon~~   |       |
+|       | Shooter - Shooter On/Off    | 1 NEO            | SPARK MAX  |       |
+|       | Climb - Right Winch         | 1 NEO 550        | SPARK MAX  |       |
+|       | Climb - Left Winch          | 1 NEO 550        | SPARK MAX  |       |
 
 **Relay**
 

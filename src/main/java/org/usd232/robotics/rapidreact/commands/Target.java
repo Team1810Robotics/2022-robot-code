@@ -16,13 +16,6 @@ public class Target extends CommandBase {
         addRequirements(driveSubsystem);
     }
 
-    // TODO: Remove after testing
-    @Override
-    public void initialize() {
-        // Turns the limelight LEDs on
-        VisionSubsystem.limeLightOn();
-    }
-
     /** Rotates the robot to target the goal using the limelight.
      *  Currently only targets on the X axis, since we don't have a hood yet.
      */

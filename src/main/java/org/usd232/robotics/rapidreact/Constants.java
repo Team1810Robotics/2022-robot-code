@@ -158,10 +158,17 @@ public final class Constants {
         public static double FORWARD_HOOD_LIMIT = 100.0; // FIXME
     }
 
+    public static final class ClimbConstants {
+        public static final int SERVO_MOTOR_PORT = 1; // FIXME
+        public static final int LEFT_WINCH_PORT = 2; // FIXME
+        public static final int RIGHT_WINCH_PORT = 3; // FIXME
+    }
+
     public static final class VisionConstants {
         /** Units in Meters */
         public static final double TARGET_HEIGHT = 2.64;
         /** Units in Meters */
+        // Hight of the Limelight Camera to the ground
         public static final double ROBOT_HEIGHT = 1.0; // FIXME
         /** Units in Degrees */
         public static final double LIME_LIGHT_MOUNT_ANGLE = 45.0; // FIXME
