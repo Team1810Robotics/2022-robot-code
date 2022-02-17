@@ -159,7 +159,7 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final int SERVO_MOTOR_PORT = 1; // FIXME
+        public static final int SERVO_MOTOR_CHANNEL = 1; // FIXME
         public static final int LEFT_WINCH_PORT = 2; // FIXME
         public static final int RIGHT_WINCH_PORT = 3; // FIXME
     }
