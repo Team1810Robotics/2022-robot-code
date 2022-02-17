@@ -1,11 +1,11 @@
 package org.usd232.robotics.rapidreact;
 
-import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
+//import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
-import edu.wpi.first.wpilibj.PneumaticHub;
+//import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
-    private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
+    //private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
 
     private Command m_autonomousCommand;
 
@@ -35,8 +35,8 @@ public class Robot extends TimedRobot {
         VisionSubsystem.limeLightOff();
 
         // Add number inputs for minimum and maximum pressure
-        SmartDashboard.setDefaultNumber("Minimum Pressure (PSI)", PneumaticConstants.MAX_TANK_PSI);
-        SmartDashboard.setDefaultNumber("Maximum Pressure (PSI)", PneumaticConstants.MIN_TANK_PSI);
+        //SmartDashboard.setDefaultNumber("Minimum Pressure (PSI)", PneumaticConstants.MAX_TANK_PSI);
+        //SmartDashboard.setDefaultNumber("Maximum Pressure (PSI)", PneumaticConstants.MIN_TANK_PSI);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
@@ -56,15 +56,15 @@ public class Robot extends TimedRobot {
         // read values periodically
         double gyroAngle = DriveSubsystem.getGyro();
         boolean gyroZero = DriveSubsystem.ifGyroZero();
-        double minPressure = SmartDashboard.getNumber("Minimum Pressure (PSI)", 0.0);
-        double maxPressure = SmartDashboard.getNumber("Maximum Pressure (PSI)", 0.0);
+        //double minPressure = SmartDashboard.getNumber("Minimum Pressure (PSI)", 0.0);
+        //double maxPressure = SmartDashboard.getNumber("Maximum Pressure (PSI)", 1.0);
 
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", gyroAngle);
         SmartDashboard.putBoolean("Gyro 0", gyroZero);
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
-        SmartDashboard.putNumber("Pressure", m_ph.getPressure(0));
-        SmartDashboard.putBoolean("Compressor Running", m_ph.getCompressor());
+        //SmartDashboard.putNumber("Pressure", m_ph.getPressure(0));
+        //SmartDashboard.putBoolean("Compressor Running", m_ph.getCompressor());
 
         /**
          * Enable the compressor with hybrid sensor control, meaning it uses both
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
          * If at any point the digital pressure switch is open, the compressor will
          * shut off.
          */
-        m_ph.enableCompressorHybrid(minPressure, maxPressure);
+        //m_ph.enableCompressorHybrid(minPressure, maxPressure);
 
         CommandScheduler.getInstance().run();
     }

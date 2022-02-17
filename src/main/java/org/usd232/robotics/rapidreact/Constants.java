@@ -164,6 +164,10 @@ public final class Constants {
         public static final int RIGHT_WINCH_PORT = 3; // FIXME
     }
 
+    public static final class ElevatorConstants {
+        public static final int PORT = 3;
+    }
+
     public static final class VisionConstants {
         /** Units in Meters */
         public static final double TARGET_HEIGHT = 2.64;

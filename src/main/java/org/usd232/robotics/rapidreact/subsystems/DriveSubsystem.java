@@ -331,7 +331,7 @@ public class DriveSubsystem extends SubsystemBase {
          */
         protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
             return TrajectoryUtil.fromPathweaverJson(
-                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("output", trajectoryName + ".wpilib.json"))); // FIXME: Change 'output' to 'paths' if it don't work
+                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("paths", trajectoryName + ".wpilib.json")));
         }
           
         /** 
