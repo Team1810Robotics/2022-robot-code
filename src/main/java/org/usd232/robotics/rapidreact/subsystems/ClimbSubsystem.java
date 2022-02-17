@@ -25,11 +25,13 @@ public class ClimbSubsystem {
         climbServo.set(value);
     }
 
+    /** Turns both right and left Winch motors on */
     public void winchOn() {
         leftWinch.set(0.5);     // TODO: Test Speed
         rightWinch.set(0.5);    // TODO: Test Speed
     }
 
+    /** stops all winch movment */
     public void winchOff() {
         leftWinch.set(0.0);
         rightWinch.set(0.0);
