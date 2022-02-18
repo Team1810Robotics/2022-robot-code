@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
 
-        /* @ TODO Once the hood is installed, uncomment this. 
+        /* TODO: Once the hood is installed, uncomment this. 
         Maybe should go in teleopInit instead */
         //HoodSubsystem.resetHood();
 

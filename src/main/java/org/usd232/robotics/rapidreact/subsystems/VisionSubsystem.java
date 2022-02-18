@@ -25,7 +25,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     /** Uses the tangent to find the distance from the target plane */
     public static double getTargetDistance() {
-            targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
             m_distance = (VisionConstants.TARGET_HEIGHT - VisionConstants.ROBOT_HEIGHT)
                     / Math.abs(Math.tan(VisionConstants.LIME_LIGHT_MOUNT_ANGLE + targetYOffset));
             return m_distance;
