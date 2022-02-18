@@ -172,8 +172,8 @@ public final class Constants {
         /** Units in Meters */
         public static final double TARGET_HEIGHT = 2.64;
         /** Units in Meters */
-        // Hight of the Limelight Camera to the ground
-        public static final double ROBOT_HEIGHT = 1.0; // FIXME
+        // Height of the Limelight Camera to the ground
+        public static final double ROBOT_HEIGHT = 0.73025;
         /** Units in Degrees */
         public static final double LIME_LIGHT_MOUNT_ANGLE = 45.0; // FIXME
     }
