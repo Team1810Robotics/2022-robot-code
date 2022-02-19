@@ -24,29 +24,6 @@ public class HoodSubsystem extends SubsystemBase {
 
     }
 
-    /** Sets the angle of the hood to a specific value. This is probably REALLY jank.
-    * @param targetValue   The value you want the hood to go to 
-    */
-    public void setHood(double targetValue) {
-
-        // If the hood is lower than it should be, move it forward
-        if(hoodEncoder.get() < targetValue){
-            forwardHood();
-        }
-
-        // If it's higher, move it backward
-        else if (hoodEncoder.get() > targetValue){
-            reverseHood();
-        }
-
-        // When the hood is at to the target value, stop moving. This is the jank part.
-        if(hoodEncoder.get() == targetValue) {
-           stopHood();
-           return;
-        }
-
-    }
-
     /** Makes the hood stop moving*/
     public void stopHood() {
         hood.set(Relay.Value.kOff);

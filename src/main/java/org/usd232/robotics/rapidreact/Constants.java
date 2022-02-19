@@ -140,8 +140,8 @@ public final class Constants {
         public static final int RIGHT_MOTOR_PORT = 0;
         public static final int LEFT_MOTOR_PORT = 1;
 
-        public static final int LEFT_PNEUMATIC_PORT = 1; // FIXME
-        public static final int RIGHT_PNEUMATIC_PORT = 2; // FIXME
+        public static final int LEFT_PNEUMATIC_PORT = 2;
+        public static final int RIGHT_PNEUMATIC_PORT = 3;
     }
 
     public static final class ShooterConstants {
