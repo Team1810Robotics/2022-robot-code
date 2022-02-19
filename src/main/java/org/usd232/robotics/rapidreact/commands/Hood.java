@@ -7,29 +7,25 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Hood extends CommandBase {
-    private final HoodSubsystem hoodSubsystem;
     private boolean forward;
     private Debouncer m_debouncer;
 
-    public Hood(HoodSubsystem hoodSubsystem, boolean forward, double debounceTime) {
-        this.hoodSubsystem = hoodSubsystem;
+    public Hood(boolean forward, double debounceTime) {
         this.forward = forward;
         // Makes debouncer "debounce" input for debounceTime on the rising edge of the input (from false to true)
         this.m_debouncer = new Debouncer(debounceTime, Debouncer.DebounceType.kRising);
-
-        addRequirements(hoodSubsystem);
     }
 
-    public Hood(HoodSubsystem hoodSubsystem, boolean forward) {
-        this(hoodSubsystem, forward, 0.1);
+    public Hood(boolean forward) {
+        this(forward, 0.1);
     }
 
     @Override
     public void execute() {
         if (forward) {
-            hoodSubsystem.forwardHood();
+            HoodSubsystem.forwardHood();
         } else {
-            hoodSubsystem.reverseHood();
+            HoodSubsystem.reverseHood();
         }
     }
 
@@ -48,6 +44,6 @@ public class Hood extends CommandBase {
 
     @Override
     public void end(boolean inturrupted) {
-        hoodSubsystem.stopHood();
+        HoodSubsystem.stopHood();
     }
 }

@@ -14,7 +14,7 @@ public class HoodSubsystem extends SubsystemBase {
     public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL); 
 
     /** Makes the hood move forward */
-    public void forwardHood() {
+    public static void forwardHood() {
         if (hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
             hood.set(Relay.Value.kOff);
 
@@ -25,12 +25,12 @@ public class HoodSubsystem extends SubsystemBase {
     }
 
     /** Makes the hood stop moving*/
-    public void stopHood() {
+    public static void stopHood() {
         hood.set(Relay.Value.kOff);
     }
 
     /** Makes the hood move backward */
-    public void reverseHood() {
+    public static void reverseHood() {
         if (hoodLS.get() == true) {
             hood.set(Relay.Value.kOff);
             hoodEncoder.reset();
