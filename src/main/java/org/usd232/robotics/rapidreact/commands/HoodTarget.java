@@ -6,14 +6,12 @@ import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class HoodTarget extends CommandBase {
-    
-    private final HoodSubsystem hoodSubsystem;
+
     private final double targetValue;
     private boolean forward;
 
 
-    public HoodTarget(HoodSubsystem hoodSubsystem, double targitValue) {
-        this.hoodSubsystem = hoodSubsystem;
+    public HoodTarget(double targitValue) {
         this.targetValue = targitValue;
     }
 
@@ -39,9 +37,9 @@ public class HoodTarget extends CommandBase {
             || HoodSubsystem.hoodEncoder.getDistance() <= (targetValue - 1)) { return; }
 
         if (forward) {
-            hoodSubsystem.forwardHood();
+            HoodSubsystem.forwardHood();
         } else {
-            hoodSubsystem.reverseHood();
+            HoodSubsystem.reverseHood();
         }
     }
 
@@ -65,24 +63,6 @@ public class HoodTarget extends CommandBase {
 
     @Override
     public void end(boolean inturrupted) {
-        hoodSubsystem.stopHood();
+        HoodSubsystem.stopHood();
     }
 }
-/*
-    public void setHood(double targetValue) {
-
-        // If the hood is lower than it should be, move it forward
-        if (hoodEncoder.get() < targetValue) {
-            forwardHood();
-        } else if (hoodEncoder.get() > targetValue) {
-            reverseHood();
-        }
-
-        // When the hood is at to the target value, stop moving. This is the jank part.
-        if(hoodEncoder.get() == targetValue) {
-           stopHood();
-           return;
-        }
-
-    }
-*/
