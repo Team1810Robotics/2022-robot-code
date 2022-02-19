@@ -144,6 +144,10 @@ public final class Constants {
         public static final int RIGHT_PNEUMATIC_PORT = 3;
     }
 
+    public static final class EjectorConstants {
+        public static final int PNEUMATIC_PORT = 4;
+    }
+
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 3; // FIXME
 
@@ -159,7 +163,7 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final int SERVO_MOTOR_CHANNEL = 1; // FIXME
+        public static final int PNEUMATIC_PORT = 1; // FIME
         public static final int LEFT_WINCH_PORT = 2; // FIXME
         public static final int RIGHT_WINCH_PORT = 3; // FIXME
     }

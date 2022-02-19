@@ -19,6 +19,7 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 
 import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,6 +44,7 @@ public class RobotContainer {
     SendableChooser<Command> pathChooser = new SendableChooser<>();
 
     private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+    private final EjectorSubsystem m_ejectorSubsystem = new EjectorSubsystem();
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
@@ -56,7 +58,7 @@ public class RobotContainer {
     // private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
     // private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
-    // private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
+    private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     // private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
     // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
@@ -159,6 +161,8 @@ public class RobotContainer {
         
         whileGreaterThan(manipulatorController, Axis.kLeftTrigger, 0.1, new LimelightOn()); // TODO: Test me
         ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
+
+        ManipulatorXbox_LB.whenActive(() -> m_ejectorSubsystem.eject());
     }
 
     /**
