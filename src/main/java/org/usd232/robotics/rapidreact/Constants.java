@@ -149,7 +149,7 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int MOTOR_PORT = 3; // FIXME
+        public static final int MOTOR_PORT = 14;
 
         public static final int MIN_ROTATION_COUNT = 10; // TODO: Find good value
     }
@@ -164,8 +164,8 @@ public final class Constants {
 
     public static final class ClimbConstants {
         public static final int PNEUMATIC_PORT = 1; // FIME
-        public static final int LEFT_WINCH_PORT = 2; // FIXME
-        public static final int RIGHT_WINCH_PORT = 3; // FIXME
+        public static final int LEFT_WINCH_PORT = 15;
+        public static final int RIGHT_WINCH_PORT = 16;
     }
 
     public static final class ElevatorConstants {

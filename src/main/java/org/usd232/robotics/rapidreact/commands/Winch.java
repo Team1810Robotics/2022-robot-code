@@ -4,11 +4,11 @@ import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Wench extends CommandBase {
+public class Winch extends CommandBase {
 
     private final ClimbSubsystem climbSubsystem;
 
-    public Wench(ClimbSubsystem climbSubsystem) {
+    public Winch(ClimbSubsystem climbSubsystem) {
         this.climbSubsystem = climbSubsystem;
     }
 

@@ -165,7 +165,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public static boolean ifGyroZero() {
-        if (getGyro() >= 0.1 || getGyro() <= -0.1) {
+        if (getGyro() >= 0.9 || getGyro() <= -0.9) {
             return false;
         }
         return true;

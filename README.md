@@ -28,10 +28,10 @@
 | 06    | Drive - Back Right Steer   | 1 Falcon         | TalonFX    |       |
 | 07    | Drive - Back Left Drive    | 1 Falcon         | TalonFX    |       |
 | 08    | Drive - Back Left Steer    | 1 Falcon         | TalonFX    |       |
-|       |~~Turret - Turret Rotation~~|~~1 Neverest~~    |~~Talon~~   |       |
-|       | Shooter - Shooter On/Off   | 1 NEO            | SPARK MAX  |       |
-|       | Climb - Right Winch        | 1 NEO 550        | SPARK MAX  |       |
-|       | Climb - Left Winch         | 1 NEO 550        | SPARK MAX  |       |
+| N/A   |~~Turret - Turret Rotation~~|~~1 Neverest~~    |~~Talon~~   |       |
+| 14    | Shooter - Shooter On/Off   | 1 NEO            | SPARK MAX  |       |
+| 15    | Climb - Left Winch         | 1 NEO 550        | SPARK MAX  |       |
+| 16    | Climb - Right Winch        | 1 NEO 550        | SPARK MAX  |       |
 
 **Relay**
 
