@@ -12,6 +12,7 @@ public class EjectorSubsystem extends SubsystemBase {
     
     private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.PNEUMATIC_PORT);
 
+    /**  */
     public void eject() {
         ballEjector.set(true);
         new WaitCommand(1.0); // TODO: Test
