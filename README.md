@@ -18,20 +18,20 @@
 
 **CAN**
 
-| ID    | Mechanism                  | Being Controlled | Controller | Port  |
-| ----- | -----                      | -----            | -----      | ----- |
-| 01    | Drive - Front Left Drive   | 1 Falcon         | TalonFX    |       |
-| 02    | Drive - Front Left Steer   | 1 Falcon         | TalonFX    |       |
-| 03    | Drive - Front Right Drive  | 1 Falcon         | TalonFX    |       |
-| 04    | Drive - Front Right Steer  | 1 Falcon         | TalonFX    |       |
-| 05    | Drive - Back Right Drive   | 1 Falcon         | TalonFX    |       |
-| 06    | Drive - Back Right Steer   | 1 Falcon         | TalonFX    |       |
-| 07    | Drive - Back Left Drive    | 1 Falcon         | TalonFX    |       |
-| 08    | Drive - Back Left Steer    | 1 Falcon         | TalonFX    |       |
-|       |~~Turret - Turret Rotation~~|~~1 Neverest~~    |~~Talon~~   |       |
-|       | Shooter - Shooter On/Off   | 1 NEO            | SPARK MAX  |       |
-|       | Climb - Right Winch        | 1 NEO 550        | SPARK MAX  |       |
-|       | Climb - Left Winch         | 1 NEO 550        | SPARK MAX  |       |
+| ID    | Mechanism                   | Being Controlled | Controller | Port  |
+| ----- | -----                       | -----            | -----      | ----- |
+| 01    | Drive - Front Left Drive    | 1 Falcon         | TalonFX    |       |
+| 02    | Drive - Front Left Steer    | 1 Falcon         | TalonFX    |       |
+| 03    | Drive - Front Right Drive   | 1 Falcon         | TalonFX    |       |
+| 04    | Drive - Front Right Steer   | 1 Falcon         | TalonFX    |       |
+| 05    | Drive - Back Right Drive    | 1 Falcon         | TalonFX    |       |
+| 06    | Drive - Back Right Steer    | 1 Falcon         | TalonFX    |       |
+| 07    | Drive - Back Left Drive     | 1 Falcon         | TalonFX    |       |
+| 08    | Drive - Back Left Steer     | 1 Falcon         | TalonFX    |       |
+|       |~~Turret - Turret Rotation~~ |~~1 Neverest~~    |~~Talon~~   |       |
+|       | Shooter - Shooter On/Off    | 1 NEO            | SPARK MAX  |       |
+|       | Climb - Right Winch         | 1 NEO 550        | SPARK MAX  |       |
+|       | Climb - Left Winch          | 1 NEO 550        | SPARK MAX  |       |
 
 **Relay**
 
@@ -40,22 +40,22 @@
 | 00   | Intake - Left Intake  | 2 JE             | Relay Spike    |
 | 01   | Intake - Right Intake | 2 JE             | Relay Spike    |
 | 02   | Hood - Hood Movement  | 1 Snowblower     | Relay Spike    |
-|      | Climb - Climb Servo   | 2 Servo          | Relay Spike    |
+| 03   | Elevator - Auger      | 1 *TBD*          | Relay Spike    |
 
 **PWM**
 
-| Port  | Mechanism | Being Controlled | Controller |
-| ----- | -----     | -----            | -----      |
-| 00    |           |                  |            | 
-| 01    |           |                  |            | 
-| 02    |           |                  |            | 
-| 03    |           |                  |            | 
-| 04    |           |                  |            | 
-| 05    |           |                  |            | 
-| 06    |           |                  |            | 
-| 07    |           |                  |            | 
-| 08    |           |                  |            | 
-| 09    |           |                  |            | 
+| Port  | Mechanism           | Being Controlled | Controller  |
+| ----- | -----               | -----            | -----       |
+| 00    | Climb - Climb Servo | 2 Servo          | Relay Spike | 
+| 01    |                     |                  |             | 
+| 02    |                     |                  |             | 
+| 03    |                     |                  |             | 
+| 04    |                     |                  |             | 
+| 05    |                     |                  |             | 
+| 06    |                     |                  |             | 
+| 07    |                     |                  |             | 
+| 08    |                     |                  |             | 
+| 09    |                     |                  |             | 
 <br>
 
 | DIO   |       |
