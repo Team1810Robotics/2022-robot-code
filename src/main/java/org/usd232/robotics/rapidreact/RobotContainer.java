@@ -2,11 +2,7 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.OIConstants;
-
-import org.usd232.robotics.rapidreact.commands.LimelightOn;
-import org.usd232.robotics.rapidreact.commands.SwerveDrive;
-import org.usd232.robotics.rapidreact.commands.Target;
-import org.usd232.robotics.rapidreact.commands.XboxTrigger;
+import org.usd232.robotics.rapidreact.log.Logger;
 
 /* Paths */
 import org.usd232.robotics.rapidreact.commands.Autonomous.DriveDistance;
@@ -17,9 +13,22 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedRightQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 /* End of Paths */
 
-import org.usd232.robotics.rapidreact.log.Logger;
+/* Commands */
+import org.usd232.robotics.rapidreact.commands.Elevator;
+import org.usd232.robotics.rapidreact.commands.Hood;
+import org.usd232.robotics.rapidreact.commands.Intake;
+import org.usd232.robotics.rapidreact.commands.LimelightOn;
+import org.usd232.robotics.rapidreact.commands.SwerveDrive;
+import org.usd232.robotics.rapidreact.commands.Target;
+import org.usd232.robotics.rapidreact.commands.XboxTrigger;
+/* end of Commands */
+
+/* Subsystems */
+import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
+/* End of Subsystems */
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -29,6 +38,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 // https://drive.google.com/file/d/1EBKde_UrpQlax-PRKJ1Qa8nDJuIpd07K/view?usp=sharing
@@ -43,8 +53,10 @@ public class RobotContainer {
 
     SendableChooser<Command> pathChooser = new SendableChooser<>();
 
+    private final AugerSubsystem m_augerSubsystem = new AugerSubsystem();
     private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
     private final EjectorSubsystem m_ejectorSubsystem = new EjectorSubsystem();
+    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
@@ -55,15 +67,15 @@ public class RobotContainer {
     // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
     private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
     // private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
-    // private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
+    private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
     // private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
-    // private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
+    private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
-    // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
-    // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
-    // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
+    private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
+    private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
+    private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
 
     // private final JoystickButton movementJoystick_Trigger = LOG.catchAll(() -> new JoystickButton(movementJoystick, 1));
     // private final JoystickButton movementJoystick_Button2 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 2));
@@ -114,7 +126,8 @@ public class RobotContainer {
         ));
 
         /* Path chooser */
-        pathChooser.setDefaultOption("Drive Back", m_driveDistance);
+        pathChooser.setDefaultOption("Null", new WaitCommand(0));
+        pathChooser.addOption("Drive Back", m_driveDistance);
         pathChooser.addOption("Left Blue Tarmac", m_blueLeft);
         pathChooser.addOption("Right Blue Tarmac", m_blueRight);
         pathChooser.addOption("Left Blue Tarmac", m_redLeft);
@@ -157,12 +170,16 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope()); // No requirements because we don't need to interrupt anything
 
-        ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
-        
         whileGreaterThan(manipulatorController, Axis.kLeftTrigger, 0.1, new LimelightOn()); // TODO: Test me
         ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
+        ManipulatorXbox_Start.whenActive(() -> m_ejectorSubsystem.eject());
+        ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
+        ManipulatorXbox_B.whenActive(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
+        ManipulatorXbox_RB.whenActive(new Intake(m_intakeSubsystem, true));
+        ManipulatorXbox_LB.whenActive(new Intake(m_intakeSubsystem, false));
+        ManipulatorXbox_LStick.whenActive(new Hood(true));
+        ManipulatorXbox_RStick.whenActive(new Hood(false));
 
-        ManipulatorXbox_LB.whenActive(() -> m_ejectorSubsystem.eject());
     }
 
     /**

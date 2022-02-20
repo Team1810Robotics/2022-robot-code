@@ -16,23 +16,64 @@
 
 ---
 
+**Controller Bindings**
+
+**Xbox**
+| Button | Purpose      |
+| -----  | -----        |
+| LT     | LL On        |
+| RT     | LL On        |
+| LB     | Left Intake  |
+| RB     | Right Intake |
+| LStick | Hood (F)     |
+| RStick | Hood (R)     |
+| Start  | Eject        |
+| Back   |              |
+| Y      |              |
+| X      |              |
+| A      |              |
+| B      | Elevator     |
+
+
+**Joystick**
+| Move - Button  | Purpose | | Rotation - Button | Purpose   |
+| -----          | -----   |-| -----             | -----     |
+| Trigger        |         | | Trigger           |           |
+| 1              |         | | 1                 |           |
+| 2              |         | | 2                 |           |
+| 3              |         | | 3                 |           |
+| 4              |         | | 4                 |           |
+| 5              |         | | 5                 |           |
+| 6              |         | | 6                 |           |
+| 7              |         | | 7                 |           |
+| 8              |         | | 8                 |           |
+| 9              |         | | 9                 | Zero Gyro |
+| 10             |         | | 10                |           |
+| 11             |         | | 11                |           |
+
+---
+
 **CAN**
 
-| ID     | Mechanism                   | Being Controlled | Controller | Port  |
-| -----  | -----                       | -----            | -----      | ----- |
-| 01     | Drive - Front Left Drive    | 1 Falcon         | TalonFX    |       |
-| 02     | Drive - Front Left Steer    | 1 Falcon         | TalonFX    |       |
-| 03     | Drive - Front Right Drive   | 1 Falcon         | TalonFX    |       |
-| 04     | Drive - Front Right Steer   | 1 Falcon         | TalonFX    |       |
-| 05     | Drive - Back Right Drive    | 1 Falcon         | TalonFX    |       |
-| 06     | Drive - Back Right Steer    | 1 Falcon         | TalonFX    |       |
-| 07     | Drive - Back Left Drive     | 1 Falcon         | TalonFX    |       |
-| 08     | Drive - Back Left Steer     | 1 Falcon         | TalonFX    |       |
-|~~N/A~~ |~~Turret - Turret Rotation~~ |~~1 Neverest~~    |~~Talon~~   |       |
-| 14     | Shooter - Shooter On/Off    | 1 NEO            | SPARK MAX  |       |
-| 15     | Climb - Left Winch          | 1 NEO 550        | SPARK MAX  |       |
-| 16     | Climb - Right Winch         | 1 NEO 550        | SPARK MAX  |       |
-| 17     | REV Pneumatics Hub          |                  |            |       |
+| ID     | Mechanism                    | Being Controlled | Controller | Port  |
+| -----  | -----                        | -----            | -----      | ----- |
+| 01     | Drive - Front Left Drive     | 1 Falcon         | TalonFX    |       |
+| 02     | Drive - Front Left Steer     | 1 Falcon         | TalonFX    |       |
+| 03     | Drive - Front Right Drive    | 1 Falcon         | TalonFX    |       |
+| 04     | Drive - Front Right Steer    | 1 Falcon         | TalonFX    |       |
+| 05     | Drive - Back Right Drive     | 1 Falcon         | TalonFX    |       |
+| 06     | Drive - Back Right Steer     | 1 Falcon         | TalonFX    |       |
+| 07     | Drive - Back Left Drive      | 1 Falcon         | TalonFX    |       |
+| 08     | Drive - Back Left Steer      | 1 Falcon         | TalonFX    |       |
+| 09     | Drive - Front Right CANCoder |                  |            |       |
+| 10     | Drive - Front Left CANCoder  |                  |            |       |
+| 11     | Drive - Back Right CANCoder  |                  |            |       |
+| 12     | Drive - Back Left CANCoder   |                  |            |       |
+| 13     | Gyro - Pigeon IMU            |                  |            |       |
+| 14     | Shooter - Shooter Motor      | 1 NEO            | SPARK MAX  |       |
+| 15     | Climb - Left Winch           | 1 NEO 550        | SPARK MAX  |       |
+| 16     | Climb - Right Winch          | 1 NEO 550        | SPARK MAX  |       |
+| 17     | REV Pneumatics Hub           |                  |            |       |
 
 **Relay**
 
