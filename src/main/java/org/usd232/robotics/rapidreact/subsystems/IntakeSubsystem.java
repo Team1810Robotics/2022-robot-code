@@ -38,23 +38,4 @@ public class IntakeSubsystem extends SubsystemBase {
         rightSolenoid.set(false);
         rightIntake.set(Relay.Value.kOff);
     }
-
-    /******************************** FOR TESTING! ********************************/
-
-    public void moveRightSolenoid() {
-        rightSolenoid.set(true);
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {}
-        rightSolenoid.set(false);
-    }
-
-
-    public void moveLeftSolenoid() {
-        leftSolenoid.set(true);
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {}
-        leftSolenoid.set(false);
-    }
 }

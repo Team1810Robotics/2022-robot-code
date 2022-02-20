@@ -18,6 +18,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  * <pre> {@code import static org.usd232.robotics.rapidreact.Constants.*;} </pre>
  */
 public final class Constants {
+    // https://drive.google.com/file/d/1g1jBZHPf6Fq6V2tG7PFIGtjpEEV2BIGf/view?usp=sharing
     public static final class DriveConstants {
         /**
          * The left-to-right distance between the drive wheels

@@ -55,34 +55,34 @@
 
 **CAN**
 
-| ID     | Mechanism                    | Being Controlled | Controller | Port  |
-| -----  | -----                        | -----            | -----      | ----- |
-| 01     | Drive - Front Left Drive     | 1 Falcon         | TalonFX    |       |
-| 02     | Drive - Front Left Steer     | 1 Falcon         | TalonFX    |       |
-| 03     | Drive - Front Right Drive    | 1 Falcon         | TalonFX    |       |
-| 04     | Drive - Front Right Steer    | 1 Falcon         | TalonFX    |       |
-| 05     | Drive - Back Right Drive     | 1 Falcon         | TalonFX    |       |
-| 06     | Drive - Back Right Steer     | 1 Falcon         | TalonFX    |       |
-| 07     | Drive - Back Left Drive      | 1 Falcon         | TalonFX    |       |
-| 08     | Drive - Back Left Steer      | 1 Falcon         | TalonFX    |       |
-| 09     | Drive - Front Right CANCoder |                  |            |       |
-| 10     | Drive - Front Left CANCoder  |                  |            |       |
-| 11     | Drive - Back Right CANCoder  |                  |            |       |
-| 12     | Drive - Back Left CANCoder   |                  |            |       |
-| 13     | Gyro - Pigeon IMU            |                  |            |       |
-| 14     | Shooter - Shooter Motor      | 1 NEO            | SPARK MAX  |       |
-| 15     | Climb - Left Winch           | 1 NEO 550        | SPARK MAX  |       |
-| 16     | Climb - Right Winch          | 1 NEO 550        | SPARK MAX  |       |
-| 17     | REV Pneumatics Hub           |                  |            |       |
+| ID     | Mechanism                    | Being Controlled | Controller | Wire Num |
+| -----  | -----                        | -----            | -----      | -----    |
+| 01     | Drive - Front Left Drive     | 1 Falcon         | TalonFX    | 1        |
+| 02     | Drive - Front Left Steer     | 1 Falcon         | TalonFX    | 2        |
+| 03     | Drive - Front Right Drive    | 1 Falcon         | TalonFX    | 3        |
+| 04     | Drive - Front Right Steer    | 1 Falcon         | TalonFX    | 4        |
+| 05     | Drive - Back Right Drive     | 1 Falcon         | TalonFX    | 5        |
+| 06     | Drive - Back Right Steer     | 1 Falcon         | TalonFX    | 6        |
+| 07     | Drive - Back Left Drive      | 1 Falcon         | TalonFX    | 7        |
+| 08     | Drive - Back Left Steer      | 1 Falcon         | TalonFX    | 8        |
+| 09     | Drive - Front Right CANCoder |                  |            | 15       |
+| 10     | Drive - Front Left CANCoder  |                  |            | 16       |
+| 11     | Drive - Back Right CANCoder  |                  |            | 17       |
+| 12     | Drive - Back Left CANCoder   |                  |            | 18       |
+| 13     | Gyro - Pigeon IMU            |                  |            | 12       |
+| 14     | Shooter - Shooter Motor      | 1 NEO            | SPARK MAX  | 25       |
+| 15     | Climb - Left Winch           | 1 NEO 550        | SPARK MAX  | 26       |
+| 16     | Climb - Right Winch          | 1 NEO 550        | SPARK MAX  | 27       |
+| 17     | REV Pneumatics Hub           |                  |            | 28       |
 
 **Relay**
 
-| Port |  Mechanism            | Being Controlled | Controller     |
-| -----| -----                 | -----            | -----          |
-| 00   | Intake - Left Intake  | 2 JE             | Relay Spike    |
-| 01   | Intake - Right Intake | 2 JE             | Relay Spike    |
-| 02   | Hood - Hood Movement  | 1 Snowblower     | Relay Spike    |
-|      | Climb - Climb Servo   | 2 Servo          | Relay Spike    |
+| Port |  Mechanism            | Being Controlled   | Controller  |
+| -----| -----                 | -----              | -----       |
+| 00   | Intake - Left Intake  | 2 JE               | Relay Spike |
+| 01   | Intake - Right Intake | 2 JE               | Relay Spike |
+| 02   | Hood - Hood Movement  | 1 Snowblower       | Relay Spike |
+| 03   | Elevator - Auger      | 1 Window Regulator | Relay Spike |
 
 **PWM**
 

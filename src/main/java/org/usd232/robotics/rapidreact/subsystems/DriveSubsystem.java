@@ -323,8 +323,7 @@ public class DriveSubsystem extends SubsystemBase {
         
         /************************ PAth STuff ************************/
     
-        /** Don't Call!
-         * <p>
+        /**
          * Gets the path of a PathPlanner json file
          * @param trajectoryName the name of the PathPlanner path you want to call
          * @throws IOException

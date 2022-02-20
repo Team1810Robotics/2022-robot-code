@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AugerSubsystem extends SubsystemBase {
     
-    private final static Relay elevator = new Relay(ElevatorConstants.PORT, Relay.Direction.kForward); // FIXME kForward (if needed)
+    private final static Relay elevator = new Relay(ElevatorConstants.PORT, Relay.Direction.kForward); // FIXME: kForward (if needed)
 
     /** Turns the elevotor on */
     public void elevatorOn() {

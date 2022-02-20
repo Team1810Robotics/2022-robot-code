@@ -22,22 +22,29 @@ public class EjectorSubsystem extends SubsystemBase {
     private final static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     private final static ColorMatch colorMatcher = new ColorMatch();
 
-    private final static Color BlueBall = Color.kFirstBlue;    // TODO: Test Color
-    private final static Color RedBall = Color.kFirstRed;      // TODO: Test Color
+    /** Color Of the Blue Ball */
+    private final static Color BlueBall = new Color(0.0, 0.4, 0.7019607844);                        // TODO: Test Color
+    private final static Color RedBall = new Color(0.9294117648, 0.1098039216, 0.1411764706);       // TODO: Test Color
 
-
+    /** Opens the ejector hatch */
     public void eject() {
         ballEjector.set(true);
     }
 
+    /** closes the ejector hatch */
     public void resetEjecter() {
         ballEjector.set(false);
     }
 
+    /** @return the current color seen by the Photo Electric color sensor (color sensor) */
     public static Color getCurrentColor() {
         return colorSensor.getColor();
     }
 
+    /** 
+     * Matches the color
+     * @return a string that is {@code "Blue"}, {@code "Red"}, or {@code "Unknown"} depending on what is seen by the color sensor
+     */
     public static String getMatchedBallColor() {
         colorMatcher.addColorMatch(BlueBall);
         colorMatcher.addColorMatch(RedBall);

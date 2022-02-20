@@ -31,12 +31,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // Checks if the motor has rotated past the minRotationCount then moves to full speed
         shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        if (shooterEncoder.getPosition() <= ShooterConstants.MIN_ROTATION_COUNT) {
+        if (Math.abs(shooterEncoder.getPosition()) <= ShooterConstants.MIN_ROTATION_COUNT) {
             shooter.set(0.5);
 
-            
-        } else if (shooterEncoder.getPosition() >= ShooterConstants.MIN_ROTATION_COUNT) {
+        } else if (Math.abs(shooterEncoder.getPosition()) >= ShooterConstants.MIN_ROTATION_COUNT) {
             shooter.set(1.0);
+            
         } else {
             LOG.warn("shooterOn() broke. (How did you get here)");
         }
