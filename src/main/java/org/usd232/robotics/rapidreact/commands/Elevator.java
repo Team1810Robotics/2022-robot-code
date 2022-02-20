@@ -1,24 +1,44 @@
 package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 
+import static edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Elevator extends CommandBase {
 
-    AugerSubsystem elevatorSubsystem;
+    private final AugerSubsystem elevatorSubsystem;
+    private final EjectorSubsystem ejectorSubsystem;
+    private final Alliance currentAlliance;
+    private final String ballColor;
     
-    public Elevator(AugerSubsystem elevatorSubsystem) {
-        this.elevatorSubsystem = elevatorSubsystem;
+    public Elevator(AugerSubsystem augerSubsystem, EjectorSubsystem ejectorSubsystem) { // TODO: Implement color stuff     easy ;)
+        this.elevatorSubsystem = augerSubsystem;
+        this.ejectorSubsystem = ejectorSubsystem;
+        this.currentAlliance = DriverStation.getAlliance();
+        this.ballColor = EjectorSubsystem.getMatchedBallColor();
     }
 
     @Override
     public void execute() {
         elevatorSubsystem.elevatorOn();
+
+
+        if (currentAlliance != Alliance.Invalid) {  // Checks if the current alliance is valid (aka should use the color sensor)
+            if (ballColor == "Red" && currentAlliance == Alliance.Blue) {
+                ejectorSubsystem.eject();
+            } else if (ballColor == "Blue" && currentAlliance == Alliance.Red) {
+                ejectorSubsystem.eject();
+            }
+        }
+
     }
 
     @Override
     public void end(boolean inturrupted) {
         elevatorSubsystem.elevatorOff();
+        ejectorSubsystem.resetEjecter();
     }
 }

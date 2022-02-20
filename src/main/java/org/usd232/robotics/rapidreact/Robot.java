@@ -3,6 +3,7 @@ package org.usd232.robotics.rapidreact;
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 //import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Gyroscope angle", gyroAngle);
         SmartDashboard.putBoolean("Gyro 0", gyroZero);
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
+        EjectorSubsystem.colorDebug();
 
         /**
          * Enable the compressor with hybrid sensor control, meaning it uses both

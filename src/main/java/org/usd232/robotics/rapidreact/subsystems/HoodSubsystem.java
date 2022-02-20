@@ -13,6 +13,8 @@ public class HoodSubsystem extends SubsystemBase {
     public static final Encoder hoodEncoder = new Encoder(HoodConstants.HOOD_ENCODER_CHANNEL[0], HoodConstants.HOOD_ENCODER_CHANNEL[1]);
     public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL); 
 
+    private HoodSubsystem() {}
+
     /** Makes the hood move forward */
     public static void forwardHood() {
         if (hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
