@@ -1,14 +1,14 @@
 package org.usd232.robotics.rapidreact.commands;
 
-import org.usd232.robotics.rapidreact.subsystems.ElevatorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Elevator extends CommandBase {
 
-    ElevatorSubsystem elevatorSubsystem;
+    AugerSubsystem elevatorSubsystem;
     
-    public Elevator(ElevatorSubsystem elevatorSubsystem) {
+    public Elevator(AugerSubsystem elevatorSubsystem) {
         this.elevatorSubsystem = elevatorSubsystem;
     }
 

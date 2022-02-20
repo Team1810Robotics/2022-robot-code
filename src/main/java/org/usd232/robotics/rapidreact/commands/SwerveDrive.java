@@ -47,21 +47,18 @@ public class SwerveDrive extends CommandBase {
     /** Sets ChassisSpeeds to the x speed, y speed, and rotation */
     @Override
     public void execute() {
-        // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
-        if (fieldOriented) {
-            m_driveSubsystem.drive(
-                    ChassisSpeeds.fromFieldRelativeSpeeds(
-                            m_translationXSupplier.getAsDouble(),
-                            m_translationYSupplier.getAsDouble(),
-                            m_rotationSupplier.getAsDouble(),
-                            m_driveSubsystem.getGyroscopeRotation()));
-        } else {
-            m_driveSubsystem.drive(
+         m_driveSubsystem.drive( 
+            (fieldOriented) ?
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                        m_translationXSupplier.getAsDouble(),
+                        m_translationYSupplier.getAsDouble(),
+                        m_rotationSupplier.getAsDouble(),
+                        m_driveSubsystem.getGyroscopeRotation()) :
+
                 new ChassisSpeeds(
                     m_translationXSupplier.getAsDouble(),
                     m_translationYSupplier.getAsDouble(),
                     m_rotationSupplier.getAsDouble()));
-        }
     }
 
     /** Checks if the conditions inside isFinished are true */
