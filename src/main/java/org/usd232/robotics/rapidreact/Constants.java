@@ -152,7 +152,13 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
 
-        public static final int MIN_ROTATION_COUNT = 10; // TODO: Find good value
+        public static final int MAX_VELOCITY = 5328;
+
+        public static final double kP = 6e-5;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double MIN_OUTUT = -1;
+        public static final int MAX_OUTPUT = 1;
     }
 
     public static final class HoodConstants {

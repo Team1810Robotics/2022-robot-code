@@ -135,8 +135,8 @@ public class RobotContainer {
         pathChooser.addOption("One Meter Path", m_OneMeter);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
-          // Configure the button bindings
-          configureButtonBindings();
+        // Configure the button bindings
+        configureButtonBindings();
     }
 
     /**

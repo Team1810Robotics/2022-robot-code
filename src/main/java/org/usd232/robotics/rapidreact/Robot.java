@@ -4,6 +4,7 @@ import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 //import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
+    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -54,13 +56,9 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
 
-        // read values periodically
-        double gyroAngle = DriveSubsystem.getGyro();
-        boolean gyroZero = DriveSubsystem.ifGyroZero();
-
         // post to smart dashboard periodically
-        SmartDashboard.putNumber("Gyroscope angle", gyroAngle);
-        SmartDashboard.putBoolean("Gyro 0", gyroZero);
+        SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
+        SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
         EjectorSubsystem.colorDebug();
 
@@ -77,6 +75,9 @@ public class Robot extends TimedRobot {
          */
         m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
 
+        /* Keeps the shooter at a constitant speed */
+        shooterSubsystem.holdShooter();
+
         CommandScheduler.getInstance().run();
     }
 
@@ -85,6 +86,9 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         // Turns Limelight off on disable
         VisionSubsystem.limeLightOff();
+
+        // Turn off shooter motor
+        shooterSubsystem.shooterOn();
     }
 
     @Override
@@ -93,6 +97,9 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
+        // Turns shooter on (Wow).
+        shooterSubsystem.shooterOn();
+
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
