@@ -133,8 +133,8 @@ public final class Constants {
     public static final class PneumaticConstants {
         public static final int PH_CAN_ID = 17; // FIXME
 
-        public static final double MAX_TANK_PSI = 10; // FIXME
-        public static final double MIN_TANK_PSI = 0; // FIXME
+        public static final double MAX_TANK_PSI = 120; // FIXME
+        public static final double MIN_TANK_PSI = 115; // FIXME
     }
     
     public static final class IntakeConstants {

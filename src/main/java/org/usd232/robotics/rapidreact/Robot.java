@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
         SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
+        SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         EjectorSubsystem.colorDebug();
 
         /**
