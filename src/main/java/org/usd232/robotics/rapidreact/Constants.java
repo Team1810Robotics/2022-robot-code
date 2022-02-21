@@ -175,8 +175,8 @@ public final class Constants {
         public static final int RIGHT_WINCH_PORT = 16;
     }
 
-    public static final class ElevatorConstants {
-        public static final int PORT = 3; // FIXME
+    public static final class AugerConstants {
+        public static final int ID = 18; // FIXME
     }
 
     public static final class VisionConstants {
