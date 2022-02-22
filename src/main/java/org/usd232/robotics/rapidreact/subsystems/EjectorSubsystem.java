@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.I2C;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
+// https://clips.twitch.tv/TallGenerousWrenchPoooound
+
 public class EjectorSubsystem extends SubsystemBase {
     
     private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.PNEUMATIC_PORT);
