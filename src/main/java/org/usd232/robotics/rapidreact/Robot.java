@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
         m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
 
         /* Keeps the shooter at a constitant speed */
-        shooterSubsystem.holdShooter();
+        shooterSubsystem.holdShooterVelocity();
 
         CommandScheduler.getInstance().run();
     }

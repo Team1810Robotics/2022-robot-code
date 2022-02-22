@@ -103,7 +103,7 @@ public class RobotContainer {
 
 
     /* Auto Paths */
-    private final Command m_driveDistance = LOG.catchAll(() -> new DriveDistance(m_driveSubsystem, -5, 0));
+    private final Command m_driveDistance = LOG.catchAll(() -> new DriveDistance(m_driveSubsystem, -5, 0, 0));
     private final Command m_blueLeft = LOG.catchAll(() -> new BlueLeftQuad(m_driveSubsystem));
     private final Command m_blueRight = LOG.catchAll(() -> new BlueRightQuad(m_driveSubsystem));
     private final Command m_redLeft = LOG.catchAll(() -> new RedLeftQuad(m_driveSubsystem));
@@ -122,7 +122,7 @@ public class RobotContainer {
                 () -> -modifyAxis(movementJoystick.getY()) * ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(movementJoystick.getX()) * ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis((rotationJoystick.getX() / 1.25)) * ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
-                true
+                () -> true
         ));
 
         /* Path chooser */
@@ -149,7 +149,7 @@ public class RobotContainer {
      */
     // Super Jank but might work?
     // TODO: Move somewhere else if it work
-    public void whileGreaterThan(XboxController controller, Axis hand, double minAmount, Command command) {
+    private void whileGreaterThan(XboxController controller, Axis hand, double minAmount, Command command) {
 
         if (controller.getRawAxis(hand.value) > minAmount) {
             CommandScheduler.getInstance().schedule(command);
