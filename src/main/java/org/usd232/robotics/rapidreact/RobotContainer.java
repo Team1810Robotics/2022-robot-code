@@ -12,7 +12,7 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedLeftQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedRightQuad;
 import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 /* End of Paths */
-
+import org.usd232.robotics.rapidreact.commands.Climb;
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.Elevator;
 import org.usd232.robotics.rapidreact.commands.Hood;
@@ -25,6 +25,7 @@ import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
@@ -57,6 +58,7 @@ public class RobotContainer {
     private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
     private final EjectorSubsystem m_ejectorSubsystem = new EjectorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
@@ -72,7 +74,7 @@ public class RobotContainer {
     // private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
-    // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
+    private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
     private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
     private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
@@ -179,6 +181,7 @@ public class RobotContainer {
         ManipulatorXbox_LB.whenActive(new Intake(m_intakeSubsystem, false));
         ManipulatorXbox_LStick.whenActive(new Hood(true));
         ManipulatorXbox_RStick.whenActive(new Hood(false));
+        ManipulatorXbox_Back.whenActive(new Climb(m_climbSubsystem, true)).whenInactive(new Climb(m_climbSubsystem, false));
 
     }
 

@@ -155,7 +155,7 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
 
-        public static final int MAX_VELOCITY = 5328;
+        public static final int MAX_VELOCITY_RPM = 5328;
 
         public static final double kP = 6.0e-5;
         public static final double kI = 0;

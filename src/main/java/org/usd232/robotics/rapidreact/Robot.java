@@ -2,11 +2,11 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
+import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
-//import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -37,6 +37,9 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
+
+        // Zeros climb winch encoders
+        ClimbSubsystem.zeroEncoders();
 
         // Resets the hood on startup (could be annoying during testing)
         // HoodSubsystem.resetHood(); // TODO: notice me 
@@ -127,14 +130,4 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {}
-
-    @Override
-    public void testInit() {
-        // Cancels all running commands at the start of test mode.
-        CommandScheduler.getInstance().cancelAll();
-    }
-
-    /** This function is called periodically during test mode. */
-    @Override
-    public void testPeriodic() {}
 }
