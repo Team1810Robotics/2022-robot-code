@@ -163,6 +163,27 @@ public class RobotContainer {
 
 
     /**
+     * While an axis is greater than a certain value run a certain command.
+     * 
+     * @param controller    What controller to reference.
+     * @param hand          What axis to look at.
+     * @param minAmount     What value should the axis be greater than to run the command.
+     * @param command       The command that should be ran while the axis is greater than the specified value.
+     */
+    // Super Jank but might work?
+    // TODO: Move somewhere else if it work
+    public void whileGreaterThan(XboxController controller, Axis hand, double minAmount, Command command) {
+
+        if (controller.getRawAxis(hand.value) > minAmount) {
+            CommandScheduler.getInstance().schedule(command);
+
+        } else {
+            command.cancel();
+        }
+    }
+
+
+    /**
      * Use this method to define your button->command mappings. Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
