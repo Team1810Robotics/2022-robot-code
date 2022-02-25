@@ -2,6 +2,7 @@ package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
+//import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -30,9 +31,13 @@ public class Target extends CommandBase {
         if (VisionSubsystem.targetXOffset < -1.0 || VisionSubsystem.targetXOffset > 1.0) {
 
             // Rotates the robot, with the speed proportional to how close it is to the target for more accuracy
-            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * VisionSubsystem.targetXOffset)));
+            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * VisionSubsystem.targetXOffset))); // @ TODO These are just placeholder values
+            
         }
-
+        // TODO: Uncomment this in when the hood is installed
+        /* HoodSubsystem.setHood(VisionSubsystem.getTargetDistance() * 5); */
+        // This is very, I repeat, VERY placeholdery math. Once we get an idea of how hard it shoots and how the encoder works, we can make this actually work.
+        
     }
 
     // If the crosshair is within 1 degree of the target, then the robot will stop moving to prevent jiggle.

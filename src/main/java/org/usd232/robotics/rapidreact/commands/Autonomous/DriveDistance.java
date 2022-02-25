@@ -89,7 +89,6 @@ public class DriveDistance extends CommandBase{
     @Override
     public void initialize() {
         LOG.enter("Started DriveDistance");
-        SmartDashboard.putString("AutoDebug", "Drive Distance Started");
         /** Maybe not need or might be needed IDK */
         m_driveSubsystem.stopModules();
     }
@@ -113,7 +112,7 @@ public class DriveDistance extends CommandBase{
                     () -> xSpeed,
                     () -> ySpeed,
                     () -> rotationSpeed,
-                    true);
+                    () -> true);
     } 
 
     @Override

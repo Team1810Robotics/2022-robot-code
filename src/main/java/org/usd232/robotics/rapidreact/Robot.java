@@ -1,11 +1,14 @@
 package org.usd232.robotics.rapidreact;
 
-//import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
+import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
+import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
-//import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -19,11 +22,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
-    //private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
+    private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
 
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
+    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -34,9 +38,11 @@ public class Robot extends TimedRobot {
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
 
-        // Add number inputs for minimum and maximum pressure
-        //SmartDashboard.setDefaultNumber("Minimum Pressure (PSI)", PneumaticConstants.MAX_TANK_PSI);
-        //SmartDashboard.setDefaultNumber("Maximum Pressure (PSI)", PneumaticConstants.MIN_TANK_PSI);
+        // Zeros climb winch encoders
+        ClimbSubsystem.zeroEncoders();
+
+        // Resets the hood on startup (could be annoying during testing)
+        // HoodSubsystem.resetHood(); // TODO: notice me 
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
@@ -53,18 +59,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
 
-        // read values periodically
-        double gyroAngle = DriveSubsystem.getGyro();
-        boolean gyroZero = DriveSubsystem.ifGyroZero();
-        //double minPressure = SmartDashboard.getNumber("Minimum Pressure (PSI)", 0.0);
-        //double maxPressure = SmartDashboard.getNumber("Maximum Pressure (PSI)", 1.0);
-
         // post to smart dashboard periodically
-        SmartDashboard.putNumber("Gyroscope angle", gyroAngle);
-        SmartDashboard.putBoolean("Gyro 0", gyroZero);
+        SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
+        SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
-        //SmartDashboard.putNumber("Pressure", m_ph.getPressure(0));
-        //SmartDashboard.putBoolean("Compressor Running", m_ph.getCompressor());
+        SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
+        EjectorSubsystem.colorDebug();
 
         /**
          * Enable the compressor with hybrid sensor control, meaning it uses both
@@ -77,7 +77,10 @@ public class Robot extends TimedRobot {
          * If at any point the digital pressure switch is open, the compressor will
          * shut off.
          */
-        //m_ph.enableCompressorHybrid(minPressure, maxPressure);
+        m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
+
+        /* Keeps the shooter at a constitant speed */
+        shooterSubsystem.holdShooterVelocity();
 
         CommandScheduler.getInstance().run();
     }
@@ -87,6 +90,9 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         // Turns Limelight off on disable
         VisionSubsystem.limeLightOff();
+
+        // Turn off shooter motor
+        shooterSubsystem.shooterOn();
     }
 
     @Override
@@ -95,6 +101,9 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
+        // Turns shooter on (Wow).
+        shooterSubsystem.shooterOn();
+
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -121,14 +130,4 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {}
-
-    @Override
-    public void testInit() {
-        // Cancels all running commands at the start of test mode.
-        CommandScheduler.getInstance().cancelAll();
-    }
-
-    /** This function is called periodically during test mode. */
-    @Override
-    public void testPeriodic() {}
 }

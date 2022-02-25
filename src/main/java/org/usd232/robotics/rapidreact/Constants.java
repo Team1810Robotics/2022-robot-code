@@ -18,6 +18,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  * <pre> {@code import static org.usd232.robotics.rapidreact.Constants.*;} </pre>
  */
 public final class Constants {
+    // https://drive.google.com/file/d/1g1jBZHPf6Fq6V2tG7PFIGtjpEEV2BIGf/view?usp=sharing
     public static final class DriveConstants {
         /**
          * The left-to-right distance between the drive wheels
@@ -130,24 +131,37 @@ public final class Constants {
     }
 
     public static final class PneumaticConstants {
-        public static final int PH_CAN_ID = 1; // FIXME
+        public static final int PH_CAN_ID = 17; // FIXME
 
-        public static final double MAX_TANK_PSI = 10; // FIXME
-        public static final double MIN_TANK_PSI = 0; // FIXME
+        public static final double MAX_TANK_PSI = 120; 
+        public static final double MIN_TANK_PSI = 80; 
     }
     
     public static final class IntakeConstants {
-        public static final int RIGHT_MOTOR_PORT = 0;
-        public static final int LEFT_MOTOR_PORT = 1;
+        public static final int RIGHT_MOTOR_PORT = 1;  
+        public static final int LEFT_MOTOR_PORT = 0;   
 
-        public static final int LEFT_PNEUMATIC_PORT = 1; // FIXME
-        public static final int RIGHT_PNEUMATIC_PORT = 2; // FIXME
+        public static final int LEFT_PNEUMATIC_PORT = 2;    // FIXME
+        public static final int RIGHT_PNEUMATIC_PORT = 3;   // FIXME
+    }
+
+    public static final class EjectorConstants {
+        public static final int EJECTOR_PNEUMATIC_PORT = 4; // FIXME
+        public static final int LOCK_PNEUMATIC_PORT = 5;    // FIXME
+
+        public static final int LIMIT_SWITCH = 4; // FIXME
     }
 
     public static final class ShooterConstants {
-        public static final int MOTOR_PORT = 3; // FIXME
+        public static final int MOTOR_PORT = 14;
 
-        public static final int MIN_ROTATION_COUNT = 10; // TODO: Find good value
+        public static final int MAX_VELOCITY_RPM = 5328;
+
+        public static final double kP = 6.0e-5;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double MIN_OUTUT = -1;
+        public static final int MAX_OUTPUT = 1;
     }
 
     public static final class HoodConstants {
@@ -159,21 +173,21 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final int SERVO_MOTOR_CHANNEL = 1; // FIXME
-        public static final int LEFT_WINCH_PORT = 2; // FIXME
-        public static final int RIGHT_WINCH_PORT = 3; // FIXME
+        public static final int PNEUMATIC_PORT = 1; // FIXME
+        public static final int LEFT_WINCH_PORT = 15;
+        public static final int RIGHT_WINCH_PORT = 16;
     }
 
-    public static final class ElevatorConstants {
-        public static final int PORT = 3; // FIXME
+    public static final class AugerConstants {
+        public static final int ID = 18; // FIXME
     }
 
     public static final class VisionConstants {
         /** Units in Meters */
         public static final double TARGET_HEIGHT = 2.64;
         /** Units in Meters */
-        // Hight of the Limelight Camera to the ground
-        public static final double ROBOT_HEIGHT = 1.0; // FIXME
+        // Height of the Limelight Camera to the ground
+        public static final double ROBOT_HEIGHT = 0.73025;
         /** Units in Degrees */
         public static final double LIME_LIGHT_MOUNT_ANGLE = 45.0; // FIXME
     }

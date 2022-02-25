@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 // https://drive.google.com/file/d/1L3HFG1faKJ7LC5MNRQro7GX06wvOmHof/view?usp=sharing
@@ -34,12 +35,12 @@ public class SwerveDrive extends CommandBase {
                                DoubleSupplier translationXSupplier,
                                DoubleSupplier translationYSupplier,
                                DoubleSupplier rotationSupplier,
-                               boolean fieldOriented) {
+                               BooleanSupplier fieldOriented) {
         this.m_driveSubsystem = driveSubsystem;
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
         this.m_rotationSupplier = rotationSupplier;
-        this.fieldOriented = fieldOriented;
+        this.fieldOriented = fieldOriented.getAsBoolean();
 
         addRequirements(driveSubsystem);
     }
@@ -47,21 +48,18 @@ public class SwerveDrive extends CommandBase {
     /** Sets ChassisSpeeds to the x speed, y speed, and rotation */
     @Override
     public void execute() {
-        // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
-        if (fieldOriented) {
-            m_driveSubsystem.drive(
-                    ChassisSpeeds.fromFieldRelativeSpeeds(
-                            m_translationXSupplier.getAsDouble(),
-                            m_translationYSupplier.getAsDouble(),
-                            m_rotationSupplier.getAsDouble(),
-                            m_driveSubsystem.getGyroscopeRotation()));
-        } else {
-            m_driveSubsystem.drive(
+         m_driveSubsystem.drive( 
+            (fieldOriented) ?
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                        m_translationXSupplier.getAsDouble(),
+                        m_translationYSupplier.getAsDouble(),
+                        m_rotationSupplier.getAsDouble(),
+                        m_driveSubsystem.getGyroscopeRotation()) :
+
                 new ChassisSpeeds(
                     m_translationXSupplier.getAsDouble(),
                     m_translationYSupplier.getAsDouble(),
                     m_rotationSupplier.getAsDouble()));
-        }
     }
 
     /** Checks if the conditions inside isFinished are true */
