@@ -133,13 +133,13 @@ public final class Constants {
     public static final class PneumaticConstants {
         public static final int PH_CAN_ID = 17; // FIXME
 
-        public static final double MAX_TANK_PSI = 120; // FIXME
-        public static final double MIN_TANK_PSI = 115; // FIXME
+        public static final double MAX_TANK_PSI = 120; 
+        public static final double MIN_TANK_PSI = 80; 
     }
     
     public static final class IntakeConstants {
-        public static final int RIGHT_MOTOR_PORT = 0;   // FIXME
-        public static final int LEFT_MOTOR_PORT = 1;    // FIXME
+        public static final int RIGHT_MOTOR_PORT = 1;  
+        public static final int LEFT_MOTOR_PORT = 0;   
 
         public static final int LEFT_PNEUMATIC_PORT = 2;    // FIXME
         public static final int RIGHT_PNEUMATIC_PORT = 3;   // FIXME
@@ -173,7 +173,7 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final int PNEUMATIC_PORT = 1; // FIME
+        public static final int PNEUMATIC_PORT = 1; // FIXME
         public static final int LEFT_WINCH_PORT = 15;
         public static final int RIGHT_WINCH_PORT = 16;
     }
