@@ -134,7 +134,7 @@ public final class Constants {
         public static final int PH_CAN_ID = 17; // FIXME
 
         public static final double MAX_TANK_PSI = 120;
-        public static final double MIN_TANK_PSI = 115;
+        public static final double MIN_TANK_PSI = 80;
     }
     
     public static final class IntakeConstants {
@@ -146,7 +146,8 @@ public final class Constants {
     }
 
     public static final class EjectorConstants {
-        public static final int PNEUMATIC_PORT = 4;
+        public static final int EJECTOR_PNEUMATIC = 4;
+        public static final int LOCK_PNEUMATIC = 5;
     }
 
     public static final class ShooterConstants {
@@ -173,10 +174,12 @@ public final class Constants {
         public static final int PNEUMATIC_PORT = 1; // FIME
         public static final int LEFT_WINCH_PORT = 15;
         public static final int RIGHT_WINCH_PORT = 16;
+
+        public static final double WINCH_ENCODER_BOTTOM = -100; // FIXME
     }
 
     public static final class AugerConstants {
-        public static final int ID = 18; // FIXME
+        public static final int VICTOR_ID = 18; // FIXME
     }
 
     public static final class VisionConstants {

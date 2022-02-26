@@ -2,6 +2,7 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
+import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
@@ -115,6 +116,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        ClimbSubsystem.zeroEncoders();
+
+        ClimbSubsystem.timer.reset();
+        ClimbSubsystem.timer.start();
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -126,7 +132,9 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        ClimbSubsystem.endgame = ClimbSubsystem.timer.get() >= 105;
+    }
 
     @Override
     public void testInit() {
