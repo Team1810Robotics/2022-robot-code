@@ -148,6 +148,8 @@ public final class Constants {
     public static final class EjectorConstants {
         public static final int EJECTOR_PNEUMATIC = 4;
         public static final int LOCK_PNEUMATIC = 5;
+
+        public static final int EJECTOR_LS = 0; // FIXME
     }
 
     public static final class ShooterConstants {

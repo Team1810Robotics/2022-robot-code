@@ -11,6 +11,8 @@ import static org.usd232.robotics.rapidreact.Constants.EjectorConstants;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -19,6 +21,8 @@ public class EjectorSubsystem extends SubsystemBase {
     
     private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
     public static final Solenoid lockSolenoid = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
+
+    public static final DigitalInput ejectorLS = new DigitalInput(EjectorConstants.EJECTOR_LS);
 
     private final static I2C.Port i2cPort = I2C.Port.kMXP;
     private final static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
