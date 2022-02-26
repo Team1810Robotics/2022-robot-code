@@ -2,15 +2,19 @@ package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase {
 
-    IntakeSubsystem intakeSubsystem;
-    boolean right;
+    private final IntakeSubsystem intakeSubsystem;
+    private final XboxController xbox;
+    private boolean right;
     
-    public Intake(IntakeSubsystem intakeSubsystem, boolean right) {
+    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean right) {
         this.intakeSubsystem = intakeSubsystem;
+        this.xbox = xbox;
         this.right = right;
         addRequirements(intakeSubsystem);
     }
@@ -22,8 +26,10 @@ public class Intake extends CommandBase {
     public void execute() {
         if (right) {
             intakeSubsystem.collectRight();
+            xbox.setRumble(RumbleType.kRightRumble, 0.5);
         } else {
             intakeSubsystem.collectLeft();
+            xbox.setRumble(RumbleType.kLeftRumble, 0.5);
         }
     }
 
@@ -31,8 +37,10 @@ public class Intake extends CommandBase {
     public void end(boolean inturrupted) {
         if (right) {
             intakeSubsystem.returnRight();
+            xbox.setRumble(RumbleType.kRightRumble, 0.0);
         } else {
             intakeSubsystem.returnLeft();
+            xbox.setRumble(RumbleType.kLeftRumble, 0.0);
         }
     }
 }

@@ -175,8 +175,8 @@ public class RobotContainer {
         ManipulatorXbox_Start.whenActive(() -> m_ejectorSubsystem.eject());
         ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
         ManipulatorXbox_B.whenActive(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
-        ManipulatorXbox_RB.whenActive(new Intake(m_intakeSubsystem, true));
-        ManipulatorXbox_LB.whenActive(new Intake(m_intakeSubsystem, false));
+        ManipulatorXbox_RB.whenActive(new Intake(m_intakeSubsystem, manipulatorController, true));
+        ManipulatorXbox_LB.whenActive(new Intake(m_intakeSubsystem, manipulatorController, false));
         ManipulatorXbox_LStick.whenActive(new Hood(true));
         ManipulatorXbox_RStick.whenActive(new Hood(false));
 
