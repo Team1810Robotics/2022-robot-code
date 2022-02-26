@@ -133,16 +133,16 @@ public final class Constants {
     public static final class PneumaticConstants {
         public static final int PH_CAN_ID = 17; // FIXME
 
-        public static final double MAX_TANK_PSI = 120; // FIXME
-        public static final double MIN_TANK_PSI = 115; // FIXME
+        public static final double MAX_TANK_PSI = 120;
+        public static final double MIN_TANK_PSI = 115;
     }
     
     public static final class IntakeConstants {
         public static final int RIGHT_MOTOR_PORT = 0;
         public static final int LEFT_MOTOR_PORT = 1;
 
-        public static final int LEFT_PNEUMATIC_PORT = 2;
-        public static final int RIGHT_PNEUMATIC_PORT = 3;
+        public static final int LEFT_PNEUMATIC_PORT = 7;
+        public static final int RIGHT_PNEUMATIC_PORT = 6;
     }
 
     public static final class EjectorConstants {
