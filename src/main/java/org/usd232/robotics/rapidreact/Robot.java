@@ -118,6 +118,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        ClimbSubsystem.zeroEncoders();
+
+        ClimbSubsystem.timer.reset();
+        ClimbSubsystem.timer.start();
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -129,5 +134,17 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        ClimbSubsystem.endgame = ClimbSubsystem.timer.get() >= 105;
+    }
+
+    @Override
+    public void testInit() {
+        // Cancels all running commands at the start of test mode.
+        CommandScheduler.getInstance().cancelAll();
+    }
+
+    /** This function is called periodically during test mode. */
+    @Override
+    public void testPeriodic() {}
 }

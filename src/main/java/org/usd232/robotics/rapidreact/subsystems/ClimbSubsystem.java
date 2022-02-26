@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -29,6 +30,22 @@ public class ClimbSubsystem {
         rightWinch.setIdleMode(IdleMode.kBrake);
 
     }
+
+    private static final RelativeEncoder leftWinchEncoder = leftWinch.getEncoder();
+    private static final RelativeEncoder rightWinchEncoder =  rightWinch.getEncoder();
+
+    public static final Timer timer = new Timer();
+
+    public static boolean endgame;
+
+    public ClimbSubsystem() {
+        leftWinch.setInverted(false);   // TODO
+        rightWinch.setInverted(false);  // TODO
+        leftWinch.setIdleMode(IdleMode.kBrake);
+        rightWinch.setIdleMode(IdleMode.kBrake);
+
+    }
+
 
     /** Retracts the piston so the hooks go up */
     public void hooksUp() {

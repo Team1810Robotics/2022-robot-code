@@ -33,7 +33,7 @@ public class Elevator extends CommandBase {
             }
         }
 
-        if (ejectorSubsystem.getLS()) {
+        if (EjectorSubsystem.ejectorLS.get()) {
             ejectorSubsystem.resetEjecter();
         }
     }

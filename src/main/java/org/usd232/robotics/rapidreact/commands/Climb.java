@@ -2,6 +2,8 @@ package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 
+import static org.usd232.robotics.rapidreact.Constants.ClimbConstants.*;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** 
@@ -22,10 +24,10 @@ public class Climb extends CommandBase {
 
     @Override
     public void execute() {
-        if (buttonPressed) {
+        if (buttonPressed && ClimbSubsystem.endgame) {
             climbSubsystem.hooksUp();
         } else {
-            if (climbSubsystem.getEncoderAve() >= 1) {
+            if (climbSubsystem.getEncoderAve() >= WINCH_ENCODER_BOTTOM) {
                 climbSubsystem.winchOn();
             } else {
                 climbSubsystem.winchOff();

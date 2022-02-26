@@ -21,10 +21,11 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class EjectorSubsystem extends SubsystemBase {
     
-    private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC_PORT);
-    private static final Solenoid lockSolenoid = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC_PORT);
-    private static final DigitalInput ejectorLS = new DigitalInput(EjectorConstants.LIMIT_SWITCH);
-    
+    private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
+    public static final Solenoid lockSolenoid = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
+
+    public static final DigitalInput ejectorLS = new DigitalInput(EjectorConstants.EJECTOR_LS);
+
     private final static I2C.Port i2cPort = I2C.Port.kMXP;
     private final static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     private final static ColorMatch colorMatcher = new ColorMatch();
@@ -36,14 +37,15 @@ public class EjectorSubsystem extends SubsystemBase {
     private final static Color RedBall = new Color(0.9294117648, 0.1098039216, 0.1411764706);       // TODO: Test Color
 
     /** Opens the ejector hatch */
-    public void eject() {
+    public void eject() { // TODO: Test
         lockSolenoid.set(false);
-        ballEjector.set(true);
+        new WaitCommand(0.5); // TODO: Test
+        ballEjector.set(true); 
     }
 
     /** closes the ejector hatch */
-    public void resetEjecter() {
-        ballEjector.set(false);
+    public void resetEjecter() { // TODO: Test
+        ballEjector.set(false); 
         new WaitCommand(1);
         lockSolenoid.set(true);
     }

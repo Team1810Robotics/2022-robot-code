@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AugerSubsystem extends SubsystemBase { // Motor controller test value: 1255
     
-    private final static VictorSPX auger = new VictorSPX(AugerConstants.ID);
+    private final static VictorSPX auger = new VictorSPX(AugerConstants.VICTOR_ID);
 
     /** Turns the elevotor on */
     public void elevatorOn() {
