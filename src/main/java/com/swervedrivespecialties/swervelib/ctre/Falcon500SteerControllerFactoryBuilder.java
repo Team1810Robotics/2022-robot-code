@@ -101,9 +101,9 @@ public final class Falcon500SteerControllerFactoryBuilder {
                 if (hasVoltageCompensation()) {
                     motorConfiguration.slot0.kF = (1023.0 * sensorVelocityCoefficient / nominalVoltage) * velocityConstant;
                 }
-                // TODO: What should be done if no nominal voltage is configured? Use a default voltage?
+                // TOD0: What should be done if no nominal voltage is configured? Use a default voltage?
 
-                // TODO: Make motion magic max voltages configurable or dynamically determine optimal values
+                // TOD0: Make motion magic max voltages configurable or dynamically determine optimal values
                 motorConfiguration.motionCruiseVelocity = 2.0 / velocityConstant / sensorVelocityCoefficient;
                 motorConfiguration.motionAcceleration = (8.0 - 2.0) / accelerationConstant / sensorVelocityCoefficient;
             }
@@ -122,8 +122,8 @@ public final class Falcon500SteerControllerFactoryBuilder {
                 motor.enableVoltageCompensation(true);
             }
             checkCtreError(motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 feedback sensor");
-            motor.setSensorPhase(moduleConfiguration.isSteerInverted());
-            motor.setInverted(TalonFXInvertType.CounterClockwise);
+            motor.setSensorPhase(true);
+            motor.setInverted(moduleConfiguration.isSteerInverted() ? TalonFXInvertType.CounterClockwise : TalonFXInvertType.Clockwise);
             motor.setNeutralMode(NeutralMode.Brake);
 
             checkCtreError(motor.setSelectedSensorPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 encoder position");

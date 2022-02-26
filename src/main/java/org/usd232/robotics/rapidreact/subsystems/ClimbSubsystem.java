@@ -18,6 +18,18 @@ public class ClimbSubsystem {
 
     private static final CANSparkMax leftWinch = new CANSparkMax(ClimbConstants.LEFT_WINCH_PORT, MotorType.kBrushless);
     private static final CANSparkMax rightWinch = new CANSparkMax(ClimbConstants.RIGHT_WINCH_PORT, MotorType.kBrushless);
+    private static final RelativeEncoder leftWinchEncoder = leftWinch.getEncoder();
+    private static final RelativeEncoder rightWinchEncoder =  rightWinch.getEncoder();
+
+    public static boolean endgame;
+
+    public ClimbSubsystem() {
+        leftWinch.setInverted(false);   // TODO
+        rightWinch.setInverted(false);  // TODO
+        leftWinch.setIdleMode(IdleMode.kBrake);
+        rightWinch.setIdleMode(IdleMode.kBrake);
+
+    }
 
     private static final RelativeEncoder leftWinchEncoder = leftWinch.getEncoder();
     private static final RelativeEncoder rightWinchEncoder =  rightWinch.getEncoder();
@@ -73,5 +85,4 @@ public class ClimbSubsystem {
         leftWinchEncoder.setPosition(0);
         rightWinchEncoder.setPosition(0);
     }
-
 }

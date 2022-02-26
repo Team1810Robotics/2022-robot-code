@@ -7,7 +7,6 @@ import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
-//import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,6 +37,9 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
+
+        // Zeros climb winch encoders
+        ClimbSubsystem.zeroEncoders();
 
         // Resets the hood on startup (could be annoying during testing)
         // HoodSubsystem.resetHood(); // TODO: notice me 
@@ -78,7 +80,7 @@ public class Robot extends TimedRobot {
         m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
 
         /* Keeps the shooter at a constitant speed */
-        shooterSubsystem.holdShooter();
+        shooterSubsystem.holdShooterVelocity();
 
         CommandScheduler.getInstance().run();
     }

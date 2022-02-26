@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.I2C;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
+// https://clips.twitch.tv/TallGenerousWrenchPoooound
+
 public class EjectorSubsystem extends SubsystemBase {
     
     private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
@@ -28,8 +30,10 @@ public class EjectorSubsystem extends SubsystemBase {
     private final static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     private final static ColorMatch colorMatcher = new ColorMatch();
 
-    /** Color Of the Blue Ball */
+    /** Color of the Blue Ball */
     private final static Color BlueBall = new Color(0.0, 0.4, 0.7019607844);                        // TODO: Test Color
+
+    /** Color of the Red Ball */
     private final static Color RedBall = new Color(0.9294117648, 0.1098039216, 0.1411764706);       // TODO: Test Color
 
     /** Opens the ejector hatch */
@@ -68,6 +72,11 @@ public class EjectorSubsystem extends SubsystemBase {
         } else {
             return "Unknown";
         }
+    }
+
+    /** @return the LS on the ejector flap */
+    public boolean getLS() {
+        return ejectorLS.get();
     }
 
     /** Color Debug Stuff */

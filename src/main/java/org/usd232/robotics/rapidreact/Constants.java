@@ -138,8 +138,8 @@ public final class Constants {
     }
     
     public static final class IntakeConstants {
-        public static final int RIGHT_MOTOR_PORT = 0;
-        public static final int LEFT_MOTOR_PORT = 1;
+        public static final int RIGHT_MOTOR_PORT = 1;  
+        public static final int LEFT_MOTOR_PORT = 0;   
 
         public static final int LEFT_PNEUMATIC_PORT = 7;
         public static final int RIGHT_PNEUMATIC_PORT = 6;
@@ -155,9 +155,9 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
 
-        public static final int MAX_VELOCITY = 5328;
+        public static final int MAX_VELOCITY_RPM = 5328;
 
-        public static final double kP = 6e-5;
+        public static final double kP = 6.0e-5;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double MIN_OUTUT = -1;
@@ -173,7 +173,7 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final int PNEUMATIC_PORT = 1; // FIME
+        public static final int PNEUMATIC_PORT = 1; // FIXME
         public static final int LEFT_WINCH_PORT = 15;
         public static final int RIGHT_WINCH_PORT = 16;
 
