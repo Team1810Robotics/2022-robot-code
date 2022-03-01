@@ -5,9 +5,9 @@ import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
-//import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        HoodSubsystem.forwardHood();
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
 
@@ -61,7 +62,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
         SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
-        SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
+        //SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         EjectorSubsystem.colorDebug();
 
         /**
@@ -78,7 +79,7 @@ public class Robot extends TimedRobot {
         m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
 
         /* Keeps the shooter at a constitant speed */
-        shooterSubsystem.holdShooter();
+        //shooterSubsystem.holdShooter();
 
         CommandScheduler.getInstance().run();
     }
@@ -90,7 +91,7 @@ public class Robot extends TimedRobot {
         VisionSubsystem.limeLightOff();
 
         // Turn off shooter motor
-        shooterSubsystem.shooterOn();
+        shooterSubsystem.shooterOff();
     }
 
     @Override
@@ -100,7 +101,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         // Turns shooter on (Wow).
-        shooterSubsystem.shooterOn();
+        // shooterSubsystem.shooterOn(); // FIME: now
 
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 

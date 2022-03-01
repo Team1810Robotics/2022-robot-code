@@ -57,7 +57,7 @@
 
 | ID     | Mechanism                    | Being Controlled   | Controller | Wire Num |
 | -----  | -----                        | -----              | -----      | -----    |
-| 01     | Drive - Front Left Drive     | 1 Falcon           | TalonFX    | 1        |
+| 01     | REV Pneumatics Hub           |                    |            | 28       |
 | 02     | Drive - Front Left Steer     | 1 Falcon           | TalonFX    | 2        |
 | 03     | Drive - Front Right Drive    | 1 Falcon           | TalonFX    | 3        |
 | 04     | Drive - Front Right Steer    | 1 Falcon           | TalonFX    | 4        |
@@ -73,7 +73,7 @@
 | 14     | Shooter - Shooter Motor      | 1 NEO              | SPARK MAX  | 25       |
 | 15     | Climb - Left Winch           | 1 NEO 550          | SPARK MAX  | 26       |
 | 16     | Climb - Right Winch          | 1 NEO 550          | SPARK MAX  | 27       |
-| 17     | REV Pneumatics Hub           |                    |            | 28       |
+| 17     | Drive - Front Left Drive     | 1 Falcon           | TalonFX    | 1        |
 | 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |   
 
 **Relay**

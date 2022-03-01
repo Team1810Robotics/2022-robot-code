@@ -35,7 +35,7 @@ public final class Constants {
         public static final double DRIVETRAIN_WHEELBASE_METERS = 0.64928;
 
         // Front left swerve module
-        public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 1;
+        public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 17;
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 2;
         public static final int FRONT_LEFT_MODULE_STEER_CANCODER = 10;
         public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(328.6);
@@ -131,7 +131,7 @@ public final class Constants {
     }
 
     public static final class PneumaticConstants {
-        public static final int PH_CAN_ID = 17; // FIXME
+        public static final int PH_CAN_ID = 1;
 
         public static final double MAX_TANK_PSI = 120;
         public static final double MIN_TANK_PSI = 80;
@@ -139,7 +139,7 @@ public final class Constants {
     
     public static final class IntakeConstants {
         public static final int RIGHT_MOTOR_PORT = 0;
-        public static final int LEFT_MOTOR_PORT = 1;
+        public static final int LEFT_MOTOR_PORT = 3;
 
         public static final int LEFT_PNEUMATIC_PORT = 7;
         public static final int RIGHT_PNEUMATIC_PORT = 6;
@@ -149,7 +149,7 @@ public final class Constants {
         public static final int EJECTOR_PNEUMATIC = 4;
         public static final int LOCK_PNEUMATIC = 5;
 
-        public static final int EJECTOR_LS = 0; // FIXME
+        public static final int EJECTOR_LS = 3; // FIXME
     }
 
     public static final class ShooterConstants {
@@ -165,11 +165,11 @@ public final class Constants {
     }
 
     public static final class HoodConstants {
-        public static final int MOTOR_PORT = 2;
+        public static final int MOTOR_PORT = 2; // FIXME
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 0; // FIXME
-        public static final int[] HOOD_ENCODER_CHANNEL = {1, 2}; // FIXME
+        public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static double FORWARD_HOOD_LIMIT = 100.0; // FIXME
+        public static double FORWARD_HOOD_LIMIT = 1000.0; // FIXME
     }
 
     public static final class ClimbConstants {
