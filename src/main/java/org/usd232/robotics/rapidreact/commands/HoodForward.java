@@ -5,29 +5,18 @@ import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Hood extends CommandBase {
-    private boolean forward;
+public class HoodForward extends CommandBase {
 
-    public Hood(boolean forward) {
-        this.forward = forward;
-    }
+    public HoodForward() {}
 
     @Override
     public void execute() {
-        if (forward) {
-            HoodSubsystem.forwardHood();
-        } else {
-            HoodSubsystem.reverseHood();
-        }
+        HoodSubsystem.forwardHood();
     }
 
     @Override
     public boolean isFinished() {
-        if (HoodSubsystem.hoodLS.get() && !forward) {
-            return true;
-        }
-
-        if (HoodSubsystem.hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT && forward) {
+        if (HoodSubsystem.hoodEncoder.getDistance() <= HoodConstants.FORWARD_HOOD_LIMIT) {
             return true;
         }
 

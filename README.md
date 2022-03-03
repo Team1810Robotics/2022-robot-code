@@ -1,24 +1,27 @@
 # 2022 Robot
 
-### Team 1810 Robotics Swerve drive code for the 2022 competition season
-**Named `Swiffer`**
+## Team 1810 Robotics Swerve drive code for the 2022 competition season
+
+### Named `Swiffer`
+
 ---
 
 * Uses Swerve Drive Specialties's MK4 with L2 gear ratio with falcons as the motors.
-    * (https://www.swervedrivespecialties.com/products/mk4-swerve-module?variant=39376675045489)
+  * (<https://www.swervedrivespecialties.com/products/mk4-swerve-module?variant=39376675045489>)
 
 ---
 
 * Electrical / Programming Wiring Chart.
-    * (https://docs.google.com/spreadsheets/d/1KCYpCz1mNoaCfkUa-aLaaVEg1ivP0he2kCzS-OsVOjM/edit?usp=sharing)
+  * (<https://docs.google.com/spreadsheets/d/1KCYpCz1mNoaCfkUa-aLaaVEg1ivP0he2kCzS-OsVOjM/edit?usp=sharing>)
 
     It is restricted so only added people can open the sheets.
 
 ---
 
-**Controller Bindings**
+### Controller Bindings
 
-**Xbox**
+### Xbox
+
 | Button | Purpose      |
 | -----  | -----        |
 | LT     | LL On        |
@@ -34,8 +37,8 @@
 | A      |              |
 | B      | Elevator     |
 
+### Joystick
 
-**Joystick**
 | Move - Button  | Purpose | | Rotation - Button | Purpose   |
 | -----          | -----   |-| -----             | -----     |
 | Trigger        |         | | Trigger           |           |
@@ -53,7 +56,7 @@
 
 ---
 
-**CAN**
+### CAN
 
 | ID     | Mechanism                    | Being Controlled   | Controller | Wire Num |
 | -----  | -----                        | -----              | -----      | -----    |
@@ -71,51 +74,52 @@
 | 12     | Drive - Back Left CANCoder   |                    |            | 18       |
 | 13     | Gyro - Pigeon IMU            |                    |            | 12       |
 | 14     | Shooter - Shooter Motor      | 1 NEO              | SPARK MAX  | 25       |
-| 15     | Climb - Left Winch           | 1 NEO 550          | SPARK MAX  | 26       |
-| 16     | Climb - Right Winch          | 1 NEO 550          | SPARK MAX  | 27       |
-| 17     | Drive - Front Left Drive     | 1 Falcon           | TalonFX    | 1        |
-| 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |   
 
-**Relay**
+| 17     | Drive - Front Left Drive     | 1 Falcon           | TalonFX    | 1        |
+| 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |
+
+### Relay
 
 | Port |  Mechanism            | Being Controlled   | Controller  |
 | -----| -----                 | -----              | -----       |
-| 00   | Intake - Left Intake  | 2 JE               | Relay Spike |
-| 01   | Intake - Right Intake | 2 JE               | Relay Spike |
+| 00   | Intake - Right Intake | 2 JE               | Relay Spike |
+| 01   | Intake - Left Intake  | 2 JE               | Relay Spike |
 | 02   | Hood - Hood Movement  | 1 Snowblower       | Relay Spike |
 | 03   |                       |                    |             |
 
-**PWM**
+### PWM
 
 | Port  | Mechanism | Being Controlled | Controller |
 | ----- | -----     | -----            | -----      |
-| 00    |           |                  |            | 
-| 01    |           |                  |            | 
-| 02    |           |                  |            | 
-| 03    |           |                  |            | 
-| 04    |           |                  |            | 
-| 05    |           |                  |            | 
-| 06    |           |                  |            | 
-| 07    |           |                  |            | 
-| 08    |           |                  |            | 
-| 09    |           |                  |            | 
-<br>
+| 00    |           |                  |            |
+| 01    |           |                  |            |
+| 02    |           |                  |            |
+| 03    |           |                  |            |
+| 04    |           |                  |            |
+| 05    |           |                  |            |
+| 06    |           |                  |            |
+| 07    |           |                  |            |
+| 08    |           |                  |            |
+| 09    |           |                  |            |
 
-| DIO   |       |
-| ----- | ----- |
-| 00    |       |
-| 01    |       | 
-| 02    |       | 
-| 03    |       |
-| 04    |       | 
-| 05    |       | 
-| 06    |       | 
-| 07    |       | 
-| 08    |       | 
-| 09    |       |
-<br>
+### DIO
 
-| Analog ln | Mechanism |
+|       | Mechanism |
+| ----- | -----     |
+| 00    |           |
+| 01    |           |
+| 02    |           |
+| 03    |           |
+| 04    |           |
+| 05    |           |
+| 06    |           |
+| 07    |           |
+| 08    |           |
+| 09    |           |
+
+### Analog In
+
+|           | Mechanism |
 | -----     | -----     |
 | 00        |           |
 | 01        |           |

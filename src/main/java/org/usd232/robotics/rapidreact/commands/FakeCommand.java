@@ -24,7 +24,7 @@ public class FakeCommand extends CommandBase {
     public FakeCommand(int SleepTimeSecs) {
         callNumber++;
         LOG.debug("FakeCommand Called [Call Number: %d]", callNumber);
-        SmartDashboard.putString("Fake command", "Call Number: " + callNumber);
+        //SmartDashboard.putString("Fake command", "Call Number: " + callNumber);
 
         sleepTimeSecs = SleepTimeSecs;
         if (sleepTimeSecs <= 1000) {

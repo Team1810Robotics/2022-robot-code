@@ -298,8 +298,6 @@ public class DriveSubsystem extends SubsystemBase {
         backLeft.set(states[2].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[2].angle.getRadians());
         backRight.set(states[3].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[3].angle.getRadians());
 
-        SmartDashboard.putNumber("Front Left Encoder", getDriveEncoder(Module.kFL));
-        SmartDashboard.putNumber("Front Left CAN Coder", getSteerCANCoder(Module.kFL));
         SmartDashboard.putString("Odometry Pose", getPose().toString());
     }
     

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase {
 
+    public static boolean sneezin;
+
     private final IntakeSubsystem intakeSubsystem;
     private final XboxController xbox;
     private boolean right;
@@ -30,7 +32,7 @@ public class Intake extends CommandBase {
         } else {
             intakeSubsystem.collectLeft();
             xbox.setRumble(RumbleType.kLeftRumble, 0.5);
-        }
+        } 
     }
 
     @Override

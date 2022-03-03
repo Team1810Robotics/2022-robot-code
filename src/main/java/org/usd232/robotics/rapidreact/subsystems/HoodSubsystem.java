@@ -27,11 +27,6 @@ public class HoodSubsystem extends SubsystemBase {
     /** Makes the hood move forward */
     public static void forwardHood() {
         LOG.info("Hood of forward");
-        if (hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
-            hood.set(Relay.Value.kOff);
-
-        } else {
-        }
         hood.set(Relay.Value.kReverse);
     }
 
@@ -43,17 +38,15 @@ public class HoodSubsystem extends SubsystemBase {
 
     /** Makes the hood move backward */
     public static void reverseHood() {
-        LOG.info("Hood of reverse");
-        if (hoodLS.get() == true) {
+        /* if (hoodLS.get()) {
             hood.set(Relay.Value.kOff);
             hoodEncoder.reset();
         } else {
-            hood.set(Relay.Value.kForward);
-        }
-
-    }
-
-    /** Sets the hood back to its default position */
+        } */
+        LOG.info("Hood of reverse");
+        hood.set(Relay.Value.kForward);
+        
+    }    /** Sets the hood back to its default position */
     public static void resetHood() {
         if (!hoodLS.get()) {
             while (!hoodLS.get()) {

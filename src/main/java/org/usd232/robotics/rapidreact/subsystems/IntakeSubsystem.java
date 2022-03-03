@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
     
+    public static boolean sneezin;
     
-    private static final Relay leftIntake = new Relay(IntakeConstants.LEFT_MOTOR_PORT, Relay.Direction.kForward);
-    private static final Relay rightIntake = new Relay(IntakeConstants.RIGHT_MOTOR_PORT, Relay.Direction.kForward);
+    private static final Relay leftIntake = new Relay(IntakeConstants.LEFT_MOTOR_PORT, Relay.Direction.kBoth);
+    private static final Relay rightIntake = new Relay(IntakeConstants.RIGHT_MOTOR_PORT, Relay.Direction.kBoth);
 
     private static final Solenoid leftSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.LEFT_PNEUMATIC_PORT);
     private static final Solenoid rightSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.RIGHT_PNEUMATIC_PORT);
@@ -19,12 +20,12 @@ public class IntakeSubsystem extends SubsystemBase {
     /** Lowers the left intake for collection and turns it on */
     public void collectLeft() {
         leftSolenoid.set(true);
-        leftIntake.set(Relay.Value.kOn);
+        leftIntake.set(Relay.Value.kForward);
     }
     /** Lowers the right intake for collection and turns it on */
     public void collectRight() {
         rightSolenoid.set(true);
-        rightIntake.set(Relay.Value.kOn);
+        rightIntake.set(Relay.Value.kForward);
     }
 
     /** Raises and turns off the left intake */
@@ -37,5 +38,9 @@ public class IntakeSubsystem extends SubsystemBase {
     public void returnRight() {
         rightSolenoid.set(false);
         rightIntake.set(Relay.Value.kOff);
+    }
+
+    public void sneeze() {
+        sneezin = true;
     }
 }

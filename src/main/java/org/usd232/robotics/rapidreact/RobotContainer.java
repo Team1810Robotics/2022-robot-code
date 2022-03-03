@@ -15,7 +15,8 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.Elevator;
-import org.usd232.robotics.rapidreact.commands.Hood;
+import org.usd232.robotics.rapidreact.commands.HoodForward;
+import org.usd232.robotics.rapidreact.commands.HoodBackward;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.LimelightOn;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
@@ -66,16 +67,16 @@ public class RobotContainer {
     // Xbox buttons
     // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
     private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
-    // private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
+    private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
-    // private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
+    private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
     private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
-    private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
-    private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
+    // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
+    // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
 
     // private final JoystickButton movementJoystick_Trigger = LOG.catchAll(() -> new JoystickButton(movementJoystick, 1));
     // private final JoystickButton movementJoystick_Button2 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 2));
@@ -172,15 +173,17 @@ public class RobotContainer {
 
         whileGreaterThan(manipulatorController, Axis.kLeftTrigger, 0.1, new LimelightOn()); // TODO: Test me
         ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
-        ManipulatorXbox_Start.whenActive(() -> m_ejectorSubsystem.eject());
+        ManipulatorXbox_Start.whenActive(() -> m_ejectorSubsystem.eject()); // FIXME
         ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
-        ManipulatorXbox_B.whenActive(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
-        ManipulatorXbox_RB.whenActive(new Intake(m_intakeSubsystem, manipulatorController, true));
-        ManipulatorXbox_LB.whenActive(new Intake(m_intakeSubsystem, manipulatorController, false));
-        ManipulatorXbox_LStick.whenActive(new Hood(true));
-        ManipulatorXbox_RStick.whenActive(new Hood(false));
+        ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
+        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
+        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);
+        ManipulatorXbox_Y.whenHeld(new HoodForward(), true);
+        ManipulatorXbox_A.whenHeld(new HoodBackward(), true);
 
     }
+
+    
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

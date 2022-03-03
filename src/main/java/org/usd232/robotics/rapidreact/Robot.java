@@ -2,7 +2,6 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
-import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
@@ -36,7 +35,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        HoodSubsystem.forwardHood();
+        
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
 
@@ -62,6 +61,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
         SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
+        SmartDashboard.putNumber("Hood Encoder", HoodSubsystem.hoodEncoder.getDistance());
+        SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
         //SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         EjectorSubsystem.colorDebug();
 
@@ -117,11 +118,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        ClimbSubsystem.zeroEncoders();
-
-        ClimbSubsystem.timer.reset();
-        ClimbSubsystem.timer.start();
-
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -133,9 +129,7 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {
-        ClimbSubsystem.endgame = ClimbSubsystem.timer.get() >= 105;
-    }
+    public void teleopPeriodic() {}
 
     @Override
     public void testInit() {

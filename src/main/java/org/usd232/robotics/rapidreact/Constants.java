@@ -139,7 +139,7 @@ public final class Constants {
     
     public static final class IntakeConstants {
         public static final int RIGHT_MOTOR_PORT = 0;
-        public static final int LEFT_MOTOR_PORT = 3;
+        public static final int LEFT_MOTOR_PORT = 1;
 
         public static final int LEFT_PNEUMATIC_PORT = 7;
         public static final int RIGHT_PNEUMATIC_PORT = 6;
@@ -165,23 +165,15 @@ public final class Constants {
     }
 
     public static final class HoodConstants {
-        public static final int MOTOR_PORT = 2; // FIXME
-        public static final int HOOD_LIMIT_SWITCH_CHANNEL = 0; // FIXME
+        public static final int MOTOR_PORT = 2;
+        public static final int HOOD_LIMIT_SWITCH_CHANNEL = 0;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static double FORWARD_HOOD_LIMIT = 1000.0; // FIXME
-    }
-
-    public static final class ClimbConstants {
-        public static final int PNEUMATIC_PORT = 1; // FIME
-        public static final int LEFT_WINCH_PORT = 15;
-        public static final int RIGHT_WINCH_PORT = 16;
-
-        public static final double WINCH_ENCODER_BOTTOM = -100; // FIXME
+        public static double FORWARD_HOOD_LIMIT = -480.0; // FIXME
     }
 
     public static final class AugerConstants {
-        public static final int VICTOR_ID = 18; // FIXME
+        public static final int VICTOR_ID = 18;
     }
 
     public static final class VisionConstants {
