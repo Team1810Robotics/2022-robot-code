@@ -2,7 +2,6 @@ package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.log.Logger;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** A command that can be called for testing */

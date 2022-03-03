@@ -15,6 +15,7 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.Elevator;
+import org.usd232.robotics.rapidreact.commands.Hood;
 import org.usd232.robotics.rapidreact.commands.HoodForward;
 import org.usd232.robotics.rapidreact.commands.HoodBackward;
 import org.usd232.robotics.rapidreact.commands.Intake;
@@ -180,6 +181,8 @@ public class RobotContainer {
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);
         ManipulatorXbox_Y.whenHeld(new HoodForward(), true);
         ManipulatorXbox_A.whenHeld(new HoodBackward(), true);
+        /* ManipulatorXbox_Y.whenHeld(new Hood(true), true);    // TODO: Test
+        ManipulatorXbox_A.whenHeld(new Hood(false), true); */   // TODO: Test
 
     }
 
