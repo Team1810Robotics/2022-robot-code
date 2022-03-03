@@ -39,7 +39,6 @@ import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -78,6 +77,7 @@ public class RobotContainer {
     private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
     // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
+    // private final JoystickButton ManipulatorXbox_Home = LOG.catchAll(() -> new JoystickButton(manipulatorController, 11));
 
     // private final JoystickButton movementJoystick_Trigger = LOG.catchAll(() -> new JoystickButton(movementJoystick, 1));
     // private final JoystickButton movementJoystick_Button2 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 2));
@@ -142,27 +142,6 @@ public class RobotContainer {
     }
 
     /**
-     * While an axis is greater than a certain value run a certain command.
-     * 
-     * @param controller    What controller to reference.
-     * @param hand          What axis to look at.
-     * @param minAmount     What value should the axis be greater than to run the command.
-     * @param command       The command that should be ran while the axis is greater than the specified value.
-     */
-    // Super Jank but might work?
-    // TODO: Move somewhere else if it work
-    public void whileGreaterThan(XboxController controller, Axis hand, double minAmount, Command command) {
-
-        if (controller.getRawAxis(hand.value) > minAmount) {
-            CommandScheduler.getInstance().schedule(command);
-
-        } else {
-            command.cancel();
-        }
-    }
-
-
-    /**
      * Use this method to define your button->command mappings. Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
@@ -172,21 +151,18 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope()); // No requirements because we don't need to interrupt anything
 
-        whileGreaterThan(manipulatorController, Axis.kLeftTrigger, 0.1, new LimelightOn()); // TODO: Test me
         ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
         ManipulatorXbox_Start.whenActive(() -> m_ejectorSubsystem.eject()); // FIXME
         ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
         ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
-        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
-        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);
+        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, manipulatorController.getStartButton()), true);  // TODO: Test
+        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, manipulatorController.getStartButton()), true); // TODO: Test
         ManipulatorXbox_Y.whenHeld(new HoodForward(), true);
         ManipulatorXbox_A.whenHeld(new HoodBackward(), true);
         /* ManipulatorXbox_Y.whenHeld(new Hood(true), true);    // TODO: Test
         ManipulatorXbox_A.whenHeld(new Hood(false), true); */   // TODO: Test
 
     }
-
-    
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

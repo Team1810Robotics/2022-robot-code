@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase {
 
-    public static boolean sneezin;
-
+    
     private final IntakeSubsystem intakeSubsystem;
     private final XboxController xbox;
-    private boolean right;
+    private static boolean motorIntake;
+    private static boolean right;
     
-    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean right) {
+    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean Right, boolean MotorIntake) {
+
         this.intakeSubsystem = intakeSubsystem;
         this.xbox = xbox;
-        this.right = right;
+        right = Right;
+        motorIntake = MotorIntake;
         addRequirements(intakeSubsystem);
     }
 
@@ -27,22 +29,25 @@ public class Intake extends CommandBase {
     @Override
     public void execute() {
         if (right) {
-            intakeSubsystem.collectRight();
-            xbox.setRumble(RumbleType.kRightRumble, 0.5);
+            intakeSubsystem.rightPneumatic(true);
+            intakeSubsystem.rightMotor(motorIntake);
+            xbox.setRumble(RumbleType.kRightRumble, 1.0);
         } else {
-            intakeSubsystem.collectLeft();
-            xbox.setRumble(RumbleType.kLeftRumble, 0.5);
+            intakeSubsystem.leftPneumatic(true);
+            intakeSubsystem.leftMotor(motorIntake);
+            xbox.setRumble(RumbleType.kLeftRumble, 1.0);
         } 
     }
 
     @Override
     public void end(boolean inturrupted) {
         if (right) {
-            intakeSubsystem.returnRight();
+            intakeSubsystem.rightPneumatic(false);
             xbox.setRumble(RumbleType.kRightRumble, 0.0);
         } else {
-            intakeSubsystem.returnLeft();
+            intakeSubsystem.leftPneumatic(false);
             xbox.setRumble(RumbleType.kLeftRumble, 0.0);
         }
+        intakeSubsystem.motorOff(right); // turns off the motor that was on. Dont get confused please : )
     }
 }

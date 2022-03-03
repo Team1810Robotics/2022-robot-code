@@ -18,7 +18,7 @@ public class XboxTrigger extends Trigger {
     private static final Logger LOG = new Logger();
     
     private XboxController xbox;
-    private final double minValue = 0.1;
+    private static final double minValue = 0.1;
     private Axis hand;
 
     public XboxTrigger(XboxController xbox, Axis hand) {
