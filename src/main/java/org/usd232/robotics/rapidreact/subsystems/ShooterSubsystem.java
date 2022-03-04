@@ -16,7 +16,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final CANSparkMax shooter = new CANSparkMax(ShooterConstants.MOTOR_PORT, MotorType.kBrushless);
     private static final RelativeEncoder shooterEncoder = shooter.getEncoder();
     private static final SparkMaxPIDController pidController = shooter.getPIDController();
-    private static final double setPoint = ShooterConstants.MAX_VELOCITY * 0.9;
+    private static final double setPoint = ShooterConstants.MAX_VELOCITY * 0.99;
     private static boolean on = false; // Perm jank
 
     public ShooterSubsystem() {
@@ -29,7 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     /** Turns on the shooter */
     public void shooterOn() {
-        shooter.set(0.75);
+        shooter.set(1);
         on = true;
     }
 
@@ -49,5 +49,9 @@ public class ShooterSubsystem extends SubsystemBase {
     /** Gets the position of the encoders. */
     public static double getEncoderPosition() {
         return shooterEncoder.getPosition();
+    }
+
+    public static double getEcoderVelocity() {
+        return shooterEncoder.getVelocity();
     }
 }

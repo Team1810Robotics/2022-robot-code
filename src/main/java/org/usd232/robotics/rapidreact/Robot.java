@@ -2,11 +2,13 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
+/* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
+/* End of Subsystems */
 
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -36,17 +38,18 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         
+        
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
-
+        
         // Resets the hood on startup (could be annoying during testing)
         // HoodSubsystem.resetHood(); // TODO: notice me 
-
+        
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
     }
-
+    
     /**
      * This function is called every robot packet, no matter the mode. Use this for items like
      * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -63,9 +66,10 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
         SmartDashboard.putNumber("Hood Encoder", HoodSubsystem.hoodEncoder.getDistance());
         SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
-        //SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
+        SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
+        SmartDashboard.putNumber("Shooter Speed", ShooterSubsystem.getEcoderVelocity());
         EjectorSubsystem.colorDebug();
-
+        
         /**
          * Enable the compressor with hybrid sensor control, meaning it uses both
          * the analog and digital pressure sensors.
@@ -77,41 +81,41 @@ public class Robot extends TimedRobot {
          * If at any point the digital pressure switch is open, the compressor will
          * shut off.
          */
-        m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
-
+        m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
+        
         /* Keeps the shooter at a constitant speed */
-        //shooterSubsystem.holdShooter();
-
+        
+        
         CommandScheduler.getInstance().run();
     }
-
+    
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
         // Turns Limelight off on disable
         VisionSubsystem.limeLightOff();
-
+        
         // Turn off shooter motor
         shooterSubsystem.shooterOff();
     }
-
+    
     @Override
     public void disabledPeriodic() {}
-
+    
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
         // Turns shooter on (Wow).
         // shooterSubsystem.shooterOn(); // FIME: now
-
+        
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+        
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
     }
-
+    
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {}
@@ -125,12 +129,16 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
-    }
 
+        // shooterSubsystem.shooterOn();
+    }
+    
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
-
+    public void teleopPeriodic() {
+        // shooterSubsystem.holdShooter();
+    }
+    
     @Override
     public void testInit() {
         // Cancels all running commands at the start of test mode.

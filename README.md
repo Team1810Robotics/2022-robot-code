@@ -24,18 +24,18 @@
 
 | Button | Purpose      |
 | -----  | -----        |
-| LT     | LL On        |
+| LT     |              |
 | RT     | LL On        |
 | LB     | Left Intake  |
 | RB     | Right Intake |
-| LStick | Hood (F)     |
-| RStick | Hood (R)     |
-| Start  | Eject        |
+| LStick |              |
+| RStick |              |
+| Start  | Intake Mod   |
 | Back   |              |
-| Y      |              |
-| X      |              |
-| A      |              |
-| B      | Elevator     |
+| Y      | Hood (F)     |
+| X      | Targit       |
+| A      | Hood (B)     |
+| B      | Auger        |
 
 ### Joystick
 
@@ -60,7 +60,7 @@
 
 | ID     | Mechanism                    | Being Controlled   | Controller | Wire Num |
 | -----  | -----                        | -----              | -----      | -----    |
-| 01     | REV Pneumatics Hub           |                    |            | 28       |
+| 01     | Drive - Front Left Drive     | 1 Falcon           | TalonFX    | 1        |
 | 02     | Drive - Front Left Steer     | 1 Falcon           | TalonFX    | 2        |
 | 03     | Drive - Front Right Drive    | 1 Falcon           | TalonFX    | 3        |
 | 04     | Drive - Front Right Steer    | 1 Falcon           | TalonFX    | 4        |
@@ -74,8 +74,7 @@
 | 12     | Drive - Back Left CANCoder   |                    |            | 18       |
 | 13     | Gyro - Pigeon IMU            |                    |            | 12       |
 | 14     | Shooter - Shooter Motor      | 1 NEO              | SPARK MAX  | 25       |
-
-| 17     | Drive - Front Left Drive     | 1 Falcon           | TalonFX    | 1        |
+| 17     | REV Pneumatics Hub           |                    |            | 28       |
 | 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |
 
 ### Relay
@@ -104,18 +103,18 @@
 
 ### DIO
 
-|       | Mechanism |
-| ----- | -----     |
-| 00    |           |
-| 01    |           |
-| 02    |           |
-| 03    |           |
-| 04    |           |
-| 05    |           |
-| 06    |           |
-| 07    |           |
-| 08    |           |
-| 09    |           |
+|       | Mechanism  |
+| ----- | -----      |
+| 00    |            |
+| 01    |            |
+| 02    |            |
+| 03    | Ejector LS |
+| 04    |            |
+| 05    |            |
+| 06    |            |
+| 07    |            |
+| 08    |            |
+| 09    | Hood LS    |
 
 ### Analog In
 

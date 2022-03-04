@@ -13,11 +13,11 @@ public class AugerSubsystem extends SubsystemBase { // Motor controller test val
 
     /** Turns the elevotor on */
     public void elevatorOn() {
-        auger.set(ControlMode.PercentOutput, 0.30); // TODO: Test Value
+        auger.set(ControlMode.PercentOutput, -1); // TODO: Test Value
     }
 
     public void elevatorReverse() {
-        auger.set(ControlMode.PercentOutput, -0.50);
+        auger.set(ControlMode.PercentOutput, 1);
     }
 
     /** Turns the elevotor off */
