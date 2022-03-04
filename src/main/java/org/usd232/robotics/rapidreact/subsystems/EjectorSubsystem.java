@@ -27,6 +27,7 @@ public class EjectorSubsystem extends SubsystemBase {
     private final static I2C.Port i2cPort = I2C.Port.kMXP;
     private final static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     private final static ColorMatch colorMatcher = new ColorMatch();
+    private static ColorMatchResult match;
 
     /** Color of the Blue Ball */
     private final static Color BlueBall = new Color(0.0, 0.4, 0.7019607844);                        // TODO: Test Color
@@ -57,10 +58,12 @@ public class EjectorSubsystem extends SubsystemBase {
      * @return a string that is {@code "Blue"}, {@code "Red"}, or {@code "Unknown"} depending on what is seen by the color sensor
      */
     public static String getMatchedBallColor() {
+        colorMatcher.setConfidenceThreshold(0.95);
+
         colorMatcher.addColorMatch(BlueBall);
         colorMatcher.addColorMatch(RedBall);
 
-        ColorMatchResult match = colorMatcher.matchClosestColor(getCurrentColor());
+        match = colorMatcher.matchClosestColor(getCurrentColor());
 
         if (match.color == BlueBall) {
             return "Blue";
@@ -72,11 +75,11 @@ public class EjectorSubsystem extends SubsystemBase {
     }
 
     /** Color Debug Stuff */
-    // TODO: For removal
     public static void colorDebug() {
         SmartDashboard.putNumber("Red", getCurrentColor().red);
         SmartDashboard.putNumber("Green", getCurrentColor().green);
         SmartDashboard.putNumber("Blue", getCurrentColor().blue);
+        SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", getMatchedBallColor());
     }
 }
