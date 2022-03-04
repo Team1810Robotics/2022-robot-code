@@ -37,7 +37,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        
+        // Turns shooter on (Wow).
+        shooterSubsystem.shooterOn();
         
         // Turns Limelight off on startup
         VisionSubsystem.limeLightOff();
@@ -70,21 +71,14 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Shooter Speed", ShooterSubsystem.getEcoderVelocity());
         EjectorSubsystem.colorDebug();
         
-        /**
-         * Enable the compressor with hybrid sensor control, meaning it uses both
-         * the analog and digital pressure sensors.
-         *
-         * This uses hysteresis between a minimum and maximum pressure value,
-         * the compressor will run when the sensor reads below the minimum pressure
-         * value, and the compressor will shut off once it reaches the maximum.
-         *
-         * If at any point the digital pressure switch is open, the compressor will
-         * shut off.
-         */
+        /** Enable compressor closed loop control using analog input. */
         m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
         
         /* Keeps the shooter at a constitant speed */
-        
+        ShooterSubsystem.holdShooter();
+
+        // Manual way to hold speed (maybe.)
+        /* shooterSubsystem.manualHoldShooter(); */   // TODO: Test
         
         CommandScheduler.getInstance().run();
     }
@@ -105,8 +99,6 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        // Turns shooter on (Wow).
-        // shooterSubsystem.shooterOn(); // FIME: now
         
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
         
@@ -129,23 +121,9 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
-
-        // shooterSubsystem.shooterOn();
     }
     
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {
-        // shooterSubsystem.holdShooter();
-    }
-    
-    @Override
-    public void testInit() {
-        // Cancels all running commands at the start of test mode.
-        CommandScheduler.getInstance().cancelAll();
-    }
-
-    /** This function is called periodically during test mode. */
-    @Override
-    public void testPeriodic() {}
+    public void teleopPeriodic() {}
 }

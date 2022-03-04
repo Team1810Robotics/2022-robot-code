@@ -156,8 +156,9 @@ public final class Constants {
         public static final int MOTOR_PORT = 14;
 
         public static final int MAX_VELOCITY = 5328;
+        public static final int MIN_VELOCITY = 5000;
 
-        public static final double kP = 6e-5;
+        public static final double kP = 0.001; // TODO: Test
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double MIN_OUTUT = -1;
@@ -169,11 +170,12 @@ public final class Constants {
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static double FORWARD_HOOD_LIMIT = -48000000; // do not FIXME
+        public static double FORWARD_HOOD_LIMIT = -48000000; // (do not) FIXME jk do.
     }
 
     public static final class AugerConstants {
         public static final int VICTOR_ID = 18;
+        public static final double AUGER_ON = -1.0; // TODO: Test Value
     }
 
     public static final class VisionConstants {

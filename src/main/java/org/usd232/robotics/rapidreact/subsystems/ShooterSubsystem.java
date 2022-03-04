@@ -16,11 +16,12 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final CANSparkMax shooter = new CANSparkMax(ShooterConstants.MOTOR_PORT, MotorType.kBrushless);
     private static final RelativeEncoder shooterEncoder = shooter.getEncoder();
     private static final SparkMaxPIDController pidController = shooter.getPIDController();
-    private static final double setPoint = ShooterConstants.MAX_VELOCITY * 0.99;
+    private static final double setPoint = ShooterConstants.MAX_VELOCITY * 1.0;
     private static boolean on = false; // Perm jank
 
     public ShooterSubsystem() {
         shooter.setInverted(true);
+        shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
         pidController.setP(ShooterConstants.kP);
         pidController.setI(ShooterConstants.kI);
         pidController.setD(ShooterConstants.kD);
@@ -33,14 +34,33 @@ public class ShooterSubsystem extends SubsystemBase {
         on = true;
     }
 
-    public void holdShooter() {
+    /** Turns the shooter on at desired speed (between 1 & -1) */
+    public void shooterOn(double speed) {
+        if (speed > 1) {
+            speed = 1;
+        } else if (speed < -1) {
+            speed = -1;
+        }
+        shooter.set(speed);
+    }
+
+    public static void holdShooter() {
         if (on) {
             pidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
         }
     }
 
+    public void manualHoldShooter() {
+        if (getEcoderVelocity() <= ShooterConstants.MIN_VELOCITY) {
+            this.shooterOn(1.0);
+        } else {
+            this.shooterOff();  // let it coast
+        }
+    }
+
     /** Turns off the shooter. Woah. */
     public void shooterOff() {
+        shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
         shooter.set(0);
         shooterEncoder.setPosition(0);
         on = false;
