@@ -6,6 +6,7 @@ import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import static edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Elevator extends CommandBase {
 
@@ -34,6 +35,7 @@ public class Elevator extends CommandBase {
         }
 
         if (EjectorSubsystem.ejectorLS.get()) {
+            new WaitCommand(0.5);
             ejectorSubsystem.resetEjecter();
         }
     }

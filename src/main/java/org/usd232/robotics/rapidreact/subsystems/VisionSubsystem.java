@@ -14,8 +14,8 @@ public class VisionSubsystem extends SubsystemBase {
     public static double targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     public static double targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-    public static double ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").getDouble(0);
-    public static double camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").getDouble(0);
+    public static boolean ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+    public static boolean camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
 
     private static double m_distance;
 
@@ -39,15 +39,15 @@ public class VisionSubsystem extends SubsystemBase {
 
     /** Turns the LimeLight On */
     public static void limeLightOn() {
-        ledMode = 3;
-        camMode = 0;
+        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
         OnOffLL = true;
     }
 
     /** Turns the LimeLight Off */
     public static void limeLightOff() {
-        ledMode = 1;
-        camMode = 1;
+        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
         OnOffLL = false;
     }
 }

@@ -51,7 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void manualHoldShooter() {
-        if (getEcoderVelocity() <= ShooterConstants.MIN_VELOCITY) {
+        if (getEncoderVelocity() <= ShooterConstants.MIN_VELOCITY) {
             this.shooterOn(1.0);
         } else {
             this.shooterOff();  // let it coast
@@ -71,7 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterEncoder.getPosition();
     }
 
-    public static double getEcoderVelocity() {
+    public static double getEncoderVelocity() {
         return shooterEncoder.getVelocity();
     }
 }

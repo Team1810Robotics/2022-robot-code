@@ -123,7 +123,7 @@ public final class Constants {
         public static final int ROTATION_JOYSTICK_PORT = 1;
         public static final int MANIPULATOR_CONTROLLER_PORT = 3;
 
-        public static final double DEADBAND = 0.45;
+        public static final double DEADBAND = 0.4;
     }
 
     public static final class PigeonConstants {
@@ -134,12 +134,12 @@ public final class Constants {
         public static final int PH_CAN_ID = 17;
 
         public static final double MAX_TANK_PSI = 120;
-        public static final double MIN_TANK_PSI = 80;
+        public static final double MIN_TANK_PSI = 100;
     }
     
     public static final class IntakeConstants {
-        public static final int RIGHT_MOTOR_PORT = 0;
-        public static final int LEFT_MOTOR_PORT = 1;
+        public static final int RIGHT_MOTOR_PORT = 1;
+        public static final int LEFT_MOTOR_PORT = 0;
 
         public static final int LEFT_PNEUMATIC_PORT = 6;
         public static final int RIGHT_PNEUMATIC_PORT = 7;
@@ -149,19 +149,19 @@ public final class Constants {
         public static final int EJECTOR_PNEUMATIC = 4;
         public static final int LOCK_PNEUMATIC = 5;
 
-        public static final int EJECTOR_LS = 3; // FIXME
+        public static final int EJECTOR_LS = 8;
     }
 
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
 
         public static final int MAX_VELOCITY = 5328;
-        public static final int MIN_VELOCITY = 5000;
+        public static final int MIN_VELOCITY = 5000; // FIXME
 
         public static final double kP = 0.001; // TODO: Test
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double MIN_OUTUT = -1;
+        public static final int MIN_OUTUT = -1;
         public static final int MAX_OUTPUT = 1;
     }
 

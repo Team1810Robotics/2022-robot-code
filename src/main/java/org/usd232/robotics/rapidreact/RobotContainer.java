@@ -18,9 +18,7 @@ import org.usd232.robotics.rapidreact.commands.Elevator;
 import org.usd232.robotics.rapidreact.commands.Hood;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.LimelightOn;
-import org.usd232.robotics.rapidreact.commands.Shooter;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
-import org.usd232.robotics.rapidreact.commands.Target;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 /* end of Commands */
 
@@ -28,6 +26,7 @@ import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 /* End of Subsystems */
@@ -54,11 +53,12 @@ public class RobotContainer {
 
     SendableChooser<Command> pathChooser = new SendableChooser<>();
 
-    private final AugerSubsystem m_augerSubsystem = new AugerSubsystem();
-    private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-    private final EjectorSubsystem m_ejectorSubsystem = new EjectorSubsystem();
-    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-    private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+    private final AugerSubsystem m_augerSubsystem = LOG.catchAll(() -> new AugerSubsystem());
+    private final DriveSubsystem m_driveSubsystem = LOG.catchAll(() -> new DriveSubsystem());
+    private final EjectorSubsystem m_ejectorSubsystem = LOG.catchAll(() -> new EjectorSubsystem());
+    private final IntakeSubsystem m_intakeSubsystem = LOG.catchAll(() -> new IntakeSubsystem());
+    private final ShooterSubsystem m_shooterSubsystem = LOG.catchAll(() -> new ShooterSubsystem());
+    private final HoodSubsystem m_hoodSubsystem = LOG.catchAll(() -> new HoodSubsystem());
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
@@ -75,7 +75,7 @@ public class RobotContainer {
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
-    //private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
+    // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
     // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
     
@@ -152,16 +152,14 @@ public class RobotContainer {
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope()); // No requirements because we don't need to interrupt anything
 
         ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
-        ManipulatorXbox_X.whenHeld(new LimelightOn()).whenHeld(new Target(m_driveSubsystem));
-        ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
-        ManipulatorXbox_B.whenHeld(new Shooter(m_shooterSubsystem));
+        ManipulatorXbox_X.whenHeld(new LimelightOn())/* .whenHeld(new Target(m_driveSubsystem)) */;
+        ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem))
+                /*.whenHeld(new Shooter(m_shooterSubsystem), true)*/;
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, manipulatorController.getBackButton()), true);  // TODO: Test
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, manipulatorController.getBackButton()), true); // TODO: Test
-        /* ManipulatorXbox_Y.whenHeld(new HoodForward(), true);
-        ManipulatorXbox_A.whenHeld(new HoodBackward(), true); */
-        ManipulatorXbox_Y.whenHeld(new Hood(true), true);    // TODO: Test
-        ManipulatorXbox_A.whenHeld(new Hood(false), true);   // TODO: Test
-
+        ManipulatorXbox_Y.whenHeld(new Hood(m_hoodSubsystem, true), true);
+        ManipulatorXbox_A.whenHeld(new Hood(m_hoodSubsystem, false), true);
+        //ManipulatorXbox_A.whenHeld(new Eject(m_ejectorSubsystem), true);
     }
 
     /**

@@ -11,20 +11,20 @@ public class Intake extends CommandBase {
     
     private final IntakeSubsystem intakeSubsystem;
     private final XboxController xbox;
-    private static boolean forward;
-    private static boolean right;
+    private boolean forward;
+    private boolean right;
     
-    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean Right, boolean MotorIntake) {
+    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean right, boolean motorIntake) {
 
         this.intakeSubsystem = intakeSubsystem;
         this.xbox = xbox;
-        right = Right;
-        forward = MotorIntake;
+        this.right = right;
+        this.forward = motorIntake;
         addRequirements(intakeSubsystem);
     }
 
     @Override
-    public void initialize() { /* I Was Here */ }
+    public void initialize() { /* I Was Here, so was I */ }
 
     @Override
     public void execute() {

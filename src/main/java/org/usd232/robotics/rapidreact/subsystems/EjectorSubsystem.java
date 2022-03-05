@@ -12,6 +12,8 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 
@@ -19,8 +21,8 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class EjectorSubsystem extends SubsystemBase {
     
-    private static final Solenoid ballEjector = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
-    public static final Solenoid lockSolenoid = new Solenoid(PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
+    private static final Solenoid ballEjector = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
+    public static final Solenoid lockSolenoid = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
 
     public static final DigitalInput ejectorLS = new DigitalInput(EjectorConstants.EJECTOR_LS);
 
@@ -30,13 +32,13 @@ public class EjectorSubsystem extends SubsystemBase {
     private static ColorMatchResult match;
 
     /** Color of the Blue Ball */
-    private final static Color BlueBall = new Color(0.0, 0.4, 0.7019607844);                        // TODO: Test Color
+    private final static Color BlueBall = new Color(0.0, 0.0, 0.7019607844);                        // TODO: Test Color
     /** Color of the Red Ball */
-    private final static Color RedBall = new Color(0.9294117648, 0.1098039216, 0.1411764706);       // TODO: Test Color
+    private final static Color RedBall = new Color(0.9294117648, 0.0, 0.1411764706);       // TODO: Test Color
 
     /** Opens the ejector hatch */
     public void eject() { // TODO: Test
-        lockSolenoid.set(false);
+        lockSolenoid.set(true);
         new WaitCommand(0.5); // TODO: Test
         ballEjector.set(true); 
     }
@@ -44,8 +46,8 @@ public class EjectorSubsystem extends SubsystemBase {
     /** closes the ejector hatch */
     public void resetEjecter() { // TODO: Test
         ballEjector.set(false); 
-        new WaitCommand(1);
-        lockSolenoid.set(true);
+        new WaitCommand(10);
+        lockSolenoid.set(false);
     }
 
     /** @return the current color seen by the Photo Electric color sensor (color sensor) */
@@ -65,9 +67,9 @@ public class EjectorSubsystem extends SubsystemBase {
 
         match = colorMatcher.matchClosestColor(getCurrentColor());
 
-        if (match.color == BlueBall) {
+        if (match.color == BlueBall && match.confidence >= 60.0) {
             return "Blue";
-        } else if (match.color == RedBall) {
+        } else if (match.color == RedBall  && match.confidence >= 60.0) {
             return "Red";
         } else {
             return "Unknown";

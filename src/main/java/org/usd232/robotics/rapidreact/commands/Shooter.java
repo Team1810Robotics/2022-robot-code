@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 // https://drive.google.com/file/d/1XJ0mosxRUbD-oGlpIFPcpEci18Gh_oIK
 
-public class Shooter extends CommandBase{
+public class Shooter extends CommandBase {
 
     ShooterSubsystem shooterSubsystem;
     

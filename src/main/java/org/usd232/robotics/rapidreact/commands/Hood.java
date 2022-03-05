@@ -14,19 +14,20 @@ public class Hood extends CommandBase {
      */
     //@SuppressWarnings("unused")
     private static final Logger LOG = new Logger();
-
-    private static /*final*/ boolean forward;
+    private final HoodSubsystem hoodSubsystem;
+    private boolean forward;
     
-    public Hood(boolean Forward) {
-        forward = Forward;
+    public Hood(HoodSubsystem hoodSubsystem, boolean forward) {
+        this.forward = forward;
+        this.hoodSubsystem = hoodSubsystem;
     }
 
     @Override
     public void execute() {
         if (forward) {
-            HoodSubsystem.forwardHood();
+            hoodSubsystem.forwardHood();
         } else {
-            HoodSubsystem.reverseHood();
+            hoodSubsystem.reverseHood();
         }
     }
 
@@ -37,6 +38,7 @@ public class Hood extends CommandBase {
         }
         
         if (HoodSubsystem.hoodLS.get() && !forward) {
+            hoodSubsystem.zeroEncoder();
             return true;
         }
         
@@ -45,8 +47,7 @@ public class Hood extends CommandBase {
     
     @Override
     public void end(boolean inturrupted) {
-        HoodSubsystem.zeroEncoder();
-        HoodSubsystem.stopHood();
+        hoodSubsystem.stopHood();
         LOG.info("Hood of stop");
     }
 }

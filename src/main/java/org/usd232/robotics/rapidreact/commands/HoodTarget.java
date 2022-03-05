@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class HoodTarget extends CommandBase {
 
     private final double targetValue;
+    private final HoodSubsystem hoodSubsystem;
     private boolean forward;
 
 
-    public HoodTarget(double targitValue) {
+    public HoodTarget(HoodSubsystem hoodSubsystem, double targitValue) {
         this.targetValue = targitValue;
+        this.hoodSubsystem = hoodSubsystem;
     }
 
 
@@ -37,9 +39,9 @@ public class HoodTarget extends CommandBase {
             || HoodSubsystem.hoodEncoder.getDistance() <= (targetValue - 1)) { return; }
 
         if (forward) {
-            HoodSubsystem.forwardHood();
+            hoodSubsystem.forwardHood();
         } else {
-            HoodSubsystem.reverseHood();
+            hoodSubsystem.reverseHood();
         }
     }
 
@@ -63,6 +65,6 @@ public class HoodTarget extends CommandBase {
 
     @Override
     public void end(boolean inturrupted) {
-        HoodSubsystem.stopHood();
+        hoodSubsystem.stopHood();
     }
 }

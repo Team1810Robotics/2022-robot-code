@@ -68,17 +68,15 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hood Encoder", HoodSubsystem.hoodEncoder.getDistance());
         SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
-        SmartDashboard.putNumber("Shooter Speed", ShooterSubsystem.getEcoderVelocity());
+        SmartDashboard.putNumber("Shooter Speed", ShooterSubsystem.getEncoderVelocity());
         EjectorSubsystem.colorDebug();
         
         /** Enable compressor closed loop control using analog input. */
         m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
         
-        /* Keeps the shooter at a constitant speed */
-        ShooterSubsystem.holdShooter();
 
         // Manual way to hold speed (maybe.)
-        /* shooterSubsystem.manualHoldShooter(); */   // TODO: Test
+        shooterSubsystem.manualHoldShooter();   // TODO: Test
         
         CommandScheduler.getInstance().run();
     }
@@ -114,6 +112,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+
+        VisionSubsystem.limeLightOff();
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -125,5 +125,9 @@ public class Robot extends TimedRobot {
     
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        
+        // Keeps the shooter running with the flywheel
+        // shooterSubsystem.manualHoldShooter();
+    }
 }

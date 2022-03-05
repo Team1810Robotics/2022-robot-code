@@ -22,27 +22,25 @@ public class HoodSubsystem extends SubsystemBase {
     public static final Encoder hoodEncoder = new Encoder(HoodConstants.HOOD_ENCODER_CHANNEL[1], HoodConstants.HOOD_ENCODER_CHANNEL[0]);
     public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL); 
 
-    private HoodSubsystem() {}
-
     /** Makes the hood move forward */
-    public static void forwardHood() {
+    public void forwardHood() {
         hood.set(Relay.Value.kReverse);
         LOG.info("Hood of forward");
     }
 
     /** Makes the hood stop moving*/
-    public static void stopHood() {
+    public void stopHood() {
         hood.set(Relay.Value.kOff);
         LOG.info("Hood of stop");
     }
 
     /** Makes the hood move backward */
-    public static void reverseHood() {
+    public void reverseHood() {
         hood.set(Relay.Value.kForward);
         LOG.info("Hood of reverse");
         
     }    /** Sets the hood back to its default position */
-    public static void resetHood() {
+    public void resetHood() {
         if (!hoodLS.get()) {
             while (!hoodLS.get()) {
                 hood.set(Relay.Value.kReverse);
@@ -52,7 +50,7 @@ public class HoodSubsystem extends SubsystemBase {
         }
     }
 
-    public static void zeroEncoder() {
+    public void zeroEncoder() {
         hoodEncoder.reset();
     }
 
