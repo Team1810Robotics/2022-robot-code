@@ -30,6 +30,7 @@ import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 /* End of Subsystems */
+import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -59,6 +60,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem = LOG.catchAll(() -> new IntakeSubsystem());
     private final ShooterSubsystem m_shooterSubsystem = LOG.catchAll(() -> new ShooterSubsystem());
     private final HoodSubsystem m_hoodSubsystem = LOG.catchAll(() -> new HoodSubsystem());
+    private final VisionSubsystem m_visionSubsystem = LOG.catchAll(() -> new VisionSubsystem());
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
@@ -151,8 +153,8 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope()); // No requirements because we don't need to interrupt anything
 
-        ManipulatorXbox_TriggerR.whenActive(new LimelightOn());
-        ManipulatorXbox_X.whenHeld(new LimelightOn())/* .whenHeld(new Target(m_driveSubsystem)) */;
+        ManipulatorXbox_TriggerR.whenActive(new LimelightOn(m_visionSubsystem));
+        ManipulatorXbox_X.whenHeld(new LimelightOn(m_visionSubsystem))/* .whenHeld(new Target(m_driveSubsystem)) */;
         ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem))
                 /*.whenHeld(new Shooter(m_shooterSubsystem), true)*/;
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, manipulatorController.getBackButton()), true);  // TODO: Test

@@ -14,8 +14,8 @@ public class VisionSubsystem extends SubsystemBase {
     public static double targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     public static double targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-    public static boolean ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
-    public static boolean camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    public boolean ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    public boolean camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
 
     private static double m_distance;
 
@@ -32,22 +32,35 @@ public class VisionSubsystem extends SubsystemBase {
             return m_distance;
     }
     
-    /** Returns the distance of the Limelight to the center of the target */
+    /** @return the distance of the Limelight to the center of the target */
     public static double getTargetDistanceOffset() {
         return (getTargetDistance() + 0.678);
     }
 
     /** Turns the LimeLight On */
-    public static void limeLightOn() {
-        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    public void limeLightOn() {
+        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledOn.value);
+        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOff.value);
         OnOffLL = true;
     }
 
     /** Turns the LimeLight Off */
-    public static void limeLightOff() {
-        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+    public void limeLightOff() {
+        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledOff.value);
+        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOn.value);
         OnOffLL = false;
+    }
+
+    public enum LLMode {
+        ledOn(3),
+        ledOff(1),
+        camOn(1),
+        camOff(0);
+
+        int value;
+
+        LLMode(int value) {
+            this.value = value;
+        }
     }
 }

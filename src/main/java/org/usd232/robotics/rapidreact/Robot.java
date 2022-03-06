@@ -29,7 +29,9 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
+
     private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+    private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -41,7 +43,7 @@ public class Robot extends TimedRobot {
         shooterSubsystem.shooterOn();
         
         // Turns Limelight off on startup
-        VisionSubsystem.limeLightOff();
+        m_visionSubsystem.limeLightOff();
         
         // Resets the hood on startup (could be annoying during testing)
         // HoodSubsystem.resetHood(); // TODO: notice me 
@@ -85,7 +87,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         // Turns Limelight off on disable
-        VisionSubsystem.limeLightOff();
+        m_visionSubsystem.limeLightOff();
         
         // Turn off shooter motor
         shooterSubsystem.shooterOff();
@@ -113,7 +115,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
-        VisionSubsystem.limeLightOff();
+        m_visionSubsystem.limeLightOff();
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

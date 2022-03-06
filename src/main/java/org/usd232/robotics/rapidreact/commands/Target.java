@@ -2,7 +2,6 @@ package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
-//import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -10,11 +9,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class Target extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
+    private final VisionSubsystem visionSubsystem;
 
-    public Target(DriveSubsystem driveSubsystem) {
+    public Target(DriveSubsystem driveSubsystem, VisionSubsystem visionSubsystem) {
         this.driveSubsystem = driveSubsystem;
+        this.visionSubsystem = visionSubsystem;
 
-        addRequirements(driveSubsystem);
+        addRequirements(driveSubsystem, visionSubsystem);
     }
 
     /** Rotates the robot to target the goal using the limelight.
@@ -22,7 +23,7 @@ public class Target extends CommandBase {
      */
     @Override
     public void execute() {
-        VisionSubsystem.limeLightOn();
+        visionSubsystem.limeLightOn();
         // Stops targeting if the limelight sees no target
         if (VisionSubsystem.targetValid <= 1.0) { return; }
 
@@ -31,12 +32,9 @@ public class Target extends CommandBase {
         if (VisionSubsystem.targetXOffset < -1.0 || VisionSubsystem.targetXOffset > 1.0) {
 
             // Rotates the robot, with the speed proportional to how close it is to the target for more accuracy
-            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * VisionSubsystem.targetXOffset))); // @ TODO These are just placeholder values
+            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * VisionSubsystem.targetXOffset))); // TODO These are just placeholder values
             
         }
-        // TODO: Uncomment this in when the hood is installed
-        /* HoodSubsystem.setHood(VisionSubsystem.getTargetDistance() * 5); */
-        // This is very, I repeat, VERY placeholdery math. Once we get an idea of how hard it shoots and how the encoder works, we can make this actually work.
         
     }
 
@@ -46,12 +44,13 @@ public class Target extends CommandBase {
         if (VisionSubsystem.targetXOffset > -1 || VisionSubsystem.targetXOffset < 1) {
             return true;
         }
+
         return false;
     }
 
     @Override
     public void end(boolean interrupted) {
-        VisionSubsystem.limeLightOff();
+        visionSubsystem.limeLightOff();
         driveSubsystem.drive(new ChassisSpeeds (0, 0, 0));
     }
     

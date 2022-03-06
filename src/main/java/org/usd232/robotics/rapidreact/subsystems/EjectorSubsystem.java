@@ -32,7 +32,7 @@ public class EjectorSubsystem extends SubsystemBase {
     private static ColorMatchResult match;
 
     /** Color of the Blue Ball */
-    private final static Color BlueBall = new Color(0.0, 0.0, 0.7019607844);                        // TODO: Test Color
+    private final static Color BlueBall = new Color(0.0, 0.0, 0.7019607844);               // TODO: Test Color
     /** Color of the Red Ball */
     private final static Color RedBall = new Color(0.9294117648, 0.0, 0.1411764706);       // TODO: Test Color
 

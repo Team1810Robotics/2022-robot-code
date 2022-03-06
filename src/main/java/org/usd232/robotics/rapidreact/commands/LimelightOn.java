@@ -6,16 +6,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** Just a test command to have a visual cue if the controller binding is working */
 public class LimelightOn extends CommandBase {
+
+    private final VisionSubsystem visionSubsystem;
     
-    public LimelightOn() {}
+    public LimelightOn(VisionSubsystem visionSubsystem) {
+        this.visionSubsystem = visionSubsystem;
+    }
 
     @Override
     public void initialize() {
-        VisionSubsystem.limeLightOn();
+        visionSubsystem.limeLightOn();
     }
 
     @Override
     public void end(boolean inturrupted) {
-        VisionSubsystem.limeLightOff();
+        visionSubsystem.limeLightOff();
     }
 }
