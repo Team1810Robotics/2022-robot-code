@@ -30,9 +30,11 @@ public class Intake extends CommandBase {
             intakeSubsystem.rightPneumatic(true);
             intakeSubsystem.rightMotor(!xbox.getBackButtonPressed());
             xbox.setRumble(RumbleType.kRightRumble, 1.0);
+            xbox.setRumble(RumbleType.kLeftRumble, 1.0);
         } else {
             intakeSubsystem.leftPneumatic(true);
             intakeSubsystem.leftMotor(!xbox.getBackButtonPressed());
+            xbox.setRumble(RumbleType.kRightRumble, 1.0);
             xbox.setRumble(RumbleType.kLeftRumble, 1.0);
         } 
     }
