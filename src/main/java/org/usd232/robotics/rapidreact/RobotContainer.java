@@ -58,7 +58,7 @@ public class RobotContainer {
     private final DriveSubsystem m_driveSubsystem = LOG.catchAll(() -> new DriveSubsystem());
     private final EjectorSubsystem m_ejectorSubsystem = LOG.catchAll(() -> new EjectorSubsystem());
     private final IntakeSubsystem m_intakeSubsystem = LOG.catchAll(() -> new IntakeSubsystem());
-    private final ShooterSubsystem m_shooterSubsystem = LOG.catchAll(() -> new ShooterSubsystem());
+    // private final ShooterSubsystem m_shooterSubsystem = LOG.catchAll(() -> new ShooterSubsystem());
     private final HoodSubsystem m_hoodSubsystem = LOG.catchAll(() -> new HoodSubsystem());
     private final VisionSubsystem m_visionSubsystem = LOG.catchAll(() -> new VisionSubsystem());
 
