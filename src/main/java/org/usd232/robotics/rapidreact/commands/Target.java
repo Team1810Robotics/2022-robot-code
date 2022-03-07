@@ -25,14 +25,14 @@ public class Target extends CommandBase {
     public void execute() {
         visionSubsystem.limeLightOn();
         // Stops targeting if the limelight sees no target
-        if (VisionSubsystem.targetValid <= 1.0) { return; }
+        if (visionSubsystem.targetValid() <= 1.0) { return; }
 
 
         // Checks if the crosshair is more or less than 1 degree away from the target
-        if (VisionSubsystem.targetXOffset < -1.0 || VisionSubsystem.targetXOffset > 1.0) {
+        if (visionSubsystem.targetXOffset() < -1.0 || visionSubsystem.targetXOffset() > 1.0) {
 
             // Rotates the robot, with the speed proportional to how close it is to the target for more accuracy
-            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * VisionSubsystem.targetXOffset))); // TODO These are just placeholder values
+            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * visionSubsystem.targetXOffset()))); // TODO These are just placeholder values
             
         }
         
@@ -41,7 +41,7 @@ public class Target extends CommandBase {
     // If the crosshair is within 1 degree of the target, then the robot will stop moving to prevent jiggle.
     @Override
     public boolean isFinished() {
-        if (VisionSubsystem.targetXOffset > -1 || VisionSubsystem.targetXOffset < 1) {
+        if (visionSubsystem.targetXOffset() > -1 || visionSubsystem.targetXOffset() < 1) {
             return true;
         }
 
