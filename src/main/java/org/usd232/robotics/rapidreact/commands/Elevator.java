@@ -15,7 +15,7 @@ public class Elevator extends CommandBase {
     private final Alliance currentAlliance;
     private final String ballColor;
     
-    public Elevator(AugerSubsystem augerSubsystem, EjectorSubsystem ejectorSubsystem) { // TODO: Implement color stuff     easy ;)
+    public Elevator(AugerSubsystem augerSubsystem, EjectorSubsystem ejectorSubsystem) {
         this.augerSubsystem = augerSubsystem;
         this.ejectorSubsystem = ejectorSubsystem;
         this.currentAlliance = DriverStation.getAlliance();

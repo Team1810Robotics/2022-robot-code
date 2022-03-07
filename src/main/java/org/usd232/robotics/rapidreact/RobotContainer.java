@@ -151,17 +151,17 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
-        rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope()); // No requirements because we don't need to interrupt anything
+        rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
         ManipulatorXbox_TriggerR.whenActive(new LimelightOn(m_visionSubsystem));
         ManipulatorXbox_X.whenHeld(new LimelightOn(m_visionSubsystem))/* .whenHeld(new Target(m_driveSubsystem)) */;
-        ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem))
-                /*.whenHeld(new Shooter(m_shooterSubsystem), true)*/;
-        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, manipulatorController.getBackButton()), true);  // TODO: Test
-        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, manipulatorController.getBackButton()), true); // TODO: Test
+        ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
+
+        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
+        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);
+
         ManipulatorXbox_Y.whenHeld(new Hood(m_hoodSubsystem, true), true);
         ManipulatorXbox_A.whenHeld(new Hood(m_hoodSubsystem, false), true);
-        //ManipulatorXbox_A.whenHeld(new Eject(m_ejectorSubsystem), true);
     }
 
     /**

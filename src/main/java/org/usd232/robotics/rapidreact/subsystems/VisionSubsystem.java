@@ -2,14 +2,21 @@ package org.usd232.robotics.rapidreact.subsystems;
 
 import static org.usd232.robotics.rapidreact.Constants.VisionConstants;
 
+import org.usd232.robotics.rapidreact.log.Logger;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // https://drive.google.com/file/d/1AjLDvokrLkQY14zsQigYv8ZqoQ9OmsL5/view?usp=sharing
 
 public class VisionSubsystem extends SubsystemBase {
-    public static double targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-    public static double targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     */
+    //@SuppressWarnings("unused")
+    private static final Logger LOG = new Logger();
 
     private double m_distance;
 
@@ -36,6 +43,7 @@ public class VisionSubsystem extends SubsystemBase {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledForceOn.value);
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOff.value);
         OnOffLL = true;
+        LOG.info("Turn Limelight Off");
     }
 
     /** Turns the LimeLight Off */
@@ -43,26 +51,35 @@ public class VisionSubsystem extends SubsystemBase {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledForceOff.value);
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOn.value);
         OnOffLL = false;
+        LOG.info("Turn Limelight On");
     }
 
     /** @return whether the target is seen or not (0 or 1) */
     public double targetValid() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        LOG.info("Target Valid: %.9f", tv);
+        return tv;
     }
 
     /** @return target's X offset from the limelight */
     public double targetXOffset() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        LOG.info("Target X: %.9f", tx);
+        return tx;
     }
 
     /** @return target's Y offset from the limelight */
     public double targetYOffset() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        LOG.info("Target Y: %.9f", ty);
+        return ty;
     }
 
     /** @return target's area from the limelight */
     public double targetArea() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+        double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+        LOG.info("Target Area: %.9f", ta);
+        return ta;
     }
 
     public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html
