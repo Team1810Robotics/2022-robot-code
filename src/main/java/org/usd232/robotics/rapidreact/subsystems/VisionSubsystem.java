@@ -8,22 +8,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // https://drive.google.com/file/d/1AjLDvokrLkQY14zsQigYv8ZqoQ9OmsL5/view?usp=sharing
 
 public class VisionSubsystem extends SubsystemBase {
-    // Turns long and bad words into short and nice words
-    public static double targetValid = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    public static double targetXOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     public static double targetYOffset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     public static double targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-    public boolean ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-    public boolean camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
-
-    private static double m_distance;
+    private double m_distance;
 
     /** For ShuffleBoard */
     public static boolean OnOffLL;
 
     /** Uses the tangent to find the distance from the target plane */
-    public static double getTargetDistance() {
+    public double getTargetDistance() {
         // Get most recent angle
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
 
@@ -33,29 +27,76 @@ public class VisionSubsystem extends SubsystemBase {
     }
     
     /** @return the distance of the Limelight to the center of the target */
-    public static double getTargetDistanceOffset() {
-        return (getTargetDistance() + 0.678);
+    public double getTargetDistanceOffset() {
+        return (this.getTargetDistance() + 0.678);
     }
 
     /** Turns the LimeLight On */
     public void limeLightOn() {
-        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledOn.value);
-        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOff.value);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledForceOn.value);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOff.value);
         OnOffLL = true;
     }
 
     /** Turns the LimeLight Off */
     public void limeLightOff() {
-        ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledOff.value);
-        camMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOn.value);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(LLMode.ledForceOff.value);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(LLMode.camOn.value);
         OnOffLL = false;
     }
 
-    public enum LLMode {
-        ledOn(3),
-        ledOff(1),
+    /** @return whether the target is seen or not (0 or 1) */
+    public double targetValid() {
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    }
+
+    /** @return target's X offset from the limelight */
+    public double targetXOffset() {
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    }
+
+    /** @return target's Y offset from the limelight */
+    public double targetYOffset() {
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+    }
+
+    /** @return target's area from the limelight */
+    public double targetArea() {
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    }
+
+    public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html
+
+        // getEntry("ledMode")
+        ledCurrentPipeline(0),
+        ledForceOff(1),
+        ledForceBlink(2),
+        ledForceOn(3),
+
+        // getEntry("camMode")
         camOn(1),
-        camOff(0);
+        camOff(0),
+
+        // getEntry("pipeline")
+        pipelineZero(0),
+        pipelineOne(1),
+        pipelineTwo(2),
+        pipelineThree(3),
+        pipelineFour(4),
+        pipelineFive(5),
+        pipelineSix(6),
+        pipelineSeven(7),
+        pipelineEight(8),
+        pipelineNine(9),
+
+        // getEntry("stream")
+        streamStandard(0),
+        streamPiPMain(1),
+        streamPiPSecondary(2),
+
+        // getEntry("snapshot")
+        snapshotStop(0),
+        snapshotStart(1);
 
         int value;
 
