@@ -78,7 +78,9 @@ public class Robot extends TimedRobot {
         
 
         // Manual way to hold speed (maybe.)
-        // shooterSubsystem.manualHoldShooter();   // TODO: Test
+        if(!ShooterSubsystem.manualShooting){
+            shooterSubsystem.manualHoldShooter();   // TODO: Test
+        }
         
         CommandScheduler.getInstance().run();
     }

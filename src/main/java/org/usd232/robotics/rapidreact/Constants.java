@@ -156,7 +156,7 @@ public final class Constants {
         public static final int MOTOR_PORT = 14;
 
         public static final int MAX_VELOCITY = 5328;
-        public static final int MIN_VELOCITY = 5000; // FIXME
+        public static final int MIN_VELOCITY =   2500; // TODO : Test
 
         public static final double kP = 0.001; // TODO: Test
         public static final double kI = 0;

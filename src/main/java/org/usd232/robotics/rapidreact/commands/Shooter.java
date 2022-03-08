@@ -19,10 +19,12 @@ public class Shooter extends CommandBase {
     @Override
     public void execute() {
         shooterSubsystem.shooterOn();
+        ShooterSubsystem.manualShooting = true;
     }
 
     @Override
     public void end(boolean inturrupted) {
         shooterSubsystem.shooterOff();
+        ShooterSubsystem.manualShooting = false;
     }
 }

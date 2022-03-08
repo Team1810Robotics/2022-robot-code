@@ -19,6 +19,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double setPoint = ShooterConstants.MAX_VELOCITY * 1.0;
     private static boolean on = false; // Perm jank
 
+    public static boolean manualShooting;
+
     public ShooterSubsystem() {
         shooter.setInverted(true);
         shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -44,12 +46,15 @@ public class ShooterSubsystem extends SubsystemBase {
         shooter.set(speed);
     }
 
+
+    /** Holds the shooter at its max speed with a PID controller. Doesn't work as of now. */
     public static void holdShooter() {
         if (on) {
             pidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
         }
     }
 
+    /** Holds the shooter at its minimum velocity when it's not being used. */
     public void manualHoldShooter() {
         if (getEncoderVelocity() <= ShooterConstants.MIN_VELOCITY) {
             this.shooterOn(1.0);
@@ -66,11 +71,12 @@ public class ShooterSubsystem extends SubsystemBase {
         on = false;
     }
 
-    /** Gets the position of the encoders. */
+    /** @return The position of the encoders. */
     public static double getEncoderPosition() {
         return shooterEncoder.getPosition();
     }
 
+    /** @return The velocity of the encoders. */
     public static double getEncoderVelocity() {
         return shooterEncoder.getVelocity();
     }
