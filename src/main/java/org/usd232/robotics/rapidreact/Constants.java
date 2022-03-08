@@ -157,6 +157,8 @@ public final class Constants {
 
         public static final int MAX_VELOCITY = 5328;
         public static final int MIN_VELOCITY = 2500; // TODO : Test
+        public static final int MAX_HOLD_VELOCITY = 5300;
+        public static final int MIN_HOLD_VELOCITY = 5000;
 
         public static final double kP = 0.001; // TODO: Test
         public static final double kI = 0;
@@ -185,7 +187,7 @@ public final class Constants {
         // Height of the Limelight Camera to the ground
         public static final double ROBOT_HEIGHT = 1.013; 
         /** Units in Degrees */
-        public static final double LIME_LIGHT_MOUNT_ANGLE = 125.0; // FIXME
+        public static final double LIME_LIGHT_MOUNT_ANGLE = 125.0;
     }
 
 }

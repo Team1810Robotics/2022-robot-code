@@ -14,7 +14,7 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 /* End of Paths */
 
 /* Commands */
-import org.usd232.robotics.rapidreact.commands.Elevator;
+import org.usd232.robotics.rapidreact.commands.ShootBalls;
 import org.usd232.robotics.rapidreact.commands.Hood;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.LimelightOn;
@@ -153,9 +153,10 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
-        ManipulatorXbox_TriggerR.whenActive(new LimelightOn(m_visionSubsystem), true);
+        ManipulatorXbox_TriggerR.whenHeld(new LimelightOn(m_visionSubsystem), true); // TODO: Test
         ManipulatorXbox_X.whenHeld(new LimelightOn(m_visionSubsystem), true)/* .whenHeld(new Target(m_driveSubsystem)) */;
-        ManipulatorXbox_B.whenHeld(new Elevator(m_augerSubsystem, m_ejectorSubsystem));
+
+        ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem));
 
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);

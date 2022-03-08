@@ -32,7 +32,8 @@ public class Target extends CommandBase {
         if (visionSubsystem.targetXOffset() < -1.0 || visionSubsystem.targetXOffset() > 1.0) {
 
             // Rotates the robot, with the speed proportional to how close it is to the target for more accuracy
-            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * visionSubsystem.targetXOffset()))); // TODO These are just placeholder values
+            // TODO These are just placeholder values
+            driveSubsystem.drive(new ChassisSpeeds(0, 0, Math.toRadians(0.5 * visionSubsystem.targetXOffset())));
             
         }
         

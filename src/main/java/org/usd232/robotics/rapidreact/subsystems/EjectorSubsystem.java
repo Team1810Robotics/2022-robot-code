@@ -37,16 +37,16 @@ public class EjectorSubsystem extends SubsystemBase {
     private final static Color RedBall = new Color(0.9294117648, 0.0, 0.1411764706);       // TODO: Test Color
 
     /** Opens the ejector hatch */
-    public void eject() { // TODO: Test
+    public void eject() {           // TODO: Test
         lockSolenoid.set(true);
-        new WaitCommand(0.5); // TODO: Test
+        new WaitCommand(0.5);
         ballEjector.set(true); 
     }
 
     /** closes the ejector hatch */
-    public void resetEjecter() { // TODO: Test
+    public void resetEjecter() {    // TODO: Test
         ballEjector.set(false); 
-        new WaitCommand(10);
+        new WaitCommand(1);
         lockSolenoid.set(false);
     }
 

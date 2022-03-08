@@ -33,10 +33,11 @@ public class HoodTarget extends CommandBase {
     @Override
     public void execute() {
 
-        // Don't start the hood if it's already within the targetValue
-        // TODO: This might not be necessary 
+        // Don't start the hood if it's already within the targetValue 
         if (HoodSubsystem.hoodEncoder.getDistance() >= (targetValue + 1) 
-            || HoodSubsystem.hoodEncoder.getDistance() <= (targetValue - 1)) { return; }
+            || HoodSubsystem.hoodEncoder.getDistance() <= (targetValue - 1)) {
+                return;
+        }
 
         if (forward) {
             hoodSubsystem.forwardHood();
@@ -47,8 +48,7 @@ public class HoodTarget extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (HoodSubsystem.hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT 
-            | HoodSubsystem.hoodLS.get()) {
+        if (HoodSubsystem.hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT || HoodSubsystem.hoodLS.get()) {
             return true;
         }
 

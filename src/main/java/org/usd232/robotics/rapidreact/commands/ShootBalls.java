@@ -2,22 +2,26 @@ package org.usd232.robotics.rapidreact.commands;
 
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 
 import static edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class Elevator extends CommandBase {
+public class ShootBalls extends CommandBase {
 
     private final AugerSubsystem augerSubsystem;
     private final EjectorSubsystem ejectorSubsystem;
+    private final ShooterSubsystem shooterSubsystem;
     private final Alliance currentAlliance;
     private final String ballColor;
     
-    public Elevator(AugerSubsystem augerSubsystem, EjectorSubsystem ejectorSubsystem) {
+    /** Command that controls the color sensor, the auger,  */
+    public ShootBalls(AugerSubsystem augerSubsystem, EjectorSubsystem ejectorSubsystem, ShooterSubsystem shooterSubsystem) {
         this.augerSubsystem = augerSubsystem;
         this.ejectorSubsystem = ejectorSubsystem;
+        this.shooterSubsystem = shooterSubsystem;
         this.currentAlliance = DriverStation.getAlliance();
         this.ballColor = EjectorSubsystem.getMatchedBallColor();
     }
@@ -38,6 +42,8 @@ public class Elevator extends CommandBase {
             new WaitCommand(0.5);
             ejectorSubsystem.resetEjecter();
         }
+
+        shooterSubsystem.shooterOn();   // TODO: test
     }
 
     @Override
