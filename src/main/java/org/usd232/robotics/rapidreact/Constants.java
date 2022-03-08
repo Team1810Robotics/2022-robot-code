@@ -175,7 +175,7 @@ public final class Constants {
 
     public static final class AugerConstants {
         public static final int VICTOR_ID = 18;
-        public static final double AUGER_ON = -1.0; // TODO: Test Value
+        public static final double AUGER_ON = -1.0;
     }
 
     public static final class VisionConstants {
@@ -183,9 +183,9 @@ public final class Constants {
         public static final double TARGET_HEIGHT = 2.64;
         /** Units in Meters */
         // Height of the Limelight Camera to the ground
-        public static final double ROBOT_HEIGHT = 0.73025;
+        public static final double ROBOT_HEIGHT = 1.013; 
         /** Units in Degrees */
-        public static final double LIME_LIGHT_MOUNT_ANGLE = 45.0; // FIXME
+        public static final double LIME_LIGHT_MOUNT_ANGLE = 125.0; // FIXME
     }
 
 }

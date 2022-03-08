@@ -3,13 +3,13 @@ package org.usd232.robotics.rapidreact.commands;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Axis;
 
 // https://drive.google.com/file/d/1b3jYlQRw3vDhasCw-WSdM6FtWdolT9bM/view?usp=sharing
 
 /** Used to turn the Xbox LT & RT from analog to Digital */
-public class XboxTrigger extends Trigger {
+public class XboxTrigger extends Button {
     /**
      * The logger.
      * 

@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         // Turns shooter on (Wow).
-        shooterSubsystem.shooterOn();
+        // shooterSubsystem.shooterOn();
         
         // Turns Limelight off on startup
         m_visionSubsystem.limeLightOff();
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-
+        
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
         SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
         
 
         // Manual way to hold speed (maybe.)
-        shooterSubsystem.manualHoldShooter();   // TODO: Test
+        // shooterSubsystem.manualHoldShooter();   // TODO: Test
         
         CommandScheduler.getInstance().run();
     }
@@ -129,7 +129,5 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         
-        // Keeps the shooter running with the flywheel
-        // shooterSubsystem.manualHoldShooter();
     }
 }
