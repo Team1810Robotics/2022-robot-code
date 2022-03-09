@@ -23,6 +23,8 @@ public class VisionSubsystem extends SubsystemBase {
     /** For ShuffleBoard */
     public static boolean OnOffLL;
 
+    public static double hoodDistance;
+
     /** Uses the tangent to find the distance from the target plane */
     public double getTargetDistance() {
         // Get most recent angle

@@ -3,6 +3,7 @@ package org.usd232.robotics.rapidreact;
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
 import org.usd232.robotics.rapidreact.commands.HoodTarget;
+import org.usd232.robotics.rapidreact.log.Logger;
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
@@ -24,6 +25,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @since 2022
  */
 public class Robot extends TimedRobot {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     */
+    //@SuppressWarnings("unused")
+    private static final Logger LOG = new Logger();
 
     private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
 
@@ -89,6 +97,16 @@ public class Robot extends TimedRobot {
         if(!ShooterSubsystem.manualShooting){
             shooterSubsystem.manualHoldShooter();   // TODO: Test
         }
+
+        new Thread(() -> {
+            try {
+                LOG.info("Moved to a new thread");
+                VisionSubsystem.hoodDistance = 0;   // Put formula here
+                
+            } catch (Exception e) {
+                LOG.error("Failed to move to a new thread");
+            }
+        }).start();
         
         CommandScheduler.getInstance().run();
     }
