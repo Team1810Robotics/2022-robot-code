@@ -48,7 +48,11 @@ public class HoodTarget extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (HoodSubsystem.hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT || HoodSubsystem.hoodLS.get()) {
+        if (HoodSubsystem.hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
+            return true;
+        }
+
+        if (HoodSubsystem.hoodLS.get()) {
             return true;
         }
 

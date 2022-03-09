@@ -2,6 +2,7 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
+import org.usd232.robotics.rapidreact.commands.HoodTarget;
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 
     private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+    private final HoodSubsystem hoodSubsystem = new HoodSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -77,6 +79,9 @@ public class Robot extends TimedRobot {
         /** Enable compressor closed loop control using analog input. */
         m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
         
+
+        // Should apply the value given in ShuffleBoard to the hood
+        new HoodTarget(hoodSubsystem, SmartDashboard.getNumber("Hood Encoder Control", 0)); // TODO: Test
 
         // Manual way to hold speed (maybe.)
         // https://drive.google.com/file/d/1Mhkmg6CINcqzfc9p3ie6-v02ha7aCzSx/view?usp=sharing
