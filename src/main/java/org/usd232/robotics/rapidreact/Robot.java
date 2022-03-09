@@ -101,10 +101,10 @@ public class Robot extends TimedRobot {
         new Thread(() -> {
             try {
                 LOG.info("Moved to a new thread");
-                VisionSubsystem.hoodDistance = 0;   // Put formula here
+                // Put formula here
                 
             } catch (Exception e) {
-                LOG.error("Failed to move to a new thread");
+                LOG.error("Failed to move to a new thread: " + e);
             }
         }).start();
         

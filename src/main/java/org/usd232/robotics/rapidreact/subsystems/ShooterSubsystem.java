@@ -56,10 +56,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public void manualHoldShooter() {
         if (getEncoderVelocity() <= ShooterConstants.MIN_VELOCITY) {
             this.shooterOn();
-            LOG.info("[manualHoldShooter] Shooter On");
+            LOG.info("Shooter On");
         } else if (getEncoderVelocity() >= ShooterConstants.MIN_VELOCITY + 100) {
             this.shooterOff();  // let it coast
-            LOG.info("[manualHoldShooter] Shooter Off");
+            LOG.info("Shooter Off");
         }
     }
 
