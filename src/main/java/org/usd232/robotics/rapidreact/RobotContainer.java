@@ -154,7 +154,7 @@ public class RobotContainer {
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
         ManipulatorXbox_TriggerR.whenHeld(new LimelightOn(m_visionSubsystem), true); // TODO: Test
-        ManipulatorXbox_X.whenHeld(new LimelightOn(m_visionSubsystem), true)/* .whenHeld(new Target(m_driveSubsystem)) */;
+        ManipulatorXbox_X.toggleWhenPressed(new LimelightOn(m_visionSubsystem), true);  // FIXME later
 
         ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem));
 

@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 
     private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
-    private final HoodSubsystem hoodSubsystem = new HoodSubsystem();
+    private final HoodSubsystem m_hoodSubsystem = new HoodSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         SmartDashboard.putNumber("Shooter Speed", ShooterSubsystem.getEncoderVelocity());
         SmartDashboard.putBoolean("Manual Shooting", ShooterSubsystem.manualShooting);
+        SmartDashboard.putNumber("Calculated Target Distance", m_visionSubsystem.getTargetDistance());
         EjectorSubsystem.colorDebug();
         
         /** Enable compressor closed loop control using analog input. */
@@ -81,7 +82,7 @@ public class Robot extends TimedRobot {
         
 
         // Should apply the value given in ShuffleBoard to the hood
-        new HoodTarget(hoodSubsystem, SmartDashboard.getNumber("Hood Encoder Control", 0)); // TODO: Test
+        new HoodTarget(m_hoodSubsystem, SmartDashboard.getNumber("Hood Encoder Control", 0)); // TODO: Test
 
         // Manual way to hold speed (maybe.)
         // https://drive.google.com/file/d/1Mhkmg6CINcqzfc9p3ie6-v02ha7aCzSx/view?usp=sharing
