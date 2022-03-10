@@ -43,11 +43,11 @@ public class Intake extends CommandBase {
     public void end(boolean inturrupted) {
         if (right) {
             intakeSubsystem.rightPneumatic(false);
-            xbox.setRumble(RumbleType.kRightRumble, 0.0);
         } else {
             intakeSubsystem.leftPneumatic(false);
-            xbox.setRumble(RumbleType.kLeftRumble, 0.0);
         }
         intakeSubsystem.motorOff(right); // turns off the motor that was on. Dont get confused please : )
+        xbox.setRumble(RumbleType.kRightRumble, 0.0);
+        xbox.setRumble(RumbleType.kLeftRumble, 0.0);
     }
 }

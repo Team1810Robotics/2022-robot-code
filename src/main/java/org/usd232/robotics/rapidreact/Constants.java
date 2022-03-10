@@ -172,7 +172,7 @@ public final class Constants {
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static double FORWARD_HOOD_LIMIT = -48000000; // (do not) FIXME jk do.
+        public static double FORWARD_HOOD_LIMIT = -2650; // (do not) FIXME jk do.
     }
 
     public static final class AugerConstants {

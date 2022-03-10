@@ -40,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     /** Turns on the shooter at max speed */
     public void shooterOn() {
-        shooter.set(1);
+        shooter.set(0.435);
         on = true;
     }
 

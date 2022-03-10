@@ -12,12 +12,8 @@ public class AugerSubsystem extends SubsystemBase { // Motor controller test val
     private final static VictorSPX auger = new VictorSPX(VICTOR_ID);
 
     /** Turns the elevotor on */
-    public void elevatorOn() {
-        auger.set(ControlMode.PercentOutput, AUGER_ON);
-    }
-
-    public void elevatorReverse() {
-        auger.set(ControlMode.PercentOutput, -AUGER_ON);
+    public void elevatorOn(boolean forward) {
+        auger.set(ControlMode.PercentOutput, forward ? AUGER_ON : -AUGER_ON);
     }
 
     /** Turns the elevotor off */

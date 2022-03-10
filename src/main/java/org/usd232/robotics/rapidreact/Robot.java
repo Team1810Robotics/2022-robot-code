@@ -2,8 +2,7 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
-import org.usd232.robotics.rapidreact.commands.HoodTarget;
-import org.usd232.robotics.rapidreact.log.Logger;
+// import org.usd232.robotics.rapidreact.commands.HoodTarget;
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
@@ -31,7 +30,7 @@ public class Robot extends TimedRobot {
      * @since 2018
      */
     //@SuppressWarnings("unused")
-    private static final Logger LOG = new Logger();
+    // private static final Logger LOG = new Logger();
 
     private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
 
@@ -39,9 +38,9 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
-    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+    private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
     private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
-    private final HoodSubsystem m_hoodSubsystem = new HoodSubsystem();
+    // private final HoodSubsystem m_hoodSubsystem = new HoodSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -49,8 +48,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        // Turns shooter on (Wow).
-        // shooterSubsystem.shooterOn();
         
         // Turns Limelight off on startup
         m_visionSubsystem.limeLightOff();
@@ -72,6 +69,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
+        // Turns shooter on (Wow).
+        // FIXME: m_shooterSubsystem.shooterOn();
         
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
@@ -80,7 +79,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hood Encoder", HoodSubsystem.hoodEncoder.getDistance());
         SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
-        SmartDashboard.putNumber("Shooter Speed", ShooterSubsystem.getEncoderVelocity());
+        SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
         SmartDashboard.putBoolean("Manual Shooting", ShooterSubsystem.manualShooting);
         SmartDashboard.putNumber("Calculated Target Distance", m_visionSubsystem.getTargetDistance());
         EjectorSubsystem.colorDebug();
@@ -90,15 +89,15 @@ public class Robot extends TimedRobot {
         
 
         // Should apply the value given in ShuffleBoard to the hood
-        new HoodTarget(m_hoodSubsystem, SmartDashboard.getNumber("Hood Encoder Control", 0)); // TODO: Test
+        // new HoodTarget(m_hoodSubsystem, SmartDashboard.getNumber("Hood Encoder Control", 0)); // TODO: Test
 
         // Manual way to hold speed (maybe.)
         // https://drive.google.com/file/d/1Mhkmg6CINcqzfc9p3ie6-v02ha7aCzSx/view?usp=sharing
-        if(!ShooterSubsystem.manualShooting){
+        /* if(!ShooterSubsystem.manualShooting){
             shooterSubsystem.manualHoldShooter();   // TODO: Test
-        }
+        } */
 
-        new Thread(() -> {
+        /* new Thread(() -> {
             try {
                 LOG.info("Moved to a new thread");
                 // Put formula here
@@ -106,7 +105,7 @@ public class Robot extends TimedRobot {
             } catch (Exception e) {
                 LOG.error("Failed to move to a new thread: " + e);
             }
-        }).start();
+        }).start(); */
         
         CommandScheduler.getInstance().run();
     }
@@ -115,10 +114,10 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         // Turns Limelight off on disable
-        m_visionSubsystem.limeLightOff();
+        // m_visionSubsystem.limeLightOff();
         
         // Turn off shooter motor
-        shooterSubsystem.shooterOff();
+        m_shooterSubsystem.shooterOff();
     }
     
     @Override
@@ -153,7 +152,5 @@ public class Robot extends TimedRobot {
     
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {
-        
-    }
+    public void teleopPeriodic() {}
 }

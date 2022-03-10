@@ -15,10 +15,12 @@ import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
 
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.ShootBalls;
+import org.usd232.robotics.rapidreact.commands.Shooter;
 import org.usd232.robotics.rapidreact.commands.Hood;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.LimelightOn;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
+import org.usd232.robotics.rapidreact.commands.Target;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 /* end of Commands */
 
@@ -68,7 +70,7 @@ public class RobotContainer {
     private final XboxController manipulatorController = LOG.catchAll(() -> new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
+    private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
     private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
@@ -153,10 +155,12 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
-        ManipulatorXbox_TriggerR.whenHeld(new LimelightOn(m_visionSubsystem), true); // TODO: Test
+        ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem), true); // TODO: Test
         ManipulatorXbox_X.toggleWhenPressed(new LimelightOn(m_visionSubsystem), true);  // FIXME later
 
-        ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem));
+        ManipulatorXbox_TriggerL.whenHeld(new Target(m_driveSubsystem, m_visionSubsystem), true);
+
+        ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem, manipulatorController));
 
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);

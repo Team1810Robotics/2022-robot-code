@@ -58,30 +58,22 @@ public class VisionSubsystem extends SubsystemBase {
 
     /** @return whether the target is seen or not (0 or 1) */
     public double targetValid() {
-        double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-        LOG.info("Target Valid: %.9f", tv);
-        return tv;
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     }
 
     /** @return target's X offset from the limelight */
     public double targetXOffset() {
-        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-        LOG.info("Target X: %.9f", tx);
-        return tx;
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     }
 
     /** @return target's Y offset from the limelight */
     public double targetYOffset() {
-        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-        LOG.info("Target Y: %.9f", ty);
-        return ty;
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     }
 
     /** @return target's area from the limelight */
     public double targetArea() {
-        double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-        LOG.info("Target Area: %.9f", ta);
-        return ta;
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     }
 
     public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html
