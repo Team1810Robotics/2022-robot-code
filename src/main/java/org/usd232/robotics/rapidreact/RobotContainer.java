@@ -3,6 +3,7 @@ package org.usd232.robotics.rapidreact;
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.OIConstants;
 import org.usd232.robotics.rapidreact.log.Logger;
+
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.ShootBalls;
 import org.usd232.robotics.rapidreact.commands.Shooter;
@@ -13,6 +14,8 @@ import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.commands.Target;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 /* end of Commands */
+
+/* Paths */
 import org.usd232.robotics.rapidreact.commands.autonomous.DriveDistance;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueLeftQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueRightQuad;
@@ -20,6 +23,8 @@ import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLine;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OneMeterPath;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedLeftQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedRightQuad;
+/* End of Paths */
+
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
@@ -27,8 +32,8 @@ import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
-/* End of Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
+/* End of Subsystems */
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
