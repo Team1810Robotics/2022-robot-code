@@ -26,7 +26,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final RelativeEncoder shooterEncoder = shooter.getEncoder();
     private static final SparkMaxPIDController pidController = shooter.getPIDController();
     private static final double setPoint = ShooterConstants.MAX_HOLD_VELOCITY * 1.0;
-    public static boolean manualShooting = false;
 
     public ShooterSubsystem() {
         shooter.setInverted(true);

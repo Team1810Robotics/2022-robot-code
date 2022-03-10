@@ -1,4 +1,4 @@
-package org.usd232.robotics.rapidreact.commands.Autonomous;
+package org.usd232.robotics.rapidreact.commands.autonomous;
 
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.log.Logger;
@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 // Currently Dead-lining. want to migrate to a PID controller if time allows
-public class DriveDistance extends CommandBase{
+public class DriveDistance extends CommandBase {
     /**
      * The logger.
      * 

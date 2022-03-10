@@ -1,4 +1,4 @@
-package org.usd232.robotics.rapidreact.commands.Autonomous.Paths;
+package org.usd232.robotics.rapidreact.commands.autonomous.paths;
 
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 

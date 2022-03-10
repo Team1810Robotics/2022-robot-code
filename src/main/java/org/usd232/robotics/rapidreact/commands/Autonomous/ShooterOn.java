@@ -1,30 +1,36 @@
-package org.usd232.robotics.rapidreact.commands;
+package org.usd232.robotics.rapidreact.commands.autonomous;
 
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-// https://drive.google.com/file/d/1XJ0mosxRUbD-oGlpIFPcpEci18Gh_oIK
-
-public class Shooter extends CommandBase {
+public class ShooterOn extends CommandBase {
 
     private final ShooterSubsystem shooterSubsystem;
     private final double percent;
+    private final boolean on;
     
-    public Shooter(ShooterSubsystem shooterSubsystem, double percent) {
+    public ShooterOn(ShooterSubsystem shooterSubsystem, double percent, boolean on) {
         this.shooterSubsystem = shooterSubsystem;
         this.percent = percent;
-        addRequirements(shooterSubsystem);
+        this.on = on;
     }
 
+    @Override
+    public void initialize() {}
 
     @Override
     public void execute() {
         shooterSubsystem.shooterOn(percent);
     }
 
+    @Override 
+    public boolean isFinished() {
+        return !on;
+    }
+
     @Override
-    public void end(boolean inturrupted) {
+    public void end(boolean interrupted) {
         shooterSubsystem.shooterOff();
     }
 }

@@ -80,7 +80,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
-        SmartDashboard.putBoolean("Manual Shooting", ShooterSubsystem.manualShooting);
         SmartDashboard.putNumber("Calculated Target Distance", m_visionSubsystem.getTargetDistance());
         EjectorSubsystem.colorDebug();
         

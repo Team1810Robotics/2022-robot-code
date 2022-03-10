@@ -3,16 +3,6 @@ package org.usd232.robotics.rapidreact;
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.OIConstants;
 import org.usd232.robotics.rapidreact.log.Logger;
-
-/* Paths */
-import org.usd232.robotics.rapidreact.commands.Autonomous.DriveDistance;
-import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.BlueLeftQuad;
-import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.BlueRightQuad;
-import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedLeftQuad;
-import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.RedRightQuad;
-import org.usd232.robotics.rapidreact.commands.Autonomous.Paths.OneMeterPath;
-/* End of Paths */
-
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.ShootBalls;
 import org.usd232.robotics.rapidreact.commands.Shooter;
@@ -23,7 +13,12 @@ import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.commands.Target;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 /* end of Commands */
-
+import org.usd232.robotics.rapidreact.commands.autonomous.DriveDistance;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueLeftQuad;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueRightQuad;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OneMeterPath;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedLeftQuad;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedRightQuad;
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
