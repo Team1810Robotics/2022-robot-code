@@ -16,6 +16,7 @@ import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 import org.usd232.robotics.rapidreact.commands.autonomous.DriveDistance;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueLeftQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueRightQuad;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLine;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OneMeterPath;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedLeftQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedRightQuad;
@@ -110,6 +111,7 @@ public class RobotContainer {
     private final Command m_redLeft = LOG.catchAll(() -> new RedLeftQuad(m_driveSubsystem));
     private final Command m_redRight = LOG.catchAll(() -> new RedRightQuad(m_driveSubsystem));
     private final Command m_OneMeter = LOG.catchAll(() -> new OneMeterPath(m_driveSubsystem));
+    private final Command m_offLine = LOG.catchAll(() -> new OffLine(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
 
     /** Turns joystick inputs into speed variables */
     public RobotContainer() {
@@ -134,6 +136,7 @@ public class RobotContainer {
         pathChooser.addOption("Right Blue Tarmac", m_blueRight);
         pathChooser.addOption("Left Red Tarmac", m_redLeft);
         pathChooser.addOption("Right Red Tarmac", m_redRight);
+        pathChooser.addOption("Shoot & Offline", m_offLine);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         // Configure the button bindings
