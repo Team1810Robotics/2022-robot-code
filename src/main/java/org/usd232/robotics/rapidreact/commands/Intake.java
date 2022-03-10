@@ -28,12 +28,12 @@ public class Intake extends CommandBase {
     public void execute() {
         if (right) {
             intakeSubsystem.rightPneumatic(true);
-            intakeSubsystem.rightMotor(!xbox.getBackButtonPressed());
+            intakeSubsystem.rightMotor(!xbox.getBackButton());
             xbox.setRumble(RumbleType.kRightRumble, 1.0);
             xbox.setRumble(RumbleType.kLeftRumble, 1.0);
         } else {
             intakeSubsystem.leftPneumatic(true);
-            intakeSubsystem.leftMotor(!xbox.getBackButtonPressed());
+            intakeSubsystem.leftMotor(!xbox.getBackButton());
             xbox.setRumble(RumbleType.kRightRumble, 1.0);
             xbox.setRumble(RumbleType.kLeftRumble, 1.0);
         } 
