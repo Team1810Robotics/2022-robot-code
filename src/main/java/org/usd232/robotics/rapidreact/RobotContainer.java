@@ -155,7 +155,7 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
-        ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem), true); // TODO: Test
+        ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem, 1.0), true); // TODO: Test
         ManipulatorXbox_X.toggleWhenPressed(new LimelightOn(m_visionSubsystem), true);  // FIXME later
 
         ManipulatorXbox_TriggerL.whenHeld(new Target(m_driveSubsystem, m_visionSubsystem), true);

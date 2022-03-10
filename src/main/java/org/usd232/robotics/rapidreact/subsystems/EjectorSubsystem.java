@@ -10,24 +10,32 @@ import static org.usd232.robotics.rapidreact.Constants.EjectorConstants;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorSensorV3;
 
+import org.usd232.robotics.rapidreact.PicoColorSensor;
 import org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
+import org.usd232.robotics.rapidreact.PicoColorSensor.RawColor;
+import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.I2C;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class EjectorSubsystem extends SubsystemBase {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     */
+    //@SuppressWarnings("unused")
+    private static final Logger LOG = new Logger();
     
     private static final Solenoid ballEjector = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
     public static final Solenoid lockSolenoid = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
 
     public static final DigitalInput ejectorLS = new DigitalInput(EjectorConstants.EJECTOR_LS);
 
-    private final static I2C.Port i2cPort = I2C.Port.kMXP;
-    private final static ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+    private static final PicoColorSensor m_colorSensor = new PicoColorSensor();
+
     private final static ColorMatch colorMatcher = new ColorMatch();
     private static ColorMatchResult match;
 
@@ -51,8 +59,20 @@ public class EjectorSubsystem extends SubsystemBase {
     }
 
     /** @return the current color seen by the Photo Electric color sensor (color sensor) */
-    public static Color getCurrentColor() {
-        return colorSensor.getColor();
+    public static RawColor getColor() {
+        if (m_colorSensor.isSensor0Connected()) {
+            return m_colorSensor.getRawColor0();
+
+        } else if (m_colorSensor.isSensor1Connected()) {
+            return m_colorSensor.getRawColor1();
+
+        } else if (m_colorSensor.isSensor2Connected()) {
+            return m_colorSensor.getRawColor2();
+
+        }
+
+        LOG.warn("No Color Sensor Connected");
+        return m_colorSensor.getRawColor0();
     }
 
     /** 
@@ -65,7 +85,7 @@ public class EjectorSubsystem extends SubsystemBase {
         colorMatcher.addColorMatch(BlueBall);
         colorMatcher.addColorMatch(RedBall);
 
-        match = colorMatcher.matchClosestColor(getCurrentColor());
+        match = colorMatcher.matchClosestColor(new Color(getColor().red, getColor().green, getColor().blue));
 
         if (match.color == BlueBall && match.confidence >= 60.0) {
             return "Blue";
@@ -78,9 +98,9 @@ public class EjectorSubsystem extends SubsystemBase {
 
     /** Color Debug Stuff */
     public static void colorDebug() {
-        SmartDashboard.putNumber("Red", getCurrentColor().red);
-        SmartDashboard.putNumber("Green", getCurrentColor().green);
-        SmartDashboard.putNumber("Blue", getCurrentColor().blue);
+        SmartDashboard.putNumber("Red", getColor().red);
+        SmartDashboard.putNumber("Green", getColor().green);
+        SmartDashboard.putNumber("Blue", getColor().blue);
         SmartDashboard.putNumber("Confidence", match.confidence);
         SmartDashboard.putString("Detected Color", getMatchedBallColor());
     }

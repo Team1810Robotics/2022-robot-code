@@ -8,17 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Shooter extends CommandBase {
 
-    ShooterSubsystem shooterSubsystem;
+    private final ShooterSubsystem shooterSubsystem;
+    private final double percent;
     
-    public Shooter(ShooterSubsystem shooterSubsystem) {
+    public Shooter(ShooterSubsystem shooterSubsystem, double percent) {
         this.shooterSubsystem = shooterSubsystem;
+        this.percent = percent;
         addRequirements(shooterSubsystem);
     }
 
 
     @Override
     public void execute() {
-        shooterSubsystem.shooterOn();
+        shooterSubsystem.shooterOn(percent);
         ShooterSubsystem.manualShooting = true;
     }
 

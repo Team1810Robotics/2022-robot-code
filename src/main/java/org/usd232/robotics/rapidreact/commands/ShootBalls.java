@@ -47,7 +47,7 @@ public class ShootBalls extends CommandBase {
             ejectorSubsystem.resetEjecter();
         }
 
-        // shooterSubsystem.shooterOn();   // TODO: test
+        // shooterSubsystem.shooterOn(1.0);   // TODO: test
     }
 
     @Override

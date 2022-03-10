@@ -26,7 +26,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final RelativeEncoder shooterEncoder = shooter.getEncoder();
     private static final SparkMaxPIDController pidController = shooter.getPIDController();
     private static final double setPoint = ShooterConstants.MAX_HOLD_VELOCITY * 1.0;
-    private static boolean on = false;
     public static boolean manualShooting = false;
 
     public ShooterSubsystem() {
@@ -38,24 +37,29 @@ public class ShooterSubsystem extends SubsystemBase {
         pidController.setOutputRange(ShooterConstants.MIN_OUTUT, ShooterConstants.MAX_OUTPUT);
     }
 
-    /** Turns on the shooter at max speed */
-    public void shooterOn() {
-        shooter.set(0.435);
-        on = true;
+    /** 
+     * Turns on the shooter at max speed 
+     * @param percent
+     */
+    public void shooterOn(double percent) {
+        if (percent > 1) {
+            percent = 1;
+        } else if (percent < -1) {
+            percent = -1;
+        }
+        shooter.set(percent); // 0.435 good for auto
     }
 
 
     /** Holds the shooter at its max speed with a PID controller. Doesn't work as of now. */
     public static void holdShooter() {
-        if (on /* && getEncoderVelocity() <= ShooterConstants.MIN_VELOCITY */) {
             pidController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
-        }
     }
 
     /** Holds the shooter at its minimum velocity when it's not being used. */
     public void manualHoldShooter() {
         if (getEncoderVelocity() <= ShooterConstants.MIN_VELOCITY) {
-            this.shooterOn();
+            this.shooterOn(1.0);
             LOG.info("Shooter On");
         } else if (getEncoderVelocity() >= ShooterConstants.MIN_VELOCITY + 100) {
             this.shooterOff();  // let it coast
@@ -68,7 +72,6 @@ public class ShooterSubsystem extends SubsystemBase {
         shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
         shooter.set(0);
         shooterEncoder.setPosition(0);
-        on = false;
     }
 
     /** @return The position of the encoders. */
