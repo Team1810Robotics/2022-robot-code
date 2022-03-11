@@ -80,7 +80,7 @@ public class RobotContainer {
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
-    // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
+    // DONT BIND private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
     // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
     
@@ -158,12 +158,11 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
-        ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem, 1.0), true); // TODO: Test
+        ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem, 1.0), true);
+        ManipulatorXbox_TriggerL.whenHeld(new Target(m_driveSubsystem, m_visionSubsystem));
         ManipulatorXbox_X.toggleWhenPressed(new LimelightOn(m_visionSubsystem), true);  // FIXME later
 
-        ManipulatorXbox_TriggerL.whenHeld(new Target(m_driveSubsystem, m_visionSubsystem), true);
-
-        ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem, manipulatorController));
+        ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem, manipulatorController), true);
 
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);

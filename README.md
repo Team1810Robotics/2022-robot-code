@@ -16,20 +16,20 @@
 
 #### Xbox
 
-| Button | Purpose      |
-| -----  | -----        |
-| LT     |              |
-| RT     | LL On        |
-| LB     | Left Intake  |
-| RB     | Right Intake |
-| LStick |              |
-| RStick |              |
-| Start  | Intake Mod   |
-| Back   |              |
-| Y      | Hood (F)     |
-| X      | Targit       |
-| A      | Hood (B)     |
-| B      | Auger        |
+| Button | Purpose           |
+| -----  | -----             |
+| LT     | Targit            |
+| RT     | Toggle Shooter    |
+| LB     | Left Intake       |
+| RB     | Right Intake      |
+| LStick |                   |
+| RStick |                   |
+| Start  |                   |
+| Back   | Intake/auger Mod  |
+| Y      | Hood (F)          |
+| X      | LL Toggle         |
+| A      | Hood (B)          |
+| B      | Auger/Shoot Balls |
 
 #### Joystick
 
