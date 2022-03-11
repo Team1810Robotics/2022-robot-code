@@ -1,7 +1,9 @@
 package org.usd232.robotics.rapidreact.commands;
 
 import static org.usd232.robotics.rapidreact.Constants.HoodConstants;
+
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -12,8 +14,8 @@ public class HoodTarget extends CommandBase {
     private boolean forward;
 
 
-    public HoodTarget(HoodSubsystem hoodSubsystem, double targitValue) {
-        this.targetValue = targitValue;
+    public HoodTarget(HoodSubsystem hoodSubsystem) {
+        this.targetValue = VisionSubsystem.getHoodDistance();
         this.hoodSubsystem = hoodSubsystem;
     }
 

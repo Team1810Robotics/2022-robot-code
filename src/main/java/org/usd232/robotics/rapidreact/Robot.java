@@ -95,16 +95,6 @@ public class Robot extends TimedRobot {
         /* if(!ShooterSubsystem.manualShooting){
             shooterSubsystem.manualHoldShooter();   // TODO: Test
         } */
-
-        /* new Thread(() -> {
-            try {
-                LOG.info("Moved to a new thread");
-                // Put formula here
-                
-            } catch (Exception e) {
-                LOG.error("Failed to move to a new thread: " + e);
-            }
-        }).start(); */
         
         CommandScheduler.getInstance().run();
     }

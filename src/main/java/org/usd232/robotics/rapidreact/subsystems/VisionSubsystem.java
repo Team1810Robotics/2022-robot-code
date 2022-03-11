@@ -76,6 +76,19 @@ public class VisionSubsystem extends SubsystemBase {
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     }
 
+    public static double getHoodDistance() {
+        new Thread(() -> {
+            try {
+                // hoodDistance = formula here;
+
+            } catch (Exception e) {
+                LOG.error(e);
+            }
+        }).run();
+
+        return hoodDistance;
+    }
+
     public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html
 
         // getEntry("ledMode")
