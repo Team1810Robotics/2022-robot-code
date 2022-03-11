@@ -6,21 +6,15 @@
 
 ---
 
-* Uses Swerve Drive Specialties's MK4 with L2 gear ratio with falcons as the motors.
-  * (<https://www.swervedrivespecialties.com/products/mk4-swerve-module?variant=39376675045489>)
+* Uses [Swerve Drive Specialties's MK4](<https://www.swervedrivespecialties.com/products/mk4-swerve-module?variant=39376675045489>) with L2 gear ratio with falcons as the motors.
 
----
-
-* Electrical / Programming Wiring Chart.
-  * (<https://docs.google.com/spreadsheets/d/1KCYpCz1mNoaCfkUa-aLaaVEg1ivP0he2kCzS-OsVOjM/edit?usp=sharing>)
-
-    It is restricted so only added people can open the sheets.
+* Electrical / Programming [Wiring Chart](<https://docs.google.com/spreadsheets/d/1KCYpCz1mNoaCfkUa-aLaaVEg1ivP0he2kCzS-OsVOjM/edit?usp=sharing>). (It is restricted so only added people can open the sheets.)
 
 ---
 
 ### Controller Bindings
 
-### Xbox
+#### Xbox
 
 | Button | Purpose      |
 | -----  | -----        |
@@ -37,7 +31,7 @@
 | A      | Hood (B)     |
 | B      | Auger        |
 
-### Joystick
+#### Joystick
 
 | Move - Button  | Purpose | | Rotation - Button | Purpose   |
 | -----          | -----   |-| -----             | -----     |
@@ -56,7 +50,7 @@
 
 ---
 
-### CAN
+#### CAN
 
 | ID     | Mechanism                    | Being Controlled   | Controller | Wire Num |
 | -----  | -----                        | -----              | -----      | -----    |
@@ -77,7 +71,7 @@
 | 17     | REV Pneumatics Hub           |                    |            | 28       |
 | 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |
 
-### Relay
+#### Relay
 
 | Port |  Mechanism            | Being Controlled   | Controller  |
 | -----| -----                 | -----              | -----       |
@@ -86,7 +80,7 @@
 | 02   | Hood - Hood Movement  | 1 Snowblower       | Relay Spike |
 | 03   |                       |                    |             |
 
-### PWM
+#### PWM
 
 | Port  | Mechanism | Being Controlled | Controller |
 | ----- | -----     | -----            | -----      |
@@ -101,7 +95,7 @@
 | 08    |           |                  |            |
 | 09    |           |                  |            |
 
-### DIO
+#### DIO
 
 |       | Mechanism  |
 | ----- | -----      |
@@ -116,7 +110,7 @@
 | 08    |            |
 | 09    | Hood LS    |
 
-### Analog In
+#### Analog In
 
 |           | Mechanism |
 | -----     | -----     |
