@@ -1,7 +1,5 @@
 package org.usd232.robotics.rapidreact.commands;
 
-import org.usd232.robotics.rapidreact.log.Logger;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Axis;
@@ -10,12 +8,6 @@ import static edu.wpi.first.wpilibj.XboxController.Axis;
 
 /** Used to turn the Xbox LT & RT from analog to Digital */
 public class XboxTrigger extends Button {
-    /**
-     * The logger.
-     * 
-     * @since 2018
-     */
-    private static final Logger LOG = new Logger();
     
     private XboxController xbox;
     private static final double minValue = 0.1;
@@ -28,12 +20,6 @@ public class XboxTrigger extends Button {
 
     @Override
     public boolean get() {
-
-        /* Debug Stuff */
-        if (xbox.getRawAxis(hand.value) > minValue) {
-            LOG.debug("Xbox %s returning TRUE", hand.toString());
-        }
-
         return xbox.getRawAxis(hand.value) > minValue;
     }
     

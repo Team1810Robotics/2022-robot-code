@@ -7,65 +7,62 @@ import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class HoodTarget extends CommandBase {
+public class HoodTarget extends CommandBase { 
 
-    private final double targetValue;
     private final HoodSubsystem hoodSubsystem;
-    private boolean forward;
+    private final VisionSubsystem visionSubsystem;
+    private double[] targetValues;
+    private boolean stop;
 
-
-    public HoodTarget(HoodSubsystem hoodSubsystem) {
-        this.targetValue = VisionSubsystem.getHoodDistance();
-        this.hoodSubsystem = hoodSubsystem;
+    public HoodTarget(HoodSubsystem hoodSubsystem, VisionSubsystem visionSubsystem) {
+        this.hoodSubsystem =  hoodSubsystem;
+        this.visionSubsystem = visionSubsystem;
     }
-
-
-    /** Says whether the hood should move forward or backward based on the current encoder */
+    
     @Override
     public void initialize() {
-        if (targetValue > HoodSubsystem.hoodEncoder.getDistance()) {
-            forward = true;
-        } else {
-            forward = false;
+        if ((visionSubsystem.getTargetingValues()[0] - 100) >= HoodSubsystem.hoodEncoder.getDistance() ||
+        (visionSubsystem.getTargetingValues()[0] + 100) <= HoodSubsystem.hoodEncoder.getDistance()) {
+            this.stop = true;
         }
     }
-
-
-    /** Moves the hood forward or backward based on the boolean in initialize() */
+    
     @Override
     public void execute() {
-
-        // Don't start the hood if it's already within the targetValue 
-        if (HoodSubsystem.hoodEncoder.getDistance() >= (targetValue + 1) 
-            || HoodSubsystem.hoodEncoder.getDistance() <= (targetValue - 1)) {
-                return;
+        targetValues = visionSubsystem.getTargetingValues();
+        
+        if (targetValues[0] >= 0) {
+            targetValues[0] = 0;
         }
 
-        if (forward) {
-            hoodSubsystem.forwardHood();
-        } else {
-            hoodSubsystem.reverseHood();
+        if (visionSubsystem.targetValid() >= 1 && !stop) {
+            if (targetValues[0] > HoodSubsystem.hoodEncoder.getDistance()) {
+                hoodSubsystem.forwardHood();
+            } else if (targetValues[0] < HoodSubsystem.hoodEncoder.getDistance()) {
+                hoodSubsystem.reverseHood();
+            }  
         }
     }
 
     @Override
     public boolean isFinished() {
+        if ((targetValues[0] - 100) >= HoodSubsystem.hoodEncoder.getDistance() ||
+                (targetValues[0] + 100) <= HoodSubsystem.hoodEncoder.getDistance()) {
+            return true;
+        }
+
+        if (targetValues[0] == HoodSubsystem.hoodEncoder.getDistance()) {
+            return true;
+        }
+
         if (HoodSubsystem.hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
             return true;
         }
 
-        if (HoodSubsystem.hoodLS.get()) {
+        /* if (HoodSubsystem.hoodLS.get()) {
             return true;
-        }
-
-        if (HoodSubsystem.hoodEncoder.getDistance() >= (targetValue + 1)) {
-            return true;
-        }
-
-        if (HoodSubsystem.hoodEncoder.getDistance() <= (targetValue - 1)) {
-            return true;
-        }
-
+        } */
+        
         return false;
     }
 

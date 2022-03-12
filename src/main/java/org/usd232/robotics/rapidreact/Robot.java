@@ -80,7 +80,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
-        SmartDashboard.putNumber("Calculated Target Distance", m_visionSubsystem.getTargetDistance());
+        SmartDashboard.putNumber("Hood Distance", m_visionSubsystem.getTargetingValues()[0]);
+        SmartDashboard.putNumber("Cal Shooter Speed", m_visionSubsystem.getTargetingValues()[1]);
         EjectorSubsystem.colorDebug();
         
         /** Enable compressor closed loop control using analog input. */

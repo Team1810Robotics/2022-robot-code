@@ -36,9 +36,9 @@ public class ShootBalls extends CommandBase {
 
         if (currentAlliance != Alliance.Invalid) {  // Checks if the current alliance is valid (aka should use the color sensor)
             if (ballColor == "Red" && currentAlliance == Alliance.Blue) {
-                ejectorSubsystem.eject();
+                // ejectorSubsystem.eject();
             } else if (ballColor == "Blue" && currentAlliance == Alliance.Red) {
-                ejectorSubsystem.eject();
+                // ejectorSubsystem.eject();
             }
         }
 

@@ -24,6 +24,7 @@ public class VisionSubsystem extends SubsystemBase {
     public static boolean OnOffLL;
 
     public static double hoodDistance;
+    public static double shooterSpeed;
 
     /** Uses the tangent to find the distance from the target plane */
     public double getTargetDistance() {
@@ -31,14 +32,10 @@ public class VisionSubsystem extends SubsystemBase {
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
 
             m_distance = (VisionConstants.TARGET_HEIGHT - VisionConstants.ROBOT_HEIGHT)
-                    / Math.abs(Math.tan(VisionConstants.LIME_LIGHT_MOUNT_ANGLE + ty));
+                    / (Math.tan(VisionConstants.LIME_LIGHT_MOUNT_ANGLE + ty));
             return m_distance;
     }
-    
-    /** @return the distance of the Limelight to the center of the target */
-    public double getTargetDistanceOffset() {
-        return (this.getTargetDistance() + 0.678);
-    }
+
 
     /** Turns the LimeLight On */
     public void limeLightOn() {
@@ -76,17 +73,22 @@ public class VisionSubsystem extends SubsystemBase {
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     }
 
-    public static double getHoodDistance() {
+    /**
+     * gets the targeting value
+     * hoodDistance[0] and shooterSpeed[1]
+     * @return array contaning the calculated hoodDistance and the shooterSpeed
+     */
+    public double[] getTargetingValues() {
         new Thread(() -> {
             try {
-                // hoodDistance = formula here;
-
+                hoodDistance = (-89.2857 * Math.pow(targetYOffset(), 2)) - (2389.29 * targetYOffset()) - 15814.3;
+                shooterSpeed = 1.0;
             } catch (Exception e) {
                 LOG.error(e);
             }
         }).run();
 
-        return hoodDistance;
+        return new double[] {hoodDistance, shooterSpeed};
     }
 
     public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html

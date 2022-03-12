@@ -19,13 +19,13 @@ public class Shiver extends SequentialCommandGroup {
                 driveSubsystem.resetOdometry(trajectory1.getInitialPose());
                 driveSubsystem.zeroGyroscope();
             }),
-            new InstantCommand(() -> intakeSubsystem.intakeExhaust(true)),
+            // new InstantCommand(() -> intakeSubsystem.intakeExhaust(true)),
             new InstantCommand(() -> shooterSubsystem.shooterOn(0.435)),
             new WaitCommand(2), // TODO: Test
             new InstantCommand(() -> augerSubsystem.elevatorOn(true)),
             new WaitCommand(5), // TODO: Test
             new InstantCommand(() -> augerSubsystem.elevatorOff()),
-            new InstantCommand(() -> intakeSubsystem.intakeExhaust(false)),
+            // new InstantCommand(() -> intakeSubsystem.intakeExhaust(false)),
             driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("Shiver")
             
         );

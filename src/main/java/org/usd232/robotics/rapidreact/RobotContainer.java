@@ -8,10 +8,10 @@ import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.commands.ShootBalls;
 import org.usd232.robotics.rapidreact.commands.Shooter;
 import org.usd232.robotics.rapidreact.commands.Hood;
+import org.usd232.robotics.rapidreact.commands.HoodTarget;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.LimelightOn;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
-import org.usd232.robotics.rapidreact.commands.Target;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 /* end of Commands */
 
@@ -20,6 +20,7 @@ import org.usd232.robotics.rapidreact.commands.autonomous.DriveDistance;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueLeftQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueRightQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLine;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OneMeterPath;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedLeftQuad;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedRightQuad;
@@ -71,7 +72,7 @@ public class RobotContainer {
     private final XboxController manipulatorController = LOG.catchAll(() -> new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
+    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
     private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
@@ -79,8 +80,8 @@ public class RobotContainer {
     private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
-    // private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
-    // DONT BIND private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
+    // DONT BIND private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
+    private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
     // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
     
@@ -92,7 +93,7 @@ public class RobotContainer {
     // private final JoystickButton movementJoystick_Button6 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 6));
     // private final JoystickButton movementJoystick_Button7 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 7));
     // private final JoystickButton movementJoystick_Button8 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 8));
-    // private final JoystickButton movementJoystick_Button9 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 9));
+    private final JoystickButton movementJoystick_Button9 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 9));
     // private final JoystickButton movementJoystick_Button10 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 10));
     // private final JoystickButton movementJoystick_Button11 = LOG.catchAll(() -> new JoystickButton(movementJoystick, 11));
     
@@ -117,6 +118,7 @@ public class RobotContainer {
     private final Command m_redRight = LOG.catchAll(() -> new RedRightQuad(m_driveSubsystem));
     private final Command m_OneMeter = LOG.catchAll(() -> new OneMeterPath(m_driveSubsystem));
     private final Command m_offLine = LOG.catchAll(() -> new OffLine(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
+    private final Command m_offLineReversed = LOG.catchAll(() -> new OfflineReversed(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
 
     /** Turns joystick inputs into speed variables */
     public RobotContainer() {
@@ -142,6 +144,7 @@ public class RobotContainer {
         pathChooser.addOption("Left Red Tarmac", m_redLeft);
         pathChooser.addOption("Right Red Tarmac", m_redRight);
         pathChooser.addOption("Shoot & Offline", m_offLine);
+        pathChooser.addOption("Shoot & Offline Reversed", m_offLineReversed);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         // Configure the button bindings
@@ -157,9 +160,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
+        movementJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
         ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem, 1.0), true);
-        ManipulatorXbox_TriggerL.whenHeld(new Target(m_driveSubsystem, m_visionSubsystem));
+        ManipulatorXbox_Start.whenHeld(new HoodTarget(m_hoodSubsystem, m_visionSubsystem));
         ManipulatorXbox_X.toggleWhenPressed(new LimelightOn(m_visionSubsystem), true);  // FIXME later
 
         ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem, manipulatorController), true);

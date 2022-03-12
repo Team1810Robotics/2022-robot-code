@@ -38,25 +38,25 @@ public final class Constants {
         public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 1;
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 2;
         public static final int FRONT_LEFT_MODULE_STEER_CANCODER = 10;
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(328.6);
+        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(327.98);
         
         // Front right swerve module
         public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 3;
         public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 4;
         public static final int FRONT_RIGHT_MODULE_STEER_CANCODER = 9;
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(10.8);
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(9.76);
         
         // Back left swerve module
         public static final int BACK_LEFT_MODULE_STEER_MOTOR = 7;
         public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 8;
         public static final int BACK_LEFT_MODULE_STEER_CANCODER = 12;
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(222.0);
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(222.62);
         
         // Back right swerve module
         public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 5;
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 6;
         public static final int BACK_RIGHT_MODULE_STEER_CANCODER = 11;
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(91.8);
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(93.60);
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
           // Front left
@@ -134,7 +134,7 @@ public final class Constants {
         public static final int PH_CAN_ID = 17;
 
         public static final double MAX_TANK_PSI = 120;
-        public static final double MIN_TANK_PSI = 100;
+        public static final double MIN_TANK_PSI = 110;
     }
     
     public static final class IntakeConstants {

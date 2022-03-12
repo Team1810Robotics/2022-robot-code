@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class OffLine extends SequentialCommandGroup {
-    public OffLine(DriveSubsystem driveSubsystem, ShooterSubsystem shooterSubsystem, AugerSubsystem augerSubsystem) {
-        Trajectory trajectory1 = driveSubsystem.loadTrajectoryFromFile("offLine");
+public class OfflineReversed extends SequentialCommandGroup {
+    public OfflineReversed(DriveSubsystem driveSubsystem, ShooterSubsystem shooterSubsystem, AugerSubsystem augerSubsystem) {
+        Trajectory trajectory1 = driveSubsystem.loadTrajectoryFromFile("offLineReversed");
 
         addCommands(
             new InstantCommand(() -> {
@@ -22,7 +22,7 @@ public class OffLine extends SequentialCommandGroup {
             new InstantCommand(() -> augerSubsystem.elevatorOn(true)),
             new WaitCommand(5), // TODO: Test
             new InstantCommand(() -> augerSubsystem.elevatorOff()),
-            driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("offLine")
+            driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("offLineReversed")
         );
     }
 }
