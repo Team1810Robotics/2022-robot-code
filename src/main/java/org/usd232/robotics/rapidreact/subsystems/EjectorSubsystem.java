@@ -40,19 +40,19 @@ public class EjectorSubsystem extends SubsystemBase {
     private static ColorMatchResult match;
 
     /** Color of the Blue Ball */
-    private final static Color BlueBall = new Color(0.0, 0.0, 0.7019607844);               // TODO: Test Color
+    private final static Color BlueBall = new Color(0.0, 0.0, 0.7019607844);               // FIXME
     /** Color of the Red Ball */
-    private final static Color RedBall = new Color(0.9294117648, 0.0, 0.1411764706);       // TODO: Test Color
+    private final static Color RedBall = new Color(0.9294117648, 0.0, 0.1411764706);       // FIXME
 
     /** Opens the ejector hatch */
-    public void eject() {           // TODO: Test
+    public void eject() {           // FIXME
         lockSolenoid.set(true);
         new WaitCommand(0.5);
         ballEjector.set(true); 
     }
 
     /** closes the ejector hatch */
-    public void resetEjecter() {    // TODO: Test
+    public void resetEjecter() {    // FIXME
         ballEjector.set(false); 
         new WaitCommand(1);
         lockSolenoid.set(false);

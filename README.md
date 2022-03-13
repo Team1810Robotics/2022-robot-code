@@ -16,37 +16,37 @@
 
 #### Xbox
 
-| Button | Purpose           |
-| -----  | -----             |
-| LT     | Targit            |
-| RT     | Toggle Shooter    |
-| LB     | Left Intake       |
-| RB     | Right Intake      |
-| LStick |                   |
-| RStick |                   |
-| Start  |                   |
-| Back   | Intake/auger Mod  |
-| Y      | Hood (F)          |
-| X      | LL Toggle         |
-| A      | Hood (B)          |
-| B      | Auger/Shoot Balls |
+| Button | Purpose            |
+| -----  | -----              |
+| LT     | Left Intake Pnue.  |
+| RT     | Right Intake Pnue. |
+| LB     | Left Intake Motor  |
+| RB     | Right Intake Motor |
+| LStick |                    |
+| RStick |                    |
+| Start  |                    |
+| Back   | Intake/auger Mod   |
+| Y      | Hood (F)           |
+| X      |                    |
+| A      | Hood (B)           |
+| B      | Auger              |
 
 #### Joystick
 
-| Move - Button  | Purpose | | Rotation - Button | Purpose   |
-| -----          | -----   |-| -----             | -----     |
-| Trigger        |         | | Trigger           |           |
-| 1              |         | | 1                 |           |
-| 2              |         | | 2                 |           |
-| 3              |         | | 3                 |           |
-| 4              |         | | 4                 |           |
-| 5              |         | | 5                 |           |
-| 6              |         | | 6                 |           |
-| 7              |         | | 7                 |           |
-| 8              |         | | 8                 |           |
-| 9              |         | | 9                 | Zero Gyro |
-| 10             |         | | 10                |           |
-| 11             |         | | 11                |           |
+| Move - Button  | Purpose   | | Rotation - Button | Purpose   |
+| -----          | -----     |-| -----             | -----     |
+| Trigger        |           | | Trigger           |           |
+| 1              |           | | 1                 |           |
+| 2              |           | | 2                 |           |
+| 3              |           | | 3                 |           |
+| 4              |           | | 4                 |           |
+| 5              |           | | 5                 |           |
+| 6              |           | | 6                 |           |
+| 7              |           | | 7                 |           |
+| 8              |           | | 8                 |           |
+| 9              | Zero Gyro | | 9                 | Zero Gyro |
+| 10             |           | | 10                |           |
+| 11             |           | | 11                |           |
 
 ---
 

@@ -79,14 +79,42 @@ public class VisionSubsystem extends SubsystemBase {
      * @return array contaning the calculated hoodDistance and the shooterSpeed
      */
     public double[] getTargetingValues() {
-        new Thread(() -> {
-            try {
-                hoodDistance = (-89.2857 * Math.pow(targetYOffset(), 2)) - (2389.29 * targetYOffset()) - 15814.3;
-                shooterSpeed = 1.0;
-            } catch (Exception e) {
-                LOG.error(e);
-            }
-        }).run();
+        if (targetValid() >= 1) {
+            new Thread(() -> {
+                try {
+                    // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
+                    hoodDistance = (-89.2857 * Math.pow(targetYOffset(), 2)) - (2389.29 * targetYOffset()) - 15814.3;
+
+                    // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
+                    hoodDistance = (hoodDistance >= 0) ? 0 : hoodDistance;
+
+                    // If the hood value is already in the + or - 100 range of the target dont tell it to move
+                    hoodDistance = ((hoodDistance - 100) >= HoodSubsystem.hoodEncoder.getDistance() 
+                        || (hoodDistance + 100) <= HoodSubsystem.hoodEncoder.getDistance()) ? 0 : hoodDistance;
+
+                    // Jank
+                    if (targetYOffset() > 1.5) {
+                        shooterSpeed = 0.435;
+                    } else if (targetYOffset() < 18.0 && targetYOffset() > -4) {
+                        shooterSpeed = 0.5;
+                    } else if (targetYOffset() < -4 && targetYOffset() > -8.5) {
+                        shooterSpeed = 0.6;
+                    } else if (targetYOffset() < -8.5 && targetYOffset() > -12) {
+                        shooterSpeed = 0.75;
+                    } else if (targetYOffset() <= -12) {
+                        shooterSpeed = 1.0;
+                    } else {
+                        shooterSpeed = 0.5;
+                        if (targetValid() <= 1) {
+                            LOG.warn("Shooter Speed unmatched");
+                        }
+                    }
+
+                } catch (Exception e) {
+                    LOG.error(e);
+                }
+            }).run();
+        }
 
         return new double[] {hoodDistance, shooterSpeed};
     }

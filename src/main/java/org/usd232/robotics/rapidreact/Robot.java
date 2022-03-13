@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
 
     private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
     private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
-    // private final HoodSubsystem m_hoodSubsystem = new HoodSubsystem();
+    private final HoodSubsystem m_hoodSubsystem = new HoodSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -50,10 +50,10 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         
         // Turns Limelight off on startup
-        m_visionSubsystem.limeLightOff();
+        m_visionSubsystem.limeLightOn();
         
         // Resets the hood on startup (could be annoying during testing)
-        // HoodSubsystem.resetHood(); // TODO: notice me 
+        m_hoodSubsystem.resetHood();
         
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
@@ -69,8 +69,15 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-        // Turns shooter on (Wow).
-        // FIXME: m_shooterSubsystem.shooterOn();
+
+        if (m_visionSubsystem.targetValid() >= 1) {
+            // TODO: Sets the shooter to Calculated target value
+            m_shooterSubsystem.shooterOn(m_visionSubsystem.getTargetingValues()[1]);
+
+            // TODO: Sets the hood to Calculated target value
+            m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]);
+        }
+
         
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
@@ -81,21 +88,11 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
         SmartDashboard.putNumber("Hood Distance", m_visionSubsystem.getTargetingValues()[0]);
-        SmartDashboard.putNumber("Cal Shooter Speed", m_visionSubsystem.getTargetingValues()[1]);
+        SmartDashboard.putNumber("Calc Shooter Speed", m_visionSubsystem.getTargetingValues()[1]);
         EjectorSubsystem.colorDebug();
         
         /** Enable compressor closed loop control using analog input. */
         m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
-        
-
-        // Should apply the value given in ShuffleBoard to the hood
-        // new HoodTarget(m_hoodSubsystem, SmartDashboard.getNumber("Hood Encoder Control", 0)); // TODO: Test
-
-        // Manual way to hold speed (maybe.)
-        // https://drive.google.com/file/d/1Mhkmg6CINcqzfc9p3ie6-v02ha7aCzSx/view?usp=sharing
-        /* if(!ShooterSubsystem.manualShooting){
-            shooterSubsystem.manualHoldShooter();   // TODO: Test
-        } */
         
         CommandScheduler.getInstance().run();
     }
@@ -104,9 +101,9 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         // Turns Limelight off on disable
-        // m_visionSubsystem.limeLightOff();
+        m_visionSubsystem.limeLightOff();
         
-        // Turn off shooter motor
+        // Turn off shooter motor on disable
         m_shooterSubsystem.shooterOff();
     }
     

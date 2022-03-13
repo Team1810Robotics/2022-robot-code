@@ -157,11 +157,11 @@ public final class Constants {
         public static final int MOTOR_PORT = 14;
 
         public static final int MAX_VELOCITY = 5328;
-        public static final int MIN_VELOCITY = 2500; // TODO : Test
+        public static final int MIN_VELOCITY = 2500;
         public static final int MAX_HOLD_VELOCITY = 5300;
         public static final int MIN_HOLD_VELOCITY = 5000;
 
-        public static final double kP = 0.001; // TODO: Test
+        public static final double kP = 0.001;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final int MIN_OUTUT = -1;
@@ -173,7 +173,7 @@ public final class Constants {
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static double FORWARD_HOOD_LIMIT = -2650; // (do not) FIXME jk do.
+        public static double FORWARD_HOOD_LIMIT = -2650;
     }
 
     public static final class AugerConstants {

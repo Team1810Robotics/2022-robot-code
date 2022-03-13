@@ -11,13 +11,15 @@ public class Intake extends CommandBase {
     
     private final IntakeSubsystem intakeSubsystem;
     private final XboxController xbox;
-    private boolean right;
+    private final boolean right;
+    private final boolean motors;
     
-    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean right) {
+    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean right, boolean motors) {
 
         this.intakeSubsystem = intakeSubsystem;
         this.xbox = xbox;
         this.right = right;
+        this.motors = motors;
         addRequirements(intakeSubsystem);
     }
 
@@ -26,17 +28,21 @@ public class Intake extends CommandBase {
 
     @Override
     public void execute() {
-        if (right) {
-            intakeSubsystem.rightPneumatic(true);
-            intakeSubsystem.rightMotor(!xbox.getBackButton());
-            xbox.setRumble(RumbleType.kRightRumble, 1.0);
-            xbox.setRumble(RumbleType.kLeftRumble, 1.0);
+        if (!motors) {
+            if (right) {
+                intakeSubsystem.rightPneumatic(true);
+            } else {
+                intakeSubsystem.leftPneumatic(true);
+            }
         } else {
-            intakeSubsystem.leftPneumatic(true);
-            intakeSubsystem.leftMotor(!xbox.getBackButton());
-            xbox.setRumble(RumbleType.kRightRumble, 1.0);
-            xbox.setRumble(RumbleType.kLeftRumble, 1.0);
-        } 
+            if (right) {
+                intakeSubsystem.rightMotor(!xbox.getBackButton());
+            } else {
+                intakeSubsystem.leftMotor(!xbox.getBackButton());
+            }
+            xbox.setRumble(RumbleType.kLeftRumble, 0.5);
+            xbox.setRumble(RumbleType.kRightRumble, 0.5);
+        }
     }
 
     @Override

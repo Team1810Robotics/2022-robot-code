@@ -55,8 +55,8 @@ public class DriveDistance extends CommandBase {
         this.ySpeed = ySpeed;
         this.rotationSpeed = rotationSpeed;
         this.rotationInitialValue = Math.abs(DriveSubsystem.getGyro());
-        this.xDistanceInitialValue = Math.abs(driveSubsystem.getTotalXTravel()); // TODO: This might not work.
-        this.yDistanceInitialValue = Math.abs(driveSubsystem.getTotalYTravel()); // TODO: This also might not work.
+        this.xDistanceInitialValue = Math.abs(driveSubsystem.getTotalXTravel());
+        this.yDistanceInitialValue = Math.abs(driveSubsystem.getTotalYTravel());
 
         addRequirements(driveSubsystem);
     }

@@ -1,19 +1,12 @@
 package org.usd232.robotics.rapidreact.commands;
 
 import static org.usd232.robotics.rapidreact.Constants.HoodConstants.*;
-import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Hood extends CommandBase {
-    /**
-     * The logger.
-     * 
-     * @since 2018/
-     */
-    //@SuppressWarnings("unused")
-    private static final Logger LOG = new Logger();
+
     private final HoodSubsystem hoodSubsystem;
     private boolean forward;
     
@@ -48,6 +41,5 @@ public class Hood extends CommandBase {
     @Override
     public void end(boolean inturrupted) {
         hoodSubsystem.stopHood();
-        LOG.info("Hood of stop");
     }
 }

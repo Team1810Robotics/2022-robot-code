@@ -1,30 +1,23 @@
 package org.usd232.robotics.rapidreact;
 
-import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
-import static org.usd232.robotics.rapidreact.Constants.OIConstants;
+import org.usd232.robotics.rapidreact.Constants.ModuleConstants;
+import org.usd232.robotics.rapidreact.Constants.OIConstants;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 /* Commands */
-import org.usd232.robotics.rapidreact.commands.ShootBalls;
-import org.usd232.robotics.rapidreact.commands.Shooter;
+import org.usd232.robotics.rapidreact.commands.Auger;
 import org.usd232.robotics.rapidreact.commands.Hood;
-import org.usd232.robotics.rapidreact.commands.HoodTarget;
 import org.usd232.robotics.rapidreact.commands.Intake;
-import org.usd232.robotics.rapidreact.commands.LimelightOn;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 /* end of Commands */
 
 /* Paths */
 import org.usd232.robotics.rapidreact.commands.autonomous.DriveDistance;
-import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueLeftQuad;
-import org.usd232.robotics.rapidreact.commands.autonomous.paths.BlueRightQuad;
-import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLine;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OneMeterPath;
-import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedLeftQuad;
-import org.usd232.robotics.rapidreact.commands.autonomous.paths.RedRightQuad;
 /* End of Paths */
+
 
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
@@ -33,7 +26,6 @@ import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
-import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 /* End of Subsystems */
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -64,7 +56,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem = LOG.catchAll(() -> new IntakeSubsystem());
     private final ShooterSubsystem m_shooterSubsystem = LOG.catchAll(() -> new ShooterSubsystem());
     private final HoodSubsystem m_hoodSubsystem = LOG.catchAll(() -> new HoodSubsystem());
-    private final VisionSubsystem m_visionSubsystem = LOG.catchAll(() -> new VisionSubsystem());
+    // private final VisionSubsystem m_visionSubsystem = LOG.catchAll(() -> new VisionSubsystem());
 
     /* Contollers */
     private final Joystick movementJoystick = LOG.catchAll(() -> new Joystick(OIConstants.MOVEMENT_JOYSTICK_PORT));
@@ -72,16 +64,16 @@ public class RobotContainer {
     private final XboxController manipulatorController = LOG.catchAll(() -> new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
+    private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
     private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
-    private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
+    // private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
     private final JoystickButton ManipulatorXbox_Y = LOG.catchAll(() -> new JoystickButton(manipulatorController, 4));
     private final JoystickButton ManipulatorXbox_LB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 5));
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // DONT BIND private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
-    private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
+    // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
     // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
     
@@ -112,12 +104,7 @@ public class RobotContainer {
 
     /* Auto Paths */
     private final Command m_driveDistance = LOG.catchAll(() -> new DriveDistance(m_driveSubsystem, -5, 0));
-    private final Command m_blueLeft = LOG.catchAll(() -> new BlueLeftQuad(m_driveSubsystem));
-    private final Command m_blueRight = LOG.catchAll(() -> new BlueRightQuad(m_driveSubsystem));
-    private final Command m_redLeft = LOG.catchAll(() -> new RedLeftQuad(m_driveSubsystem));
-    private final Command m_redRight = LOG.catchAll(() -> new RedRightQuad(m_driveSubsystem));
     private final Command m_OneMeter = LOG.catchAll(() -> new OneMeterPath(m_driveSubsystem));
-    private final Command m_offLine = LOG.catchAll(() -> new OffLine(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
     private final Command m_offLineReversed = LOG.catchAll(() -> new OfflineReversed(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
 
     /** Turns joystick inputs into speed variables */
@@ -139,11 +126,6 @@ public class RobotContainer {
         pathChooser.setDefaultOption("Null", new WaitCommand(0));
         pathChooser.addOption("Drive Back", m_driveDistance);
         pathChooser.addOption("One Meter Path", m_OneMeter);
-        pathChooser.addOption("Left Blue Tarmac", m_blueLeft);
-        pathChooser.addOption("Right Blue Tarmac", m_blueRight);
-        pathChooser.addOption("Left Red Tarmac", m_redLeft);
-        pathChooser.addOption("Right Red Tarmac", m_redRight);
-        pathChooser.addOption("Shoot & Offline", m_offLine);
         pathChooser.addOption("Shoot & Offline Reversed", m_offLineReversed);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
@@ -162,14 +144,12 @@ public class RobotContainer {
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
         movementJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
-        ManipulatorXbox_TriggerR.toggleWhenActive(new Shooter(m_shooterSubsystem, 1.0), true);
-        ManipulatorXbox_Start.whenHeld(new HoodTarget(m_hoodSubsystem, m_visionSubsystem));
-        ManipulatorXbox_X.toggleWhenPressed(new LimelightOn(m_visionSubsystem), true);  // FIXME later
+        ManipulatorXbox_B.whenHeld(new Auger(m_augerSubsystem, m_ejectorSubsystem, manipulatorController), true);
 
-        ManipulatorXbox_B.whenHeld(new ShootBalls(m_augerSubsystem, m_ejectorSubsystem, m_shooterSubsystem, manipulatorController), true);
-
-        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), true);
-        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), true);
+        ManipulatorXbox_TriggerR.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, false), true);
+        ManipulatorXbox_TriggerL.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, false), true);
+        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, true), true);
+        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, true), true);
 
         ManipulatorXbox_Y.whenHeld(new Hood(m_hoodSubsystem, true), true);
         ManipulatorXbox_A.whenHeld(new Hood(m_hoodSubsystem, false), true);

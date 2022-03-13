@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class AugerSubsystem extends SubsystemBase { // Motor controller test value: 1255
+public class AugerSubsystem extends SubsystemBase {
     
     private final static VictorSPX auger = new VictorSPX(VICTOR_ID);
 

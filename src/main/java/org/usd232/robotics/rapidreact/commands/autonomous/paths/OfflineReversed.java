@@ -18,9 +18,9 @@ public class OfflineReversed extends SequentialCommandGroup {
                 driveSubsystem.resetOdometry(trajectory1.getInitialPose());
             }),
             new InstantCommand(() -> shooterSubsystem.shooterOn(0.435)),
-            new WaitCommand(2), // TODO: Test
+            new WaitCommand(2),
             new InstantCommand(() -> augerSubsystem.elevatorOn(true)),
-            new WaitCommand(5), // TODO: Test
+            new WaitCommand(5),
             new InstantCommand(() -> augerSubsystem.elevatorOff()),
             driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("offLineReversed")
         );

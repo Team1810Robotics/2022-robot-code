@@ -2,21 +2,12 @@ package org.usd232.robotics.rapidreact.subsystems;
 
 import static org.usd232.robotics.rapidreact.Constants.HoodConstants;
 
-import org.usd232.robotics.rapidreact.log.Logger;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay; // Motor controller is a spike
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HoodSubsystem extends SubsystemBase {
-    /**
-     * The logger.
-     * 
-     * @since 2018/
-     */
-    //@SuppressWarnings("unused")
-    private static final Logger LOG = new Logger();
     
     private static final Relay hood = new Relay(HoodConstants.MOTOR_PORT, Relay.Direction.kBoth);
     public static final Encoder hoodEncoder = new Encoder(HoodConstants.HOOD_ENCODER_CHANNEL[1], HoodConstants.HOOD_ENCODER_CHANNEL[0]);
@@ -25,19 +16,16 @@ public class HoodSubsystem extends SubsystemBase {
     /** Makes the hood move forward */
     public void forwardHood() {
         hood.set(Relay.Value.kReverse);
-        LOG.info("Hood of forward");
     }
 
     /** Makes the hood stop moving*/
     public void stopHood() {
         hood.set(Relay.Value.kOff);
-        LOG.info("Hood of stop");
     }
 
     /** Makes the hood move backward */
     public void reverseHood() {
         hood.set(Relay.Value.kForward);
-        LOG.info("Hood of reverse");
         
     }    /** Sets the hood back to its default position */
     public void resetHood() {
@@ -47,6 +35,23 @@ public class HoodSubsystem extends SubsystemBase {
             }
             hood.set(Relay.Value.kOff);
             hoodEncoder.reset();
+        }
+    }
+
+    public void setHood(double target) {
+        boolean forward;
+        if (target >= hoodEncoder.getDistance()) {
+            forward = true;
+        } else if (target <= hoodEncoder.getDistance()) {
+            forward = false;
+        } else {
+            return;
+        }
+
+        if (forward) {
+            this.forwardHood();
+        } else {
+            this.reverseHood();
         }
     }
 
