@@ -11,11 +11,15 @@ public class HoodSubsystem extends SubsystemBase {
     
     private static final Relay hood = new Relay(HoodConstants.MOTOR_PORT, Relay.Direction.kBoth);
     public static final Encoder hoodEncoder = new Encoder(HoodConstants.HOOD_ENCODER_CHANNEL[1], HoodConstants.HOOD_ENCODER_CHANNEL[0]);
-    public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL); 
+    public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL);
+
+    private boolean forward;
 
     /** Makes the hood move forward */
     public void forwardHood() {
-        hood.set(Relay.Value.kReverse);
+        if (hoodEncoder.getDistance() <= HoodConstants.FORWARD_HOOD_LIMIT) {
+            hood.set(Relay.Value.kReverse);
+        }
     }
 
     /** Makes the hood stop moving*/
@@ -25,9 +29,12 @@ public class HoodSubsystem extends SubsystemBase {
 
     /** Makes the hood move backward */
     public void reverseHood() {
-        hood.set(Relay.Value.kForward);
-        
-    }    /** Sets the hood back to its default position */
+        if (!hoodLS.get()) {
+            hood.set(Relay.Value.kForward);
+        }
+    }
+
+    /** Sets the hood back to its default position */
     public void resetHood() {
         if (!hoodLS.get()) {
             while (!hoodLS.get()) {
@@ -37,9 +44,14 @@ public class HoodSubsystem extends SubsystemBase {
             hoodEncoder.reset();
         }
     }
-
+    
+    public void zeroEncoder() {
+        hoodEncoder.reset();
+    }
+    
     public void setHood(double target) {
-        boolean forward;
+        
+
         if (target >= hoodEncoder.getDistance()) {
             forward = true;
         } else if (target <= hoodEncoder.getDistance()) {
@@ -53,10 +65,6 @@ public class HoodSubsystem extends SubsystemBase {
         } else {
             this.reverseHood();
         }
-    }
-
-    public void zeroEncoder() {
-        hoodEncoder.reset();
     }
 
 }

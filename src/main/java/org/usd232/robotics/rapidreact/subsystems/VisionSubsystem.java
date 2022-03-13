@@ -2,6 +2,7 @@ package org.usd232.robotics.rapidreact.subsystems;
 
 import static org.usd232.robotics.rapidreact.Constants.VisionConstants;
 
+import org.usd232.robotics.rapidreact.Constants.HoodConstants;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -79,29 +80,33 @@ public class VisionSubsystem extends SubsystemBase {
      * @return array contaning the calculated hoodDistance and the shooterSpeed
      */
     public double[] getTargetingValues() {
+        final double ty = targetYOffset();
+
         if (targetValid() >= 1) {
             new Thread(() -> {
                 try {
                     // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
-                    hoodDistance = (-89.2857 * Math.pow(targetYOffset(), 2)) - (2389.29 * targetYOffset()) - 15814.3;
+                    hoodDistance = (-89.2857 * Math.pow(ty, 2)) - (2389.29 * ty) - 15814.3;
 
                     // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
                     hoodDistance = (hoodDistance >= 0) ? 0 : hoodDistance;
+
+                    hoodDistance = (hoodDistance > HoodConstants.FORWARD_HOOD_LIMIT) ? HoodConstants.FORWARD_HOOD_LIMIT : hoodDistance;
 
                     // If the hood value is already in the + or - 100 range of the target dont tell it to move
                     hoodDistance = ((hoodDistance - 100) >= HoodSubsystem.hoodEncoder.getDistance() 
                         || (hoodDistance + 100) <= HoodSubsystem.hoodEncoder.getDistance()) ? 0 : hoodDistance;
 
                     // Jank
-                    if (targetYOffset() > 1.5) {
+                    if (ty > 1.5) {
                         shooterSpeed = 0.435;
-                    } else if (targetYOffset() < 18.0 && targetYOffset() > -4) {
+                    } else if (ty < 18.0 && ty > -4) {
                         shooterSpeed = 0.5;
-                    } else if (targetYOffset() < -4 && targetYOffset() > -8.5) {
+                    } else if (ty < -4 && ty > -8.5) {
                         shooterSpeed = 0.6;
-                    } else if (targetYOffset() < -8.5 && targetYOffset() > -12) {
+                    } else if (ty < -8.5 && ty > -12) {
                         shooterSpeed = 0.75;
-                    } else if (targetYOffset() <= -12) {
+                    } else if (ty <= -12) {
                         shooterSpeed = 1.0;
                     } else {
                         shooterSpeed = 0.5;
