@@ -51,12 +51,12 @@ public class HoodSubsystem extends SubsystemBase {
     
     public void setHood(double target) {
         
-
-        if (target >= hoodEncoder.getDistance()) {
+        if (target > hoodEncoder.getDistance()) {
             forward = true;
-        } else if (target <= hoodEncoder.getDistance()) {
+        } else if (target < hoodEncoder.getDistance()) {
             forward = false;
-        } else {
+        } else if ((target - HoodConstants.HOOD_DEADBAND) >= HoodSubsystem.hoodEncoder.getDistance() 
+                    || (target + HoodConstants.HOOD_DEADBAND) <= HoodSubsystem.hoodEncoder.getDistance()) { // If at + or - DEADBAND then dont move 
             return;
         }
 

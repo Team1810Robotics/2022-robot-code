@@ -88,14 +88,14 @@ public class VisionSubsystem extends SubsystemBase {
                     // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
                     hoodDistance = (-89.2857 * Math.pow(ty, 2)) - (2389.29 * ty) - 15814.3;
 
-                    // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
-                    hoodDistance = (hoodDistance >= 0) ? 0 : hoodDistance;
-
-                    hoodDistance = (hoodDistance > HoodConstants.FORWARD_HOOD_LIMIT) ? HoodConstants.FORWARD_HOOD_LIMIT : hoodDistance;
-
-                    // If the hood value is already in the + or - 100 range of the target dont tell it to move
-                    hoodDistance = ((hoodDistance - 100) >= HoodSubsystem.hoodEncoder.getDistance() 
-                        || (hoodDistance + 100) <= HoodSubsystem.hoodEncoder.getDistance()) ? 0 : hoodDistance;
+                    if (hoodDistance > 0) {
+                        // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
+                        hoodDistance = 0;
+                        
+                    } else if (hoodDistance > HoodConstants.FORWARD_HOOD_LIMIT) {
+                        // if the calculated hood distance is past the max limit then set it to be at the max limit
+                        hoodDistance = HoodConstants.FORWARD_HOOD_LIMIT;
+                    }
 
                     // Jank
                     if (ty > 1.5) {
