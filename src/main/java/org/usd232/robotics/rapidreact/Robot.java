@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
 
-        if (m_visionSubsystem.targetValid() >= 1) {
+        if (VisionSubsystem.OnOffLL) {
             // TODO: Sets the shooter to Calculated target value
             m_shooterSubsystem.shooterOn(m_visionSubsystem.getTargetingValues()[1]);
 
