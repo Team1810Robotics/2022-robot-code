@@ -19,6 +19,8 @@ public class HoodSubsystem extends SubsystemBase {
     public void forwardHood() {
         if (hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
             hood.set(Relay.Value.kReverse);
+        } else {
+            hood.set(Relay.Value.kOff);
         }
     }
 
@@ -31,6 +33,8 @@ public class HoodSubsystem extends SubsystemBase {
     public void reverseHood() {
         if (!hoodLS.get()) {
             hood.set(Relay.Value.kForward);
+        } else {
+            hood.set(Relay.Value.kOff);
         }
     }
 
@@ -58,9 +62,7 @@ public class HoodSubsystem extends SubsystemBase {
             forward = false;
 
         } else if ((target - HoodConstants.HOOD_DEADBAND) >= HoodSubsystem.hoodEncoder.getDistance() 
-                    || (target + HoodConstants.HOOD_DEADBAND) <= HoodSubsystem.hoodEncoder.getDistance()) { // If at + or - DEADBAND then dont move 
-            this.stopHood();
-            this.zeroEncoder();
+                    || (target + HoodConstants.HOOD_DEADBAND) <= HoodSubsystem.hoodEncoder.getDistance()) { // If at + or - DEADBAND then dont move
             return;
         }
 

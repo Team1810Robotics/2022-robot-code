@@ -1,7 +1,5 @@
 package org.usd232.robotics.rapidreact.subsystems;
 
-import static org.usd232.robotics.rapidreact.Constants.VisionConstants;
-
 import org.usd232.robotics.rapidreact.Constants.HoodConstants;
 import org.usd232.robotics.rapidreact.log.Logger;
 
@@ -21,7 +19,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     public static double hoodDistance;
     public static double shooterSpeed;
-
 
     /** Turns the LimeLight On */
     public void limeLightOn() {
@@ -74,18 +71,21 @@ public class VisionSubsystem extends SubsystemBase {
         final double ty = targetYOffset();
 
         if (targetValid() >= 1) {
+            // Trying to use all threads we have (all 2 of them)
             new Thread(() -> {
                 try {
-                    // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
-                    hoodDistance = -89.2857 * Math.pow(ty, 2) - 2389.29 * ty - 15814.3;
-
-                    if (hoodDistance > 0) {
-                        // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
-                        hoodDistance = 0;
-                        
-                    } else if (hoodDistance < HoodConstants.FORWARD_HOOD_LIMIT) {
-                        // if the calculated hood distance is past the max limit then set it to be at the max limit
-                        hoodDistance = HoodConstants.FORWARD_HOOD_LIMIT;
+                    if (ty <= -12) {
+                        // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
+                        hoodDistance = -89.2857 * Math.pow(ty, 2) - 2389.29 * ty - 15814.3;
+    
+                        if (hoodDistance > 0) {
+                            // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
+                            hoodDistance = 0;
+                            
+                        } else if (hoodDistance < HoodConstants.FORWARD_HOOD_LIMIT) {
+                            // if the calculated hood distance is past the max limit then set it to be at the max limit
+                            hoodDistance = HoodConstants.FORWARD_HOOD_LIMIT;
+                        }
                     }
 
                     // Jank

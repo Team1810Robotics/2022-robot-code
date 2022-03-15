@@ -12,32 +12,6 @@ targetCompatibility = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "org.usd232.robotics.rapidreact.Main"
 
-/* Define my     targets (RoboRIO ) an d artifacts (deployable files)
-/* // This is added by GradleRIO's backing p  roject Deploy Utils. */
-
-// Hi Jack. We can't believe you shut the computer and   made us wait for an entire Windows update... Ugh
-/// It's ok though. We  still think you roxxorz   .
-
-
-// Josh was here.
-// And Patrick.
-/* // And Jordan.
-
-*/
-
-/*
-
-
-
-// and Ryan (but does that matter?).
-// Oh, and McLeod. :)
-
-// https://www.youtube.com/watch?v=dQw4w9WgXcQ
-// Since pi day 2022
-*/
-
-
-
 deploy {
     targets {
         roborio(getTargetTypeClass('RoboRIO')) {

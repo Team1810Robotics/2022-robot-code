@@ -2,10 +2,8 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
-// import org.usd232.robotics.rapidreact.commands.HoodTarget;
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
-import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
@@ -71,11 +69,11 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
 
         if (m_visionSubsystem.getLimelight()) {
-            // Sets the shooter to Calculated target value
+            // Sets the shooter to calculated target value
             m_shooterSubsystem.shooterOn(m_visionSubsystem.getTargetingValues()[1]);
 
-            // Sets the hood to Calculated target value
-            // m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]);
+            // TODO: Sets the hood to calculated target value
+            m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]);
         }
 
         
