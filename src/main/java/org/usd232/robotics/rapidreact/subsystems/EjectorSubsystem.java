@@ -87,11 +87,11 @@ public class EjectorSubsystem extends SubsystemBase {
         colorMatcher.addColorMatch(BlueBall);
         colorMatcher.addColorMatch(RedBall);
 
-        match = colorMatcher.matchClosestColor(new Color(getColor().red, getColor().green, getColor().blue));
+        match = colorMatcher.matchClosestColor(new Color((getColor().red / 100), 0.0, (getColor().blue / 100)));
 
-        if (match.color == BlueBall && getColor().ir >= 90) {
+        if (match.color == BlueBall) {
             return "Blue";
-        } else if (match.color == RedBall && getColor().ir >= 90) {
+        } else if (match.color == RedBall) {
             return "Red";
         } else {
             return "Unknown";
@@ -103,7 +103,6 @@ public class EjectorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Red", getColor().red);
         SmartDashboard.putNumber("Green", getColor().green);
         SmartDashboard.putNumber("Blue", getColor().blue);
-        SmartDashboard.putNumber("IR", getColor().ir);
         SmartDashboard.putNumber("Confidence", match.confidence);
         
         SmartDashboard.putString("Detected Color", getMatchedBallColor());

@@ -17,7 +17,7 @@ public class HoodSubsystem extends SubsystemBase {
 
     /** Makes the hood move forward */
     public void forwardHood() {
-        if (hoodEncoder.getDistance() <= HoodConstants.FORWARD_HOOD_LIMIT) {
+        if (hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
             hood.set(Relay.Value.kReverse);
         }
     }
@@ -51,14 +51,16 @@ public class HoodSubsystem extends SubsystemBase {
     
     public void setHood(double target) { // TODO: Test
         
-        if (target > hoodEncoder.getDistance()) {
+        if (target < hoodEncoder.getDistance()) {
             forward = true;
 
-        } else if (target < hoodEncoder.getDistance()) {
+        } else if (target > hoodEncoder.getDistance()) {
             forward = false;
 
         } else if ((target - HoodConstants.HOOD_DEADBAND) >= HoodSubsystem.hoodEncoder.getDistance() 
                     || (target + HoodConstants.HOOD_DEADBAND) <= HoodSubsystem.hoodEncoder.getDistance()) { // If at + or - DEADBAND then dont move 
+            this.stopHood();
+            this.zeroEncoder();
             return;
         }
 

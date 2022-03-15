@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
         m_visionSubsystem.limeLightOn();
         
         // Resets the hood on startup (could be annoying during testing)
-        m_hoodSubsystem.resetHood();
+        // m_hoodSubsystem.resetHood();
         
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
@@ -70,26 +70,27 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
 
-        if (VisionSubsystem.OnOffLL) {
-            // TODO: Sets the shooter to Calculated target value
+        if (m_visionSubsystem.getLimelight()) {
+            // Sets the shooter to Calculated target value
             m_shooterSubsystem.shooterOn(m_visionSubsystem.getTargetingValues()[1]);
 
-            // TODO: Sets the hood to Calculated target value
-            m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]);
+            // Sets the hood to Calculated target value
+            // m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]);
         }
 
         
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
         SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
-        SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
+        SmartDashboard.putBoolean("Lime Light On/Off", m_visionSubsystem.getLimelight());
         SmartDashboard.putNumber("Hood Encoder", HoodSubsystem.hoodEncoder.getDistance());
         SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
         SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
         SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
         SmartDashboard.putNumber("Hood Distance", m_visionSubsystem.getTargetingValues()[0]);
         SmartDashboard.putNumber("Calc Shooter Speed", m_visionSubsystem.getTargetingValues()[1]);
-        EjectorSubsystem.colorDebug();
+        
+        // EjectorSubsystem.colorDebug();
         
         /** Enable compressor closed loop control using analog input. */
         m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);

@@ -173,7 +173,7 @@ public final class Constants {
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static final int HOOD_DEADBAND = 100;
+        public static final int HOOD_DEADBAND = 150;
 
         public static double FORWARD_HOOD_LIMIT = -2650;
     }
