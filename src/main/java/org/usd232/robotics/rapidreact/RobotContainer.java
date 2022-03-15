@@ -17,7 +17,6 @@ import org.usd232.robotics.rapidreact.commands.XboxTrigger;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
 /* End of Paths */
 
-
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
@@ -102,7 +101,7 @@ public class RobotContainer {
     // private final JoystickButton rotationJoystick_Button11 = LOG.catchAll(() -> new JoystickButton(rotationJoystick, 11));
 
 
-    /* Auto Paths */
+    /* Auto Path(s) */
     private final Command m_offLineReversed = LOG.catchAll(() -> new OfflineReversed(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
 
     /** Turns joystick inputs into speed variables */
@@ -144,6 +143,7 @@ public class RobotContainer {
 
         ManipulatorXbox_X.toggleWhenActive(new Limelight(m_visionSubsystem), true);
 
+        // TODO: Test
         ManipulatorXbox_TriggerR.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, true), false);
         ManipulatorXbox_TriggerL.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, false), false);
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, true), false);
