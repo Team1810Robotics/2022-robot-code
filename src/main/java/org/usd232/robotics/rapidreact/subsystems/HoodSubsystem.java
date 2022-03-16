@@ -68,12 +68,14 @@ public class HoodSubsystem extends SubsystemBase {
 
         double distance = hoodEncoder.getDistance();
         
-        if ((target - HoodConstants.HOOD_DEADBAND) > distance 
-                    || (target + HoodConstants.HOOD_DEADBAND) < distance) { // If at + or - DEADBAND then dont move
+        // The signs are right: https://drive.google.com/file/d/18RI6TNe7JNofdJY-OnkNUPFjMOrOIRQu/view?usp=sharing
+        if ((target - HoodConstants.HOOD_DEADBAND) <= distance 
+                    || (target + HoodConstants.HOOD_DEADBAND) >= distance) { // If at + or - DEADBAND then dont move
             this.stopHood();
             LOG.info("Stop Hood");
             return;
-        } else if ((target < distance)) {
+
+        } else if (target < distance) {
             forward = true;
             LOG.info("forward = true;");
 
