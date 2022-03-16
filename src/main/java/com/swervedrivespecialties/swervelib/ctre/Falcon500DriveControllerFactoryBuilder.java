@@ -66,7 +66,8 @@ public final class Falcon500DriveControllerFactoryBuilder {
                 motor.enableVoltageCompensation(true);
             }
 
-            motor.setNeutralMode(NeutralMode.Coast);
+            motor.setNeutralMode(NeutralMode.Coast); // FIXME if I no work
+
 
             motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
             motor.setSensorPhase(true);
