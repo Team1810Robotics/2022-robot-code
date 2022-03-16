@@ -140,6 +140,9 @@ public class RobotContainer {
         // Back button zeros the gyroscope
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
         movementJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
+        //TODO Needs more refining
+        //rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.initializeFocusPIDs());
+        //movementJoystick_Button9.whenPressed(() -> m_driveSubsystem.initializeFocusPIDs());
 
         ManipulatorXbox_B.whenHeld(new Auger(m_augerSubsystem, m_ejectorSubsystem, manipulatorController), true);
 

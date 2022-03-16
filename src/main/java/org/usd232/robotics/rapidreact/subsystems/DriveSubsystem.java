@@ -6,12 +6,16 @@ import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import org.usd232.robotics.rapidreact.Constants.FocusPID.HeadingParams;
+import org.usd232.robotics.rapidreact.Constants.FocusPID.XLocationParams;
+import org.usd232.robotics.rapidreact.Constants.FocusPID.YLocationParams;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -374,4 +378,51 @@ public class DriveSubsystem extends SubsystemBase {
             
             }
         }
+        //TODO not ready, needs to turn modules based on tx
+        /*public void turn(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+            SwerveModuleState[] states =
+            Constants.Swerve.kinematics.toSwerveModuleStates(
+                fieldRelative
+                  ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getHeading())
+                  : new ChassisSpeeds(xSpeed, ySpeed, rot));
+            SwerveDriveKinematics.normalizeWheelSpeeds(states, Constants.Swerve.kMaxSpeed);
+            for (int i = 0; i < states.length; i++) {
+              SwerveModule module = modules[i];
+              SwerveModuleState state = states[i];
+              module.setDesiredState(state);
+            }
+          }
+          
+        private PIDController xLocationPidController; 
+        private PIDController yLocationPidController; 
+        private PIDController headingPidController; 
+
+        private double angleTolerance    = 1;   // degrees
+        private double distanceTolerance = 0.1; // meters
+        
+        public void initializeFocusPIDs() {
+            xLocationPidController = new PIDController(XLocationParams.kP, XLocationParams.kI, XLocationParams.kD);
+            
+            yLocationPidController = new PIDController(YLocationParams.kP, XLocationParams.kI, XLocationParams.kD);
+            
+            headingPidController = new PIDController(HeadingParams.kP, HeadingParams.kI, HeadingParams.kD);
+            //headingPidController.enableContinuousInput(-180, 180);
+          }
+        
+          public boolean goTo(Pose2d target) {
+            Transform2d difference = getPose().minus(target);
+            if ((difference.getRotation().getDegrees() < angleTolerance) && (difference.getX()*difference.getX() + difference.getY()*difference.getY()) < distanceTolerance)
+              return true;
+        
+            Pose2d pose = getPose();
+            drive(
+              xLocationPidController.calculate(pose.getX(), target.getX()),
+              yLocationPidController.calculate(pose.getY(), target.getY()),
+              headingPidController.calculate(getGyro(), target.getRotation().getDegrees()),
+              true
+            );
+            return false;
+          
+          }
+          */
 }

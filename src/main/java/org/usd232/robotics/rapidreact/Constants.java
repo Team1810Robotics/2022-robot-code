@@ -182,4 +182,22 @@ public final class Constants {
         public static final int VICTOR_ID = 18;
         public static final double AUGER_ON = -1.0;
     }
+
+    public static final class FocusPID {
+        public static final class XLocationParams {
+            public static final double kP = 0.1;
+            public static final double kI = 0;
+            public static final double kD = 0;
+        } 
+        public static final class YLocationParams {
+            public static final double kP = 0.1;
+            public static final double kI = 0;
+            public static final double kD = 0;
+        } 
+        public static final class HeadingParams {
+            public static final double kP = 70/360;
+            public static final double kI = 0;
+            public static final double kD = 0;
+        } 
+    }
 }
