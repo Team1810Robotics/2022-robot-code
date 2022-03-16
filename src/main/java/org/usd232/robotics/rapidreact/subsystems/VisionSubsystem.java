@@ -76,7 +76,7 @@ public class VisionSubsystem extends SubsystemBase {
                 try {
                     if (ty <= -12) {
                         // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
-                        hoodDistance = -89.2857 * Math.pow(ty, 2) - 2389.29 * ty - 15814.3;
+                        hoodDistance = -80.433 * Math.pow(ty, 2) - 2156.31 * ty - 14451.6;
     
                         if (hoodDistance > 0) {
                             // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
@@ -85,7 +85,9 @@ public class VisionSubsystem extends SubsystemBase {
                         } else if (hoodDistance < HoodConstants.FORWARD_HOOD_LIMIT) {
                             // if the calculated hood distance is past the max limit then set it to be at the max limit
                             hoodDistance = HoodConstants.FORWARD_HOOD_LIMIT;
-                        }
+                        } 
+                    } else {
+                        hoodDistance = 0;
                     }
 
                     // Jank
@@ -100,10 +102,8 @@ public class VisionSubsystem extends SubsystemBase {
                     } else if (ty <= -12) {
                         shooterSpeed = 1.0;
                     } else {
-                        shooterSpeed = 0.7;
-                        if (targetValid() >= 1) {
-                            LOG.warn("Shooter Speed unmatched");
-                        }
+                        shooterSpeed = 0.5;
+                        LOG.warn("Shooter Speed unmatched");
                     }
 
                 } catch (Exception e) {

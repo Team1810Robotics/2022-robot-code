@@ -2,16 +2,27 @@ package org.usd232.robotics.rapidreact.subsystems;
 
 import static org.usd232.robotics.rapidreact.Constants.HoodConstants;
 
+import org.usd232.robotics.rapidreact.log.Logger;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay; // Motor controller is a spike
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HoodSubsystem extends SubsystemBase {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     */
+    //@SuppressWarnings("unused")
+    private static final Logger LOG = new Logger();
     
     private static final Relay hood = new Relay(HoodConstants.MOTOR_PORT, Relay.Direction.kBoth);
     public static final Encoder hoodEncoder = new Encoder(HoodConstants.HOOD_ENCODER_CHANNEL[1], HoodConstants.HOOD_ENCODER_CHANNEL[0]);
     public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL);
+
+    private static final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
     private boolean forward;
 
@@ -54,22 +65,31 @@ public class HoodSubsystem extends SubsystemBase {
     }
     
     public void setHood(double target) { // TODO: Test
+
+        double distance = hoodEncoder.getDistance();
         
-        if (target < hoodEncoder.getDistance()) {
-            forward = true;
-
-        } else if (target > hoodEncoder.getDistance()) {
-            forward = false;
-
-        } else if ((target - HoodConstants.HOOD_DEADBAND) >= HoodSubsystem.hoodEncoder.getDistance() 
-                    || (target + HoodConstants.HOOD_DEADBAND) <= HoodSubsystem.hoodEncoder.getDistance()) { // If at + or - DEADBAND then dont move
+        if ((target - HoodConstants.HOOD_DEADBAND) > distance 
+                    || (target + HoodConstants.HOOD_DEADBAND) < distance) { // If at + or - DEADBAND then dont move
+            this.stopHood();
+            LOG.info("Stop Hood");
             return;
+        } else if ((target < distance)) {
+            forward = true;
+            LOG.info("forward = true;");
+
+        } else if (target > distance) {
+            forward = false;
+            LOG.info("forward = false;");
         }
 
-        if (forward) {
-            this.forwardHood();
+        if (visionSubsystem.getLimelight()) {
+            if (forward) {
+                this.forwardHood();
+            } else {
+                this.reverseHood();
+            }
         } else {
-            this.reverseHood();
+            this.stopHood();
         }
     }
 

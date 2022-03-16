@@ -63,8 +63,8 @@ public class RobotContainer {
     private final XboxController manipulatorController = LOG.catchAll(() -> new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
-    private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
+    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
+    // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
@@ -143,11 +143,8 @@ public class RobotContainer {
 
         ManipulatorXbox_X.toggleWhenActive(new Limelight(m_visionSubsystem), true);
 
-        // TODO: Test
-        ManipulatorXbox_TriggerR.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, true), false);
-        ManipulatorXbox_TriggerL.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false, false), false);
-        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, true), false);
-        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true, false), false);
+        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), false);
+        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), false);
 
         ManipulatorXbox_Y.whenHeld(new Hood(m_hoodSubsystem, true), true);
         ManipulatorXbox_A.whenHeld(new Hood(m_hoodSubsystem, false), true);
