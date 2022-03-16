@@ -11,12 +11,15 @@ import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.Limelight;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 import org.usd232.robotics.rapidreact.commands.XboxTrigger;
+import org.usd232.robotics.rapidreact.commands.intake.IntakeLeftMotor;
+import org.usd232.robotics.rapidreact.commands.intake.IntakeLeftPneumatic;
+import org.usd232.robotics.rapidreact.commands.intake.IntakeRightMotor;
+import org.usd232.robotics.rapidreact.commands.intake.IntakeRightPneumatic;
 /* end of Commands */
 
 /* Paths */
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
 /* End of Paths */
-
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
@@ -30,7 +33,6 @@ import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -63,8 +65,8 @@ public class RobotContainer {
     private final XboxController manipulatorController = LOG.catchAll(() -> new XboxController(OIConstants.MANIPULATOR_CONTROLLER_PORT));
     
     // Xbox buttons
-    // private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kLeftTrigger));
-    // private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, Axis.kRightTrigger));
+    private final XboxTrigger ManipulatorXbox_TriggerL = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxController.Axis.kLeftTrigger));
+    private final XboxTrigger ManipulatorXbox_TriggerR = LOG.catchAll(() -> new XboxTrigger(manipulatorController, XboxController.Axis.kRightTrigger));
     private final JoystickButton ManipulatorXbox_A = LOG.catchAll(() -> new JoystickButton(manipulatorController, 1));
     private final JoystickButton ManipulatorXbox_B = LOG.catchAll(() -> new JoystickButton(manipulatorController, 2));
     private final JoystickButton ManipulatorXbox_X = LOG.catchAll(() -> new JoystickButton(manipulatorController, 3));
@@ -143,8 +145,13 @@ public class RobotContainer {
 
         ManipulatorXbox_X.toggleWhenActive(new Limelight(m_visionSubsystem), true);
 
-        ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), false);
-        ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), false);
+        // ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true), false);
+        // ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false), false);
+
+        ManipulatorXbox_RB.whenHeld(new IntakeRightMotor(m_intakeSubsystem, manipulatorController), false);
+        ManipulatorXbox_LB.whenHeld(new IntakeLeftMotor(m_intakeSubsystem, manipulatorController), false);
+        ManipulatorXbox_TriggerR.whenHeld(new IntakeRightPneumatic(m_intakeSubsystem), false);
+        ManipulatorXbox_TriggerL.whenHeld(new IntakeLeftPneumatic(m_intakeSubsystem), false);
 
         ManipulatorXbox_Y.whenHeld(new Hood(m_hoodSubsystem, true), true);
         ManipulatorXbox_A.whenHeld(new Hood(m_hoodSubsystem, false), true);
