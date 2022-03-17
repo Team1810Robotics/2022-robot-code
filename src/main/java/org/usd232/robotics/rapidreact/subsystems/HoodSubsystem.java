@@ -52,8 +52,8 @@ public class HoodSubsystem extends SubsystemBase {
     /** Sets the hood back to its default position */
     public void resetHood() {
         if (!hoodLS.get()) {
-            LOG.info("While");
             while (!hoodLS.get()) {
+                LOG.info("in hood hile loop");
                 this.reverseHood();
             }
             hood.set(Relay.Value.kOff);
