@@ -18,17 +18,17 @@
 
 | Button | Purpose            |
 | -----  | -----              |
-| LT     | Left Intake Pnue.  |
-| RT     | Right Intake Pnue. |
-| LB     | Left Intake Motor  |
-| RB     | Right Intake Motor |
+| LT     |                    |
+| RT     |                    |
+| LB     | Left Intake        |
+| RB     | Right Intake       |
 | LStick |                    |
 | RStick |                    |
 | Start  |                    |
 | Back   | Intake/auger Mod   |
-| Y      | Hood (F)           |
-| X      |                    |
-| A      | Hood (B)           |
+| Y      | Reset Hood         |
+| X      | Limelight Toggle   |
+| A      |                    |
 | B      | Auger              |
 
 #### Joystick
