@@ -30,7 +30,7 @@ public class EjectorSubsystem extends SubsystemBase {
     private static final Logger LOG = new Logger();
     
     private static final Solenoid ballEjector = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.EJECTOR_PNEUMATIC);
-    public static final Solenoid lockSolenoid = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
+    private static final Solenoid lockSolenoid = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EjectorConstants.LOCK_PNEUMATIC);
 
     public static final DigitalInput ejectorLS = new DigitalInput(EjectorConstants.EJECTOR_LS);
 
@@ -56,6 +56,14 @@ public class EjectorSubsystem extends SubsystemBase {
         ballEjector.set(false); 
         new WaitCommand(1);
         lockSolenoid.set(false);
+    }
+
+    public void lockSolenoid(boolean on) {
+        lockSolenoid.set(on);
+    }
+
+    public void ballEjector(boolean on) {
+        ballEjector.set(on); 
     }
 
     /** @return the current color seen by the Photo Electric color sensor (color sensor) */

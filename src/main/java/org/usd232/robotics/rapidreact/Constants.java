@@ -147,8 +147,8 @@ public final class Constants {
     }
 
     public static final class EjectorConstants {
-        public static final int EJECTOR_PNEUMATIC = 4;
-        public static final int LOCK_PNEUMATIC = 5;
+        public static final int EJECTOR_PNEUMATIC = 5;
+        public static final int LOCK_PNEUMATIC = 4;
 
         public static final int EJECTOR_LS = 8;
     }
@@ -173,7 +173,7 @@ public final class Constants {
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static final int HOOD_DEADBAND = 0;
+        public static final double HOOD_DEADBAND = 200;
 
         public static double FORWARD_HOOD_LIMIT = -2650;
     }
@@ -181,23 +181,5 @@ public final class Constants {
     public static final class AugerConstants {
         public static final int VICTOR_ID = 18;
         public static final double AUGER_ON = -1.0;
-    }
-
-    public static final class FocusPID {
-        public static final class XLocationParams {
-            public static final double kP = 0.1;
-            public static final double kI = 0;
-            public static final double kD = 0;
-        } 
-        public static final class YLocationParams {
-            public static final double kP = 0.1;
-            public static final double kI = 0;
-            public static final double kD = 0;
-        } 
-        public static final class HeadingParams {
-            public static final double kP = 70/360;
-            public static final double kI = 0;
-            public static final double kD = 0;
-        } 
     }
 }

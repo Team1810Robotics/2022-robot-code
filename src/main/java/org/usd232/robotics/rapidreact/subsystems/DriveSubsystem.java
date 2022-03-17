@@ -6,16 +6,12 @@ import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
-import org.usd232.robotics.rapidreact.Constants.FocusPID.HeadingParams;
-import org.usd232.robotics.rapidreact.Constants.FocusPID.XLocationParams;
-import org.usd232.robotics.rapidreact.Constants.FocusPID.YLocationParams;
 import org.usd232.robotics.rapidreact.log.Logger;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -72,6 +68,8 @@ public class DriveSubsystem extends SubsystemBase {
     private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
     private final SwerveDriveOdometry m_odometer;
+
+    public static boolean coast;
 
     public enum Module {
         kFL,

@@ -81,8 +81,9 @@ public class VisionSubsystem extends SubsystemBase {
                         if (hoodDistance > 0) {
                             // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
                             hoodDistance = 0;
-                            
-                        } else if (hoodDistance < HoodConstants.FORWARD_HOOD_LIMIT) {
+                        }
+                        
+                        if (hoodDistance < HoodConstants.FORWARD_HOOD_LIMIT) {
                             // if the calculated hood distance is past the max limit then set it to be at the max limit
                             hoodDistance = HoodConstants.FORWARD_HOOD_LIMIT;
                         } 

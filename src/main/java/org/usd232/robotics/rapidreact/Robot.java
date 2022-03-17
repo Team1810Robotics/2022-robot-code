@@ -50,9 +50,6 @@ public class Robot extends TimedRobot {
         // Turns Limelight off on startup
         m_visionSubsystem.limeLightOn();
         
-        // Resets the hood on startup (could be annoying during testing)
-        // m_hoodSubsystem.resetHood();
-        
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
@@ -69,11 +66,15 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
 
         if (m_visionSubsystem.getLimelight()) {
+
             // Sets the shooter to calculated target value
             m_shooterSubsystem.shooterOn(m_visionSubsystem.getTargetingValues()[1]);
 
-            // TODO: Sets the hood to calculated target value
-            m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]);
+            // Sets the hood to calculated target value
+            m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]); 
+
+        } else {
+            m_hoodSubsystem.stopHood();
         }
 
         
@@ -112,6 +113,9 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
+
+        // Resets the hood on startup (could be annoying during testing)
+        m_hoodSubsystem.resetHood();
         
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
         

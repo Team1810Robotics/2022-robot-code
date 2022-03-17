@@ -52,8 +52,9 @@ public class HoodSubsystem extends SubsystemBase {
     /** Sets the hood back to its default position */
     public void resetHood() {
         if (!hoodLS.get()) {
+            LOG.info("While");
             while (!hoodLS.get()) {
-                hood.set(Relay.Value.kReverse);
+                this.reverseHood();
             }
             hood.set(Relay.Value.kOff);
             hoodEncoder.reset();
@@ -69,19 +70,22 @@ public class HoodSubsystem extends SubsystemBase {
         double distance = hoodEncoder.getDistance();
         
         // The signs are right: https://drive.google.com/file/d/18RI6TNe7JNofdJY-OnkNUPFjMOrOIRQu/view?usp=sharing
-        if ((target - HoodConstants.HOOD_DEADBAND) <= distance 
-                    || (target + HoodConstants.HOOD_DEADBAND) >= distance) { // If at + or - DEADBAND then dont move
+        if ((distance - HoodConstants.HOOD_DEADBAND) <= target 
+                    && (distance + HoodConstants.HOOD_DEADBAND) >= target) { // If at + or - DEADBAND then dont move
             this.stopHood();
-            LOG.info("Stop Hood");
             return;
 
-        } else if (target < distance) {
-            forward = true;
-            LOG.info("forward = true;");
-
-        } else if (target > distance) {
-            forward = false;
-            LOG.info("forward = false;");
+        } else {
+            if (target < distance) {
+                forward = true;
+                LOG.info("forward = true;");
+                
+            } else if (target > distance) {
+                forward = false;
+                LOG.info("forward = false;");
+            } else {
+                LOG.info("you fileailed");
+            }
         }
 
         if (visionSubsystem.getLimelight()) {
@@ -92,6 +96,7 @@ public class HoodSubsystem extends SubsystemBase {
             }
         } else {
             this.stopHood();
+            LOG.info("Stop Hood");
         }
     }
 
