@@ -22,10 +22,6 @@ public class HoodSubsystem extends SubsystemBase {
     public static final Encoder hoodEncoder = new Encoder(HoodConstants.HOOD_ENCODER_CHANNEL[1], HoodConstants.HOOD_ENCODER_CHANNEL[0]);
     public static final DigitalInput hoodLS = new DigitalInput(HoodConstants.HOOD_LIMIT_SWITCH_CHANNEL);
 
-    private static final VisionSubsystem visionSubsystem = new VisionSubsystem();
-
-    private boolean forward;
-
     /** Makes the hood move forward */
     public void forwardHood() {
         if (hoodEncoder.getDistance() >= HoodConstants.FORWARD_HOOD_LIMIT) {
@@ -68,36 +64,26 @@ public class HoodSubsystem extends SubsystemBase {
     public void setHood(double target) {
 
         double distance = hoodEncoder.getDistance();
-        
+
         // The signs are right: https://drive.google.com/file/d/10tB8zsp_gBse0LokIxdII_zqo9CH4YSJ/view?usp=sharing
         if ((distance - HoodConstants.HOOD_DEADBAND) <= target 
-                    && (distance + HoodConstants.HOOD_DEADBAND) >= target) { // If at + or - DEADBAND then dont move
+                    && (distance + HoodConstants.HOOD_DEADBAND) >= target) { // If in + or - HOOD_DEADBAND then dont move
             this.stopHood();
-            return;
+            LOG.info("Stop Hood: In deadband");
 
         } else {
             if (target < distance) {
-                forward = true;
-                LOG.info("forward = true;");
-                
+                LOG.info("Hood forward");
+                this.forwardHood();
+                    
             } else if (target > distance) {
-                forward = false;
-                LOG.info("forward = false;");
+                LOG.info("Hood backward");
+                this.reverseHood();
+
             } else {
+                this.stopHood();
                 LOG.info("you fileailed");
             }
         }
-
-        if (visionSubsystem.getLimelight()) {
-            if (forward) {
-                this.forwardHood();
-            } else {
-                this.reverseHood();
-            }
-        } else {
-            this.stopHood();
-            LOG.info("Stop Hood");
-        }
     }
-
 }
