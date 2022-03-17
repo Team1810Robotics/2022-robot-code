@@ -46,7 +46,7 @@ public class Auger extends CommandBase {
     }
 
     @Override
-    public void end(boolean inturrupted) {
+    public void end(boolean interrupted) {
         augerSubsystem.elevatorOff();
         ejectorSubsystem.resetEjecter();
     }

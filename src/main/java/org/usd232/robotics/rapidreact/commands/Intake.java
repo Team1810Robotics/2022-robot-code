@@ -11,7 +11,7 @@ public class Intake extends CommandBase {
     private final XboxController xbox;
     private final boolean right;
     
-    public Intake(IntakeSubsystem intakeSubsystem , XboxController xbox, boolean right) {
+    public Intake(IntakeSubsystem intakeSubsystem, XboxController xbox, boolean right) {
 
         this.intakeSubsystem = intakeSubsystem;
         this.xbox = xbox;
@@ -32,9 +32,9 @@ public class Intake extends CommandBase {
             intakeSubsystem.leftMotor(!xbox.getBackButton());
         }
     }
-//sus
+
     @Override
-    public void end(boolean inturrupted) {
+    public void end(boolean interrupted) {
         if (right) {
             intakeSubsystem.rightPneumatic(false);
         } else {

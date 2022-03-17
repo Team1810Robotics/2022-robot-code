@@ -24,7 +24,7 @@ public class Shooter extends CommandBase {
     }
 
     @Override
-    public void end(boolean inturrupted) {
+    public void end(boolean interrupted) {
         shooterSubsystem.shooterOff();
     }
 }

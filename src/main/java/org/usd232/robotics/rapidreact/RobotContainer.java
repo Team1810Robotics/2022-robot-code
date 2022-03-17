@@ -9,6 +9,8 @@ import org.usd232.robotics.rapidreact.commands.Auger;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.Limelight;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
+import org.usd232.robotics.rapidreact.commands.intake.IntakeLeft;
+import org.usd232.robotics.rapidreact.commands.intake.IntakeRight;
 /* end of Commands */
 
 /* Paths */
@@ -142,6 +144,9 @@ public class RobotContainer {
 
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true));
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false));
+
+        // TODO: ManipulatorXbox_RB.whenHeld(new IntakeRight(m_intakeSubsystem, manipulatorController), false);
+        // TODO: ManipulatorXbox_LB.whenHeld(new IntakeLeft(m_intakeSubsystem, manipulatorController), false);
 
         ManipulatorXbox_Y.whenPressed(() -> m_hoodSubsystem.resetHood());
     }

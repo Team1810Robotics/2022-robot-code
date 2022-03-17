@@ -18,7 +18,7 @@ public class Limelight extends CommandBase{
     }
 
     @Override
-    public void end(boolean inturrupted) {
+    public void end(boolean interrupted) {
         visionSubsystem.limeLightOff();
     }
     
