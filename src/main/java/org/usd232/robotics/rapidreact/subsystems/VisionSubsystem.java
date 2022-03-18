@@ -107,16 +107,20 @@ public class VisionSubsystem extends SubsystemBase {
                         LOG.warn("Shooter Speed unmatched");
                     }
 
+                    /* psudo = 0.00117547 * Math.pow(ty, 2) - 0.0245664 * ty + 0.501134;
+
+                    psudo = (psudo < 0.435) ? 0.435 : psudo;
+
+                    psudo = (psudo > 1) ? 1 : psudo; */
+
                 } catch (Exception e) {
                     LOG.error(e);
                 }
             }).run();
         }
 
-
         return new double[] {hoodDistance, shooterSpeed};
     }
-
     public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html
 
         // getEntry("ledMode")

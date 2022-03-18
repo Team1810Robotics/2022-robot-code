@@ -67,11 +67,13 @@ public class Robot extends TimedRobot {
 
         if (m_visionSubsystem.getLimelight()) {
 
+            double[] trgeValues = m_visionSubsystem.getTargetingValues();
+
             // Sets the shooter to calculated target value
-            m_shooterSubsystem.shooterOn(m_visionSubsystem.getTargetingValues()[1]);
+            m_shooterSubsystem.shooterOn(trgeValues[1]);
 
             // Sets the hood to calculated target value
-            m_hoodSubsystem.setHood(m_visionSubsystem.getTargetingValues()[0]); 
+            m_hoodSubsystem.setHood(trgeValues[0]); 
 
         } else {
             m_hoodSubsystem.stopHood();
@@ -88,8 +90,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
         SmartDashboard.putNumber("Hood Distance", m_visionSubsystem.getTargetingValues()[0]);
         SmartDashboard.putNumber("Calc Shooter Speed", m_visionSubsystem.getTargetingValues()[1]);
-        
-        // EjectorSubsystem.colorDebug();
         
         /** Enable compressor closed loop control using analog input. */
         m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);

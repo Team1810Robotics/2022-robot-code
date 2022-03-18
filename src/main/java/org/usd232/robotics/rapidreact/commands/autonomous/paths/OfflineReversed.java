@@ -22,9 +22,7 @@ public class OfflineReversed extends SequentialCommandGroup {
             new InstantCommand(() -> augerSubsystem.elevatorOn(true)),
             new WaitCommand(5),
             new InstantCommand(() -> augerSubsystem.elevatorOff()),
-            new InstantCommand(() -> DriveSubsystem.coast = false),
-            driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("offLineReversed"),
-            new InstantCommand(() -> DriveSubsystem.coast = true)
+            driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("offLineReversed")
         );
     }
 }

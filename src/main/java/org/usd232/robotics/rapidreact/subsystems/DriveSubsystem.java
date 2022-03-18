@@ -69,8 +69,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     private final SwerveDriveOdometry m_odometer;
 
-    public static boolean coast;
-
     public enum Module {
         kFL,
         kFrontLeft,

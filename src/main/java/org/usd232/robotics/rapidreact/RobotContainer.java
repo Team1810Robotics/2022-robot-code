@@ -6,11 +6,10 @@ import org.usd232.robotics.rapidreact.log.Logger;
 
 /* Commands */
 import org.usd232.robotics.rapidreact.commands.Auger;
+import org.usd232.robotics.rapidreact.commands.Hood;
 import org.usd232.robotics.rapidreact.commands.Intake;
 import org.usd232.robotics.rapidreact.commands.Limelight;
 import org.usd232.robotics.rapidreact.commands.SwerveDrive;
-import org.usd232.robotics.rapidreact.commands.intake.IntakeLeft;
-import org.usd232.robotics.rapidreact.commands.intake.IntakeRight;
 /* end of Commands */
 
 /* Paths */
@@ -72,7 +71,7 @@ public class RobotContainer {
     private final JoystickButton ManipulatorXbox_RB = LOG.catchAll(() -> new JoystickButton(manipulatorController, 6));
     // DONT BIND: private final JoystickButton ManipulatorXbox_Back = LOG.catchAll(() -> new JoystickButton(manipulatorController, 7));
     // private final JoystickButton ManipulatorXbox_Start = LOG.catchAll(() -> new JoystickButton(manipulatorController, 8));
-    // private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
+    private final JoystickButton ManipulatorXbox_LStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 9));
     // private final JoystickButton ManipulatorXbox_RStick = LOG.catchAll(() -> new JoystickButton(manipulatorController, 10));
     
     // private final JoystickButton movementJoystick_Trigger = LOG.catchAll(() -> new JoystickButton(movementJoystick, 1));
@@ -145,8 +144,7 @@ public class RobotContainer {
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true));
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false));
 
-        // TODO: ManipulatorXbox_RB.whenHeld(new IntakeRight(m_intakeSubsystem, manipulatorController), false);
-        // TODO: ManipulatorXbox_LB.whenHeld(new IntakeLeft(m_intakeSubsystem, manipulatorController), false);
+        ManipulatorXbox_LStick.whenHeld(new Hood(m_hoodSubsystem, true));
 
         ManipulatorXbox_Y.whenPressed(() -> m_hoodSubsystem.resetHood());
     }

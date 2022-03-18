@@ -10,8 +10,6 @@ import com.swervedrivespecialties.swervelib.DriveController;
 import com.swervedrivespecialties.swervelib.DriveControllerFactory;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 
-import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
-
 public final class Falcon500DriveControllerFactoryBuilder {
     private static final double TICKS_PER_ROTATION = 2048.0;
 
@@ -68,12 +66,7 @@ public final class Falcon500DriveControllerFactoryBuilder {
                 motor.enableVoltageCompensation(true);
             }
 
-            if (DriveSubsystem.coast) { // FIXME if I no work
-                motor.setNeutralMode(NeutralMode.Coast);
-            } else {
-                motor.setNeutralMode(NeutralMode.Brake);
-            }
-
+            motor.setNeutralMode(NeutralMode.Brake);
 
             motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
             motor.setSensorPhase(true);

@@ -49,7 +49,7 @@ public class HoodSubsystem extends SubsystemBase {
     public void resetHood() {
         if (!hoodLS.get()) {
             while (!hoodLS.get()) {
-                LOG.info("in hood hile loop");
+                LOG.info("in hile loop");
                 this.reverseHood();
             }
             hood.set(Relay.Value.kOff);
@@ -69,15 +69,12 @@ public class HoodSubsystem extends SubsystemBase {
         if ((distance - HoodConstants.HOOD_DEADBAND) <= target 
                     && (distance + HoodConstants.HOOD_DEADBAND) >= target) { // If in + or - HOOD_DEADBAND then dont move
             this.stopHood();
-            LOG.info("Stop Hood: In deadband");
 
         } else {
             if (target < distance) {
-                LOG.info("Hood forward");
                 this.forwardHood();
                     
             } else if (target > distance) {
-                LOG.info("Hood backward");
                 this.reverseHood();
 
             } else {
