@@ -308,117 +308,62 @@ public class DriveSubsystem extends SubsystemBase {
         backRight.set(0, 0);
     }
 
-        /** @return total traveled y distance (Hopefully) */
-        public double getTotalYTravel() {
-            return getPose().getY();
-        }
-        
-        /** @return total travled x distance (Hopefully) */
-        public double getTotalXTravel() {
-            return getPose().getX();
-        }
-        
-        /************************ PAth STuff ************************/
+    /************************ PAth STuff ************************/
     
-        /**
-         * Gets the path of a PathPlanner json file
-         * @param trajectoryName the name of the PathPlanner path you want to call
-         * @throws IOException
-         */
-        protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
-            return TrajectoryUtil.fromPathweaverJson(
-                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("paths", trajectoryName + ".wpilib.json")));
-        }
+    /**
+     * Gets the path of a PathPlanner json file
+     * @param trajectoryName the name of the PathPlanner path you want to call
+     * @throws IOException
+     */
+    protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
+        return TrajectoryUtil.fromPathweaverJson(
+            Filesystem.getDeployDirectory().toPath().resolve(Paths.get("paths", trajectoryName + ".wpilib.json")));
+    }
           
-        /** 
+    /** 
+     * Loads the PathPlanner File 
          * Loads the PathPlanner File 
-         * @param filename the name of the .json file
-         */
-        public Trajectory loadTrajectoryFromFile(String filename) {
-            try {
-                return loadTrajectory(filename);
-            } catch (IOException e) {
-                DriverStation.reportError("Failed to load auto trajectory: " + filename, false);
-                return new Trajectory();
-            }
+     * Loads the PathPlanner File 
+     * @param filename the name of the .json file
+     */
+    public Trajectory loadTrajectoryFromFile(String filename) {
+        try {
+            return loadTrajectory(filename);
+        } catch (IOException e) {
+            DriverStation.reportError("Failed to load auto trajectory: " + filename, false);
+            return new Trajectory();
         }
+    }
           
-        /**
-         * Creates a command to follow a Trajectory on the drivetrain.
-         * @param trajectory trajectory to follow
-         * @return command that will run the trajectory
-         */
-        public Command createCommandForTrajectory(Trajectory trajectory, Boolean initPose) {
+    /**
+     * Creates a command to follow a Trajectory on the drivetrain.
+     * @param trajectory trajectory to follow
+     * @return command that will run the trajectory
+     */
+    public Command createCommandForTrajectory(Trajectory trajectory, Boolean initPose) {
     
-            PIDController xController = new PIDController(AutoConstants.kp_X_CONTROLLER, 0, 0);
-            PIDController yController = new PIDController(AutoConstants.kp_Y_CONTROLLER, 0, 0);
-            ProfiledPIDController thetaController = new ProfiledPIDController(
-                AutoConstants.kp_THETA_CONTROLLER, 0.0, 0.1, AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
-            thetaController.enableContinuousInput(-Math.PI, Math.PI);
+        PIDController xController = new PIDController(AutoConstants.kp_X_CONTROLLER, 0, 0);
+        PIDController yController = new PIDController(AutoConstants.kp_Y_CONTROLLER, 0, 0);
+        ProfiledPIDController thetaController = new ProfiledPIDController(
+            AutoConstants.kp_THETA_CONTROLLER, 0.0, 0.1, AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
+        thetaController.enableContinuousInput(-Math.PI, Math.PI);
     
-            SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-                trajectory,
-                this::getPose,
-                DriveConstants.DRIVE_KINEMATICS,
-                xController,
-                yController,
-                thetaController,
-                this::setModuleStates,
-                this);
+        SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+            trajectory,
+            this::getPose,
+            DriveConstants.DRIVE_KINEMATICS,
+            xController,
+            yController,
+            thetaController,
+            this::setModuleStates,
+            this);
     
-            if (initPose) {
-                var reset =  new InstantCommand(() -> this.resetOdometry(trajectory.getInitialPose()));
-                return reset.andThen(swerveControllerCommand.andThen(() -> stopModules()));
-            } else {
-                return swerveControllerCommand.andThen(() -> stopModules());
+        if (initPose) {
+            var reset =  new InstantCommand(() -> this.resetOdometry(trajectory.getInitialPose()));
+            return reset.andThen(swerveControllerCommand.andThen(() -> stopModules()));
+        } else {
+            return swerveControllerCommand.andThen(() -> stopModules());
             
-            }
         }
-        //TODO not ready, needs to turn modules based on tx
-        /*public void turn(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-            SwerveModuleState[] states =
-            Constants.Swerve.kinematics.toSwerveModuleStates(
-                fieldRelative
-                  ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getHeading())
-                  : new ChassisSpeeds(xSpeed, ySpeed, rot));
-            SwerveDriveKinematics.normalizeWheelSpeeds(states, Constants.Swerve.kMaxSpeed);
-            for (int i = 0; i < states.length; i++) {
-              SwerveModule module = modules[i];
-              SwerveModuleState state = states[i];
-              module.setDesiredState(state);
-            }
-          }
-          
-        private PIDController xLocationPidController; 
-        private PIDController yLocationPidController; 
-        private PIDController headingPidController; 
-
-        private double angleTolerance    = 1;   // degrees
-        private double distanceTolerance = 0.1; // meters
-        
-        public void initializeFocusPIDs() {
-            xLocationPidController = new PIDController(XLocationParams.kP, XLocationParams.kI, XLocationParams.kD);
-            
-            yLocationPidController = new PIDController(YLocationParams.kP, XLocationParams.kI, XLocationParams.kD);
-            
-            headingPidController = new PIDController(HeadingParams.kP, HeadingParams.kI, HeadingParams.kD);
-            //headingPidController.enableContinuousInput(-180, 180);
-          }
-        
-          public boolean goTo(Pose2d target) {
-            Transform2d difference = getPose().minus(target);
-            if ((difference.getRotation().getDegrees() < angleTolerance) && (difference.getX()*difference.getX() + difference.getY()*difference.getY()) < distanceTolerance)
-              return true;
-        
-            Pose2d pose = getPose();
-            drive(
-              xLocationPidController.calculate(pose.getX(), target.getX()),
-              yLocationPidController.calculate(pose.getY(), target.getY()),
-              headingPidController.calculate(getGyro(), target.getRotation().getDegrees()),
-              true
-            );
-            return false;
-          
-          }
-          */
+    }
 }

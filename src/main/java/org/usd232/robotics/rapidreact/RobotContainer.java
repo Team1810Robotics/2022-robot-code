@@ -19,7 +19,6 @@ import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
-import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
@@ -49,7 +48,6 @@ public class RobotContainer {
 
     private final AugerSubsystem m_augerSubsystem = LOG.catchAll(() -> new AugerSubsystem());
     private final DriveSubsystem m_driveSubsystem = LOG.catchAll(() -> new DriveSubsystem());
-    private final EjectorSubsystem m_ejectorSubsystem = LOG.catchAll(() -> new EjectorSubsystem());
     private final IntakeSubsystem m_intakeSubsystem = LOG.catchAll(() -> new IntakeSubsystem());
     private final ShooterSubsystem m_shooterSubsystem = LOG.catchAll(() -> new ShooterSubsystem());
     private final HoodSubsystem m_hoodSubsystem = LOG.catchAll(() -> new HoodSubsystem());
@@ -137,7 +135,7 @@ public class RobotContainer {
         rotationJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
         movementJoystick_Button9.whenPressed(() -> m_driveSubsystem.zeroGyroscope());
 
-        ManipulatorXbox_B.whenHeld(new Auger(m_augerSubsystem, m_ejectorSubsystem, manipulatorController), false);
+        ManipulatorXbox_B.whenHeld(new Auger(m_augerSubsystem, manipulatorController), false);
 
         ManipulatorXbox_X.toggleWhenActive(new Limelight(m_visionSubsystem), true);
 

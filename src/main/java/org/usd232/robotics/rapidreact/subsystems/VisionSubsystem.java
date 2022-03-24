@@ -17,8 +17,8 @@ public class VisionSubsystem extends SubsystemBase {
     //@SuppressWarnings("unused")
     private static final Logger LOG = new Logger();
 
-    public static double hoodDistance;
-    public static double shooterSpeed;
+    private static double hoodDistance;
+    private static double shooterSpeed;
 
     /** Turns the LimeLight On */
     public void limeLightOn() {
@@ -75,7 +75,6 @@ public class VisionSubsystem extends SubsystemBase {
             new Thread(() -> {
                 try {
                     if (ty <= -12) {
-                        // https://drive.google.com/file/d/1RJiiPBYFC2quWnSevSmdUtwoIomkVR09/view?usp=sharing
                         hoodDistance = -80.433 * Math.pow(ty, 2) - 2156.31 * ty - 14451.6;
     
                         if (hoodDistance > 0) {
@@ -106,12 +105,6 @@ public class VisionSubsystem extends SubsystemBase {
                         shooterSpeed = 0.5;
                         LOG.warn("Shooter Speed unmatched");
                     }
-
-                    /* psudo = 0.00117547 * Math.pow(ty, 2) - 0.0245664 * ty + 0.501134;
-
-                    psudo = (psudo < 0.435) ? 0.435 : psudo;
-
-                    psudo = (psudo > 1) ? 1 : psudo; */
 
                 } catch (Exception e) {
                     LOG.error(e);

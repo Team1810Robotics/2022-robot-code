@@ -10,6 +10,7 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 
+// Not used
 public class PicoColorSensor implements AutoCloseable {
   public static class RawColor {
     public RawColor(int r, int g, int b, int _ir) {

@@ -78,7 +78,7 @@ public final class Constants {
          */
         // Freespeed: 4.96824 m/s^2
         // Calculated: 4.968230455 m/s^2
-        // Real: TODO m/^2 (after whole robot is assembled)
+        // Real: (Not done) m/^2 (after whole robot is assembled)
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 2048.0 / 60.0 *
         SdsModuleConfigurations.MK4_L2.getDriveReduction() *
         SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
@@ -98,7 +98,7 @@ public final class Constants {
         // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
         // Freespeed: 61.21537703 rad/s^2
         // Calculated: 61.2152594258 rad/s^2
-        // Real: TODO rad/s^2 (after whole robot is assembled)
+        // Real: (Not done) rad/s^2 (after whole robot is assembled)
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
         Math.hypot(DriveConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DriveConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0); // hypot is about 0.08116 meters
     }
@@ -143,29 +143,10 @@ public final class Constants {
 
         public static final int LEFT_PNEUMATIC_PORT = 6;
         public static final int RIGHT_PNEUMATIC_PORT = 7;
-        public static final int EXHAUST = 8;
-    }
-
-    public static final class EjectorConstants {
-        public static final int EJECTOR_PNEUMATIC = 5;
-        public static final int LOCK_PNEUMATIC = 4;
-
-        public static final int EJECTOR_LS = 8;
     }
 
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
-
-        public static final int MAX_VELOCITY = 5328;
-        public static final int MIN_VELOCITY = 2500;
-        public static final int MAX_HOLD_VELOCITY = 5300;
-        public static final int MIN_HOLD_VELOCITY = 5000;
-
-        public static final double kP = 0.001;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final int MIN_OUTUT = -1;
-        public static final int MAX_OUTPUT = 1;
     }
 
     public static final class HoodConstants {
