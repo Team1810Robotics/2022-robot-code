@@ -43,7 +43,7 @@ public class ShooterSubsystem extends SubsystemBase {
     /** @return The position of the encoders. */
     public static double getEncoderPosition() {
         return shooterEncoder.getPosition();
-    }
+    } 
 
     /** @return The velocity of the encoders. */
     public static double getEncoderVelocity() {
