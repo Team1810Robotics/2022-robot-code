@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 // https://drive.google.com/file/d/1EBKde_UrpQlax-PRKJ1Qa8nDJuIpd07K/view?usp=sharing
@@ -116,8 +115,7 @@ public class RobotContainer {
         ));
 
         /* Path chooser */
-        pathChooser.setDefaultOption("Null", new WaitCommand(0));
-        pathChooser.addOption("Shoot & Offline Reversed", m_offLineReversed);
+        pathChooser.setDefaultOption("Shoot & Offline Reversed", m_offLineReversed);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         // Configure the button bindings

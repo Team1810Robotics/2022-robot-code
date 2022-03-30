@@ -121,7 +121,7 @@ public final class Constants {
     public static final class OIConstants {
         public static final int MOVEMENT_JOYSTICK_PORT = 0;
         public static final int ROTATION_JOYSTICK_PORT = 1;
-        public static final int MANIPULATOR_CONTROLLER_PORT = 3;
+        public static final int MANIPULATOR_CONTROLLER_PORT = 2;
 
         public static final double DEADBAND = 0.4;
     }
@@ -133,7 +133,7 @@ public final class Constants {
     public static final class PneumaticConstants {
         public static final int PH_CAN_ID = 17;
 
-        public static final double MAX_TANK_PSI = 120;
+        public static final double MAX_TANK_PSI = 117;
         public static final double MIN_TANK_PSI = 110;
     }
     

@@ -16,7 +16,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private static final Solenoid leftSolenoid = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, LEFT_PNEUMATIC_PORT);
     private static final Solenoid rightSolenoid = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, RIGHT_PNEUMATIC_PORT);
-    // private static final Solenoid exhaust = new Solenoid(PneumaticConstants.PH_CAN_ID, PneumaticsModuleType.REVPH, EXHAUST);
 
     /** Lowers the left intake */
     public void leftPneumatic(boolean on) {
@@ -27,12 +26,8 @@ public class IntakeSubsystem extends SubsystemBase {
         rightSolenoid.set(on);
     }
     
-    /* public void intakeExhaust(boolean off) {
-        exhaust.set(off);
-    } */
-    
     public void leftMotor(boolean forward) {
-        if (forward) {
+        if (!forward) {
             leftIntake.set(Relay.Value.kForward);
         } else {
             leftIntake.set(Relay.Value.kReverse);

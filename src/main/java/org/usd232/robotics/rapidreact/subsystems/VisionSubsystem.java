@@ -35,6 +35,7 @@ public class VisionSubsystem extends SubsystemBase {
 
     /** @return if the limelight is on or off */
     public boolean getLimelight() {
+        // return (NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").getDouble(0) == 3)
         if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").getDouble(0) == 3) {
             return true;
         } else {

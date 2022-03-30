@@ -21,7 +21,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     /** 
-     * Turns on the shooter at max speed 
+     * Turns on the shooter
      * @param percent
      */
     public void shooterOn(double percent) {
