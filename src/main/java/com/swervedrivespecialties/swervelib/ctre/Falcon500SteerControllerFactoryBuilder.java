@@ -124,7 +124,7 @@ public final class Falcon500SteerControllerFactoryBuilder {
             checkCtreError(motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 feedback sensor");
             motor.setSensorPhase(moduleConfiguration.isSteerInverted());
             motor.setInverted(TalonFXInvertType.CounterClockwise);
-            motor.setNeutralMode(NeutralMode.Brake);
+            motor.setNeutralMode(NeutralMode.Coast); // TODO
 
             checkCtreError(motor.setSelectedSensorPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 encoder position");
 
