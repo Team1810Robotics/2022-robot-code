@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
             double[] trgeValues = m_visionSubsystem.getTargetingValues();
 
             // Sets the shooter to calculated target value
-            m_shooterSubsystem.shooterOn(trgeValues[1]);
+            m_shooterSubsystem.setShooterVelocity(trgeValues[1]);
 
             // Sets the hood to calculated target value
             m_hoodSubsystem.setHood(trgeValues[0]); 
@@ -116,6 +116,7 @@ public class Robot extends TimedRobot {
 
         // Resets the hood on startup (could be annoying during testing)
         m_hoodSubsystem.resetHood();
+        // m_driveSubsystem.setBrake();
         
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
         
@@ -131,6 +132,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+
+        // m_driveSubsystem.setCoast();
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

@@ -108,9 +108,9 @@ public final class Constants {
         public static final double MAX_AUTO_RADIANS_PER_SEC = ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 1.5;
         public static final double MAX_AUTO_ACCELERATION_RADIANS = 3;
 
-        public static final double kp_X_CONTROLLER = 1.2; // (https://youtu.be/jIKBWO7ps0w)
-        public static final double kp_Y_CONTROLLER = 1.2;
-        public static final double kp_THETA_CONTROLLER = 2.8;
+        public static final double kp_X_CONTROLLER = 0.1; // (https://youtu.be/jIKBWO7ps0w)
+        public static final double kp_Y_CONTROLLER = 0.1;
+        public static final double kp_THETA_CONTROLLER = 0.2;
 
         public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = 
                 new TrapezoidProfile.Constraints(
@@ -147,6 +147,11 @@ public final class Constants {
 
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
+
+        public static final int MAX_SPEED = 6500;
+
+        public static final double kP = 0.000;    // FIXME
+        public static final double kFF = 0.00017; // FIXME
     }
 
     public static final class HoodConstants {
