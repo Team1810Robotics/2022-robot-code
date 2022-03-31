@@ -25,38 +25,38 @@ public final class Constants {
          *
          * Should be measured from center to center.
          */
-        public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.5;
+        public static final double DRIVETRAIN_TRACKWIDTH_METERS =  0.64928; // 0.5
         
         /**
          * The front-to-back distance between the drive wheels.
          *
          * Should be measured from center to center.
         */
-        public static final double DRIVETRAIN_WHEELBASE_METERS = 0.64928;
+        public static final double DRIVETRAIN_WHEELBASE_METERS = 0.5; // 0.64928
 
         // Front left swerve module
-        public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 1;
-        public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 2;
-        public static final int FRONT_LEFT_MODULE_STEER_CANCODER = 10;
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(327.98);
+        public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 3;
+        public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 4;
+        public static final int FRONT_LEFT_MODULE_STEER_CANCODER = 9;
+        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(278.09);
         
         // Front right swerve module
-        public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 3;
-        public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 4;
-        public static final int FRONT_RIGHT_MODULE_STEER_CANCODER = 9;
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(9.76);
+        public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 5;
+        public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 6;
+        public static final int FRONT_RIGHT_MODULE_STEER_CANCODER = 11;
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(3.96);
         
         // Back left swerve module
-        public static final int BACK_LEFT_MODULE_STEER_MOTOR = 7;
-        public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 8;
-        public static final int BACK_LEFT_MODULE_STEER_CANCODER = 12;
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(222.62);
+        public static final int BACK_LEFT_MODULE_STEER_MOTOR = 1;
+        public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 2;
+        public static final int BACK_LEFT_MODULE_STEER_CANCODER = 10;
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(239.41);
         
         // Back right swerve module
-        public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 5;
-        public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 6;
-        public static final int BACK_RIGHT_MODULE_STEER_CANCODER = 11;
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(93.60);
+        public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 7;
+        public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 8;
+        public static final int BACK_RIGHT_MODULE_STEER_CANCODER = 12;
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(132.80);
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
           // Front left
@@ -88,7 +88,7 @@ public final class Constants {
          * <p>
          * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
          */
-        public static final double MAX_VOLTAGE = 5.0;
+        public static final double MAX_VOLTAGE = 7.9;
 
         /**
          * The maximum angular velocity of the robot in radians per second.
