@@ -273,7 +273,6 @@ public class DriveSubsystem extends SubsystemBase {
         m_chassisSpeeds = chassisSpeeds;
     }
 
-    // TODO: Test This
     public void setModuleStates(SwerveModuleState[] states) {
         SwerveDriveKinematics.desaturateWheelSpeeds(states, ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
         frontLeft.set(states[0].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[0].angle.getRadians());
@@ -298,8 +297,6 @@ public class DriveSubsystem extends SubsystemBase {
         backLeft.set(states[2].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[2].angle.getRadians());
         backRight.set(states[3].speedMetersPerSecond / ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND * ModuleConstants.MAX_VOLTAGE, states[3].angle.getRadians());
 
-        SmartDashboard.putNumber("Front Left Encoder", getDriveEncoder(Module.kFL));
-        SmartDashboard.putNumber("Front Left CAN Coder", getSteerCANCoder(Module.kFL));
         SmartDashboard.putString("Odometry Pose", getPose().toString());
     }
     
@@ -311,70 +308,62 @@ public class DriveSubsystem extends SubsystemBase {
         backRight.set(0, 0);
     }
 
-        /** @return total traveled y distance (Hopefully) */
-        public double getTotalYTravel() {
-            return getPose().getY();
-        }
-        
-        /** @return total travled x distance (Hopefully) */
-        public double getTotalXTravel() {
-            return getPose().getX();
-        }
-        
-        /************************ PAth STuff ************************/
+    /************************ PAth STuff ************************/
     
-        /**
-         * Gets the path of a PathPlanner json file
-         * @param trajectoryName the name of the PathPlanner path you want to call
-         * @throws IOException
-         */
-        protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
-            return TrajectoryUtil.fromPathweaverJson(
-                Filesystem.getDeployDirectory().toPath().resolve(Paths.get("paths", trajectoryName + ".wpilib.json")));
-        }
+    /**
+     * Gets the path of a PathPlanner json file
+     * @param trajectoryName the name of the PathPlanner path you want to call
+     * @throws IOException
+     */
+    protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
+        return TrajectoryUtil.fromPathweaverJson(
+            Filesystem.getDeployDirectory().toPath().resolve(Paths.get("paths", trajectoryName + ".wpilib.json")));
+    }
           
-        /** 
+    /** 
+     * Loads the PathPlanner File 
          * Loads the PathPlanner File 
-         * @param filename the name of the .json file
-         */
-        public Trajectory loadTrajectoryFromFile(String filename) {
-            try {
-                return loadTrajectory(filename);
-            } catch (IOException e) {
-                DriverStation.reportError("Failed to load auto trajectory: " + filename, false);
-                return new Trajectory();
-            }
+     * Loads the PathPlanner File 
+     * @param filename the name of the .json file
+     */
+    public Trajectory loadTrajectoryFromFile(String filename) {
+        try {
+            return loadTrajectory(filename);
+        } catch (IOException e) {
+            DriverStation.reportError("Failed to load auto trajectory: " + filename, false);
+            return new Trajectory();
         }
+    }
           
-        /**
-         * Creates a command to follow a Trajectory on the drivetrain.
-         * @param trajectory trajectory to follow
-         * @return command that will run the trajectory
-         */
-        public Command createCommandForTrajectory(Trajectory trajectory, Boolean initPose) {
+    /**
+     * Creates a command to follow a Trajectory on the drivetrain.
+     * @param trajectory trajectory to follow
+     * @return command that will run the trajectory
+     */
+    public Command createCommandForTrajectory(Trajectory trajectory, Boolean initPose) {
     
-            PIDController xController = new PIDController(AutoConstants.kp_X_CONTROLLER, 0, 0);
-            PIDController yController = new PIDController(AutoConstants.kp_Y_CONTROLLER, 0, 0);
-            ProfiledPIDController thetaController = new ProfiledPIDController(
-                AutoConstants.kp_THETA_CONTROLLER, 0.0, 0.1, AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
-            thetaController.enableContinuousInput(-Math.PI, Math.PI);
+        PIDController xController = new PIDController(AutoConstants.kp_X_CONTROLLER, 0, 0);
+        PIDController yController = new PIDController(AutoConstants.kp_Y_CONTROLLER, 0, 0);
+        ProfiledPIDController thetaController = new ProfiledPIDController(
+            AutoConstants.kp_THETA_CONTROLLER, 0.0, 0.1, AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
+        thetaController.enableContinuousInput(-Math.PI, Math.PI);
     
-            SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-                trajectory,
-                this::getPose,
-                DriveConstants.DRIVE_KINEMATICS,
-                xController,
-                yController,
-                thetaController,
-                this::setModuleStates,
-                this);
+        SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+            trajectory,
+            this::getPose,
+            DriveConstants.DRIVE_KINEMATICS,
+            xController,
+            yController,
+            thetaController,
+            this::setModuleStates,
+            this);
     
-            if (initPose) {
-                var reset =  new InstantCommand(() -> this.resetOdometry(trajectory.getInitialPose()));
-                return reset.andThen(swerveControllerCommand.andThen(() -> stopModules()));
-            } else {
-                return swerveControllerCommand.andThen(() -> stopModules());
+        if (initPose) {
+            var reset =  new InstantCommand(() -> this.resetOdometry(trajectory.getInitialPose()));
+            return reset.andThen(swerveControllerCommand.andThen(() -> stopModules()));
+        } else {
+            return swerveControllerCommand.andThen(() -> stopModules());
             
-            }
         }
+    }
 }

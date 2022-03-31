@@ -1,59 +1,56 @@
 # 2022 Robot
 
-### Team 1810 Robotics Swerve drive code for the 2022 competition season
-**Named `Swiffer`**
----
+## Team 1810 Robotics Swerve drive code for the 2022 competition season
 
-* Uses Swerve Drive Specialties's MK4 with L2 gear ratio with falcons as the motors.
-    * (https://www.swervedrivespecialties.com/products/mk4-swerve-module?variant=39376675045489)
+### Named `Drilbur`
 
 ---
 
-* Electrical / Programming Wiring Chart.
-    * (https://docs.google.com/spreadsheets/d/1KCYpCz1mNoaCfkUa-aLaaVEg1ivP0he2kCzS-OsVOjM/edit?usp=sharing)
+* Uses [Swerve Drive Specialties's MK4](<https://www.swervedrivespecialties.com/products/mk4-swerve-module?variant=39376675045489>) with L2 gear ratio with falcons as the motors.
 
-    It is restricted so only added people can open the sheets.
-
----
-
-**Controller Bindings**
-
-**Xbox**
-| Button | Purpose      |
-| -----  | -----        |
-| LT     | LL On        |
-| RT     | LL On        |
-| LB     | Left Intake  |
-| RB     | Right Intake |
-| LStick | Hood (F)     |
-| RStick | Hood (R)     |
-| Start  | Eject        |
-| Back   |              |
-| Y      |              |
-| X      |              |
-| A      |              |
-| B      | Elevator     |
-
-
-**Joystick**
-| Move - Button  | Purpose | | Rotation - Button | Purpose   |
-| -----          | -----   |-| -----             | -----     |
-| Trigger        |         | | Trigger           |           |
-| 1              |         | | 1                 |           |
-| 2              |         | | 2                 |           |
-| 3              |         | | 3                 |           |
-| 4              |         | | 4                 |           |
-| 5              |         | | 5                 |           |
-| 6              |         | | 6                 |           |
-| 7              |         | | 7                 |           |
-| 8              |         | | 8                 |           |
-| 9              |         | | 9                 | Zero Gyro |
-| 10             |         | | 10                |           |
-| 11             |         | | 11                |           |
+* Electrical / Programming [Wiring Chart](<https://docs.google.com/spreadsheets/d/1KCYpCz1mNoaCfkUa-aLaaVEg1ivP0he2kCzS-OsVOjM/edit?usp=sharing>). (It is restricted so only added people can open the sheets.)
 
 ---
 
-**CAN**
+### Controller Bindings
+
+#### Xbox
+
+| Button | Purpose            |
+| -----  | -----              |
+| LT     |                    |
+| RT     |                    |
+| LB     | Left Intake        |
+| RB     | Right Intake       |
+| LStick |                    |
+| RStick |                    |
+| Start  |                    |
+| Back   | Intake/auger Mod   |
+| Y      | Reset Hood         |
+| X      | Limelight Toggle   |
+| A      |                    |
+| B      | Auger              |
+
+#### Joystick
+
+| Move - Button  | Purpose   | | Rotation - Button | Purpose   |
+| -----          | -----     |-| -----             | -----     |
+| Trigger        |           | | Trigger           |           |
+| 1              |           | | 1                 |           |
+| 2              |           | | 2                 |           |
+| 3              |           | | 3                 |           |
+| 4              |           | | 4                 |           |
+| 5              |           | | 5                 |           |
+| 6              |           | | 6                 |           |
+| 7              |           | | 7                 |           |
+| 8              |           | | 8                 |           |
+| 9              | Zero Gyro | | 9                 | Zero Gyro |
+| 10             |           | | 10                |           |
+| 11             |           | | 11                |           |
+
+---
+
+#### CAN
 
 | ID     | Mechanism                    | Being Controlled   | Controller | Wire Num |
 | -----  | -----                        | -----              | -----      | -----    |
@@ -71,51 +68,51 @@
 | 12     | Drive - Back Left CANCoder   |                    |            | 18       |
 | 13     | Gyro - Pigeon IMU            |                    |            | 12       |
 | 14     | Shooter - Shooter Motor      | 1 NEO              | SPARK MAX  | 25       |
-| 15     | Climb - Left Winch           | 1 NEO 550          | SPARK MAX  | 26       |
-| 16     | Climb - Right Winch          | 1 NEO 550          | SPARK MAX  | 27       |
 | 17     | REV Pneumatics Hub           |                    |            | 28       |
-| 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |   
+| 18     | Auger - Auger Motor          | 1 Window Regulator | VictorSPX  |          |
 
-**Relay**
+#### Relay
 
 | Port |  Mechanism            | Being Controlled   | Controller  |
 | -----| -----                 | -----              | -----       |
-| 00   | Intake - Left Intake  | 2 JE               | Relay Spike |
-| 01   | Intake - Right Intake | 2 JE               | Relay Spike |
+| 00   | Intake - Right Intake | 2 JE               | Relay Spike |
+| 01   | Intake - Left Intake  | 2 JE               | Relay Spike |
 | 02   | Hood - Hood Movement  | 1 Snowblower       | Relay Spike |
 | 03   |                       |                    |             |
 
-**PWM**
+#### PWM
 
-| Port  | Mechanism           | Being Controlled | Controller  |
-| ----- | -----               | -----            | -----       |
-| 00    | Climb - Climb Servo | 2 Servo          | Relay Spike | 
-| 01    |                     |                  |             | 
-| 02    |                     |                  |             | 
-| 03    |                     |                  |             | 
-| 04    |                     |                  |             | 
-| 05    |                     |                  |             | 
-| 06    |                     |                  |             | 
-| 07    |                     |                  |             | 
-| 08    |                     |                  |             | 
-| 09    |                     |                  |             | 
-<br>
+| Port  | Mechanism | Being Controlled | Controller |
+| ----- | -----     | -----            | -----      |
+| 00    |           |                  |            |
+| 01    |           |                  |            |
+| 02    |           |                  |            |
+| 03    |           |                  |            |
+| 04    |           |                  |            |
+| 05    |           |                  |            |
+| 06    |           |                  |            |
+| 07    |           |                  |            |
+| 08    |           |                  |            |
+| 09    |           |                  |            |
 
-| DIO   |       |
-| ----- | ----- |
-| 00    |       |
-| 01    |       | 
-| 02    |       | 
-| 03    |       |
-| 04    |       | 
-| 05    |       | 
-| 06    |       | 
-| 07    |       | 
-| 08    |       | 
-| 09    |       |
-<br>
+#### DIO
 
-| Analog ln | Mechanism |
+|       | Mechanism  |
+| ----- | -----      |
+| 00    |            |
+| 01    |            |
+| 02    |            |
+| 03    | Ejector LS |
+| 04    |            |
+| 05    |            |
+| 06    |            |
+| 07    |            |
+| 08    |            |
+| 09    | Hood LS    |
+
+#### Analog In
+
+|           | Mechanism |
 | -----     | -----     |
 | 00        |           |
 | 01        |           |

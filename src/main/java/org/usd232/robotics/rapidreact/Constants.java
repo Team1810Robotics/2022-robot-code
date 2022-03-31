@@ -38,25 +38,25 @@ public final class Constants {
         public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 1;
         public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 2;
         public static final int FRONT_LEFT_MODULE_STEER_CANCODER = 10;
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(328.6);
+        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(327.98);
         
         // Front right swerve module
         public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 3;
         public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 4;
         public static final int FRONT_RIGHT_MODULE_STEER_CANCODER = 9;
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(10.8);
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(9.76);
         
         // Back left swerve module
         public static final int BACK_LEFT_MODULE_STEER_MOTOR = 7;
         public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 8;
         public static final int BACK_LEFT_MODULE_STEER_CANCODER = 12;
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(222.0);
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(222.62);
         
         // Back right swerve module
         public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 5;
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 6;
         public static final int BACK_RIGHT_MODULE_STEER_CANCODER = 11;
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(91.8);
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(93.60);
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
           // Front left
@@ -78,7 +78,7 @@ public final class Constants {
          */
         // Freespeed: 4.96824 m/s^2
         // Calculated: 4.968230455 m/s^2
-        // Real: TODO m/^2 (after whole robot is assembled)
+        // Real: (Not done) m/^2 (after whole robot is assembled)
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 2048.0 / 60.0 *
         SdsModuleConfigurations.MK4_L2.getDriveReduction() *
         SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
@@ -88,7 +88,7 @@ public final class Constants {
          * <p>
          * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
          */
-        public static final double MAX_VOLTAGE = 6.0;
+        public static final double MAX_VOLTAGE = 5.0;
 
         /**
          * The maximum angular velocity of the robot in radians per second.
@@ -98,7 +98,7 @@ public final class Constants {
         // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
         // Freespeed: 61.21537703 rad/s^2
         // Calculated: 61.2152594258 rad/s^2
-        // Real: TODO rad/s^2 (after whole robot is assembled)
+        // Real: (Not done) rad/s^2 (after whole robot is assembled)
         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
         Math.hypot(DriveConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DriveConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0); // hypot is about 0.08116 meters
     }
@@ -108,9 +108,9 @@ public final class Constants {
         public static final double MAX_AUTO_RADIANS_PER_SEC = ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 1.5;
         public static final double MAX_AUTO_ACCELERATION_RADIANS = 3;
 
-        public static final double kp_X_CONTROLLER = 1.2; // TODO: Calculate (https://youtu.be/jIKBWO7ps0w)
-        public static final double kp_Y_CONTROLLER = 1.2; // TODO: Calculate
-        public static final double kp_THETA_CONTROLLER = 2.8; // TODO: Calculate
+        public static final double kp_X_CONTROLLER = 1.2; // (https://youtu.be/jIKBWO7ps0w)
+        public static final double kp_Y_CONTROLLER = 1.2;
+        public static final double kp_THETA_CONTROLLER = 2.8;
 
         public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = 
                 new TrapezoidProfile.Constraints(
@@ -121,9 +121,9 @@ public final class Constants {
     public static final class OIConstants {
         public static final int MOVEMENT_JOYSTICK_PORT = 0;
         public static final int ROTATION_JOYSTICK_PORT = 1;
-        public static final int MANIPULATOR_CONTROLLER_PORT = 3;
+        public static final int MANIPULATOR_CONTROLLER_PORT = 2;
 
-        public static final double DEADBAND = 0.45;
+        public static final double DEADBAND = 0.4;
     }
 
     public static final class PigeonConstants {
@@ -131,67 +131,36 @@ public final class Constants {
     }
 
     public static final class PneumaticConstants {
-        public static final int PH_CAN_ID = 17; // FIXME
+        public static final int PH_CAN_ID = 17;
 
-        public static final double MAX_TANK_PSI = 120;
-        public static final double MIN_TANK_PSI = 80;
+        public static final double MAX_TANK_PSI = 117;
+        public static final double MIN_TANK_PSI = 110;
     }
     
     public static final class IntakeConstants {
-        public static final int RIGHT_MOTOR_PORT = 1;  
-        public static final int LEFT_MOTOR_PORT = 0;   
+        public static final int RIGHT_MOTOR_PORT = 1;
+        public static final int LEFT_MOTOR_PORT = 0;
 
-        public static final int LEFT_PNEUMATIC_PORT = 7;
-        public static final int RIGHT_PNEUMATIC_PORT = 6;
-    }
-
-    public static final class EjectorConstants {
-        public static final int EJECTOR_PNEUMATIC = 4;
-        public static final int LOCK_PNEUMATIC = 5;
-
-        public static final int EJECTOR_LS = 0; // FIXME
+        public static final int LEFT_PNEUMATIC_PORT = 6;
+        public static final int RIGHT_PNEUMATIC_PORT = 7;
     }
 
     public static final class ShooterConstants {
         public static final int MOTOR_PORT = 14;
-
-        public static final int MAX_VELOCITY_RPM = 5328;
-
-        public static final double kP = 6.0e-5;
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double MIN_OUTUT = -1;
-        public static final int MAX_OUTPUT = 1;
     }
 
     public static final class HoodConstants {
         public static final int MOTOR_PORT = 2;
-        public static final int HOOD_LIMIT_SWITCH_CHANNEL = 0; // FIXME
-        public static final int[] HOOD_ENCODER_CHANNEL = {1, 2}; // FIXME
+        public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
+        public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static double FORWARD_HOOD_LIMIT = 100.0; // FIXME
-    }
+        public static final double HOOD_DEADBAND = 200;
 
-    public static final class ClimbConstants {
-        public static final int PNEUMATIC_PORT = 1; // FIXME
-        public static final int LEFT_WINCH_PORT = 15;
-        public static final int RIGHT_WINCH_PORT = 16;
-
-        public static final double WINCH_ENCODER_BOTTOM = -100; // FIXME
+        public static double FORWARD_HOOD_LIMIT = -2650;
     }
 
     public static final class AugerConstants {
-        public static final int VICTOR_ID = 18; // FIXME
+        public static final int VICTOR_ID = 18;
+        public static final double AUGER_ON = -1.0;
     }
-
-    public static final class VisionConstants {
-        /** Units in Meters */
-        public static final double TARGET_HEIGHT = 2.64;
-        /** Units in Meters */
-        // Height of the Limelight Camera to the ground
-        public static final double ROBOT_HEIGHT = 0.73025;
-        /** Units in Degrees */
-        public static final double LIME_LIGHT_MOUNT_ANGLE = 45.0; // FIXME
-    }
-
 }

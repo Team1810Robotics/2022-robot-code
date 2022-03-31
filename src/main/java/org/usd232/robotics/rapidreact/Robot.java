@@ -2,11 +2,12 @@ package org.usd232.robotics.rapidreact;
 
 import static org.usd232.robotics.rapidreact.Constants.PneumaticConstants;
 
-import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
+/* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
-import org.usd232.robotics.rapidreact.subsystems.EjectorSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.ShooterSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.VisionSubsystem;
+/* End of Subsystems */
 
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -21,13 +22,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @since 2022
  */
 public class Robot extends TimedRobot {
+    /**
+     * The logger.
+     * 
+     * @since 2018
+     */
+    //@SuppressWarnings("unused")
+    // private static final Logger LOG = new Logger();
 
     private PneumaticHub m_ph = new PneumaticHub(PneumaticConstants.PH_CAN_ID);
 
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
-    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+
+    private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+    private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+    private final HoodSubsystem m_hoodSubsystem = new HoodSubsystem();
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -35,20 +46,15 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        
         // Turns Limelight off on startup
-        VisionSubsystem.limeLightOff();
-
-        // Zeros climb winch encoders
-        ClimbSubsystem.zeroEncoders();
-
-        // Resets the hood on startup (could be annoying during testing)
-        // HoodSubsystem.resetHood(); // TODO: notice me 
-
+        m_visionSubsystem.limeLightOn();
+        
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
     }
-
+    
     /**
      * This function is called every robot packet, no matter the mode. Use this for items like
      * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -59,70 +65,72 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
 
+        if (m_visionSubsystem.getLimelight()) {
+
+            double[] trgeValues = m_visionSubsystem.getTargetingValues();
+
+            // Sets the shooter to calculated target value
+            m_shooterSubsystem.shooterOn(trgeValues[1]);
+
+            // Sets the hood to calculated target value
+            m_hoodSubsystem.setHood(trgeValues[0]); 
+
+        } else {
+            m_hoodSubsystem.stopHood();
+        }
+
+        
         // post to smart dashboard periodically
         SmartDashboard.putNumber("Gyroscope angle", DriveSubsystem.getGyro());
         SmartDashboard.putBoolean("Gyro 0", DriveSubsystem.ifGyroZero());
-        SmartDashboard.putBoolean("Lime Light On/Off", VisionSubsystem.OnOffLL);
-        SmartDashboard.putNumber("Compressor PSI", m_ph.getPressure(0));
-        EjectorSubsystem.colorDebug();
-
-        /**
-         * Enable the compressor with hybrid sensor control, meaning it uses both
-         * the analog and digital pressure sensors.
-         *
-         * This uses hysteresis between a minimum and maximum pressure value,
-         * the compressor will run when the sensor reads below the minimum pressure
-         * value, and the compressor will shut off once it reaches the maximum.
-         *
-         * If at any point the digital pressure switch is open, the compressor will
-         * shut off.
-         */
-        m_ph.enableCompressorHybrid(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
-
-        /* Keeps the shooter at a constitant speed */
-        shooterSubsystem.holdShooterVelocity();
-
+        SmartDashboard.putBoolean("Lime Light On/Off", m_visionSubsystem.getLimelight());
+        SmartDashboard.putNumber("Hood Encoder", HoodSubsystem.hoodEncoder.getDistance());
+        SmartDashboard.putBoolean("Hood LS", HoodSubsystem.hoodLS.get());
+        SmartDashboard.putString("Compressor PSI", String.format("%.4f", m_ph.getPressure(0)));
+        SmartDashboard.putString("Shooter Speed", String.format("%.2f", ShooterSubsystem.getEncoderVelocity()));
+        SmartDashboard.putNumber("Hood Distance", m_visionSubsystem.getTargetingValues()[0]);
+        SmartDashboard.putNumber("Calc Shooter Speed", m_visionSubsystem.getTargetingValues()[1]);
+        
+        /** Enable compressor closed loop control using analog input. */
+        m_ph.enableCompressorAnalog(PneumaticConstants.MIN_TANK_PSI, PneumaticConstants.MAX_TANK_PSI);
+        
         CommandScheduler.getInstance().run();
     }
-
+    
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
         // Turns Limelight off on disable
-        VisionSubsystem.limeLightOff();
-
-        // Turn off shooter motor
-        shooterSubsystem.shooterOn();
+        m_visionSubsystem.limeLightOff();
+        
+        // Turn off shooter motor on disable
+        m_shooterSubsystem.shooterOff();
     }
-
+    
     @Override
     public void disabledPeriodic() {}
-
+    
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        // Turns shooter on (Wow).
-        shooterSubsystem.shooterOn();
 
+        // Resets the hood on startup (could be annoying during testing)
+        m_hoodSubsystem.resetHood();
+        
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+        
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
     }
-
+    
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
-        ClimbSubsystem.zeroEncoders();
-
-        ClimbSubsystem.timer.reset();
-        ClimbSubsystem.timer.start();
-
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -131,20 +139,8 @@ public class Robot extends TimedRobot {
             m_autonomousCommand.cancel();
         }
     }
-
+    
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {
-        ClimbSubsystem.endgame = ClimbSubsystem.timer.get() >= 105;
-    }
-
-    @Override
-    public void testInit() {
-        // Cancels all running commands at the start of test mode.
-        CommandScheduler.getInstance().cancelAll();
-    }
-
-    /** This function is called periodically during test mode. */
-    @Override
-    public void testPeriodic() {}
+    public void teleopPeriodic() {}
 }
