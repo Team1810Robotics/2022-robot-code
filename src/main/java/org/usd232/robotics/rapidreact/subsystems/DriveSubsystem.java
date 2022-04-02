@@ -1,5 +1,7 @@
 package org.usd232.robotics.rapidreact.subsystems;
 
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
@@ -16,10 +18,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -27,15 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 import static org.usd232.robotics.rapidreact.Constants.AutoConstants;
 import static org.usd232.robotics.rapidreact.Constants.DriveConstants;
 import static org.usd232.robotics.rapidreact.Constants.ModuleConstants;
 import static org.usd232.robotics.rapidreact.Constants.PigeonConstants;
-
-import java.io.IOException;
-import java.nio.file.Paths;
 
 // https://drive.google.com/file/d/1jjWRu1KV4cwF8fZrVr89JhTrMbSx8Aeh/view?usp=sharing
 
@@ -309,30 +303,10 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     /************************ PAth STuff ************************/
-    
-    /**
-     * Gets the path of a PathPlanner json file
-     * @param trajectoryName the name of the PathPlanner path you want to call
-     * @throws IOException
-     */
-    protected static Trajectory loadTrajectory(String trajectoryName) throws IOException {
-        return TrajectoryUtil.fromPathweaverJson(
-            Filesystem.getDeployDirectory().toPath().resolve(Paths.get("paths", trajectoryName + ".wpilib.json")));
-    }
-          
-    /** 
-     * Loads the PathPlanner File 
-         * Loads the PathPlanner File 
-     * Loads the PathPlanner File 
-     * @param filename the name of the .json file
-     */
-    public Trajectory loadTrajectoryFromFile(String filename) {
-        try {
-            return loadTrajectory(filename);
-        } catch (IOException e) {
-            DriverStation.reportError("Failed to load auto trajectory: " + filename, false);
-            return new Trajectory();
-        }
+
+    public Pose2d getInitPose(PathPlannerTrajectory trajectory) {
+        return new Pose2d(trajectory.getInitialState().poseMeters.getTranslation(),
+            trajectory.getInitialState().holonomicRotation);
     }
           
     /**
@@ -340,7 +314,7 @@ public class DriveSubsystem extends SubsystemBase {
      * @param trajectory trajectory to follow
      * @return command that will run the trajectory
      */
-    public Command createCommandForTrajectory(Trajectory trajectory, Boolean initPose) {
+    public Command createCommandForTrajectory(PathPlannerTrajectory trajectory, Boolean initPose) {
     
         PIDController xController = new PIDController(AutoConstants.kp_X_CONTROLLER, 0, 0);
         PIDController yController = new PIDController(AutoConstants.kp_Y_CONTROLLER, 0, 0);
@@ -348,7 +322,7 @@ public class DriveSubsystem extends SubsystemBase {
             AutoConstants.kp_THETA_CONTROLLER, 0.0, 0.1, AutoConstants.THETA_CONTROLLER_CONSTRAINTS);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
     
-        SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+        PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
             trajectory,
             this::getPose,
             DriveConstants.DRIVE_KINEMATICS,
@@ -359,11 +333,10 @@ public class DriveSubsystem extends SubsystemBase {
             this);
     
         if (initPose) {
-            var reset =  new InstantCommand(() -> this.resetOdometry(trajectory.getInitialPose()));
+            var reset =  new InstantCommand(() -> this.resetOdometry(getInitPose(trajectory)));
             return reset.andThen(swerveControllerCommand.andThen(() -> stopModules()));
         } else {
             return swerveControllerCommand.andThen(() -> stopModules());
-            
         }
     }
 }

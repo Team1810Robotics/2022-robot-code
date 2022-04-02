@@ -47,14 +47,21 @@ public class HoodSubsystem extends SubsystemBase {
 
     /** Sets the hood back to its default position */
     public void resetHood() {
-        if (!hoodLS.get()) {
-            while (!hoodLS.get()) {
-                LOG.info("in hile loop");
-                this.reverseHood();
+        new Thread(() -> {
+            try {
+                if (!hoodLS.get()) {
+                    while (!hoodLS.get()) {
+                        LOG.info("in hile loop");
+                        this.reverseHood();
+                    }
+                    hood.set(Relay.Value.kOff);
+                    hoodEncoder.reset();
+                }
+
+            } catch (Exception e) {
+                LOG.error(e);
             }
-            hood.set(Relay.Value.kOff);
-            hoodEncoder.reset();
-        }
+        }).run();
     }
     
     public void zeroEncoder() {

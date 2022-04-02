@@ -88,7 +88,7 @@ public final class Constants {
          * <p>
          * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
          */
-        public static final double MAX_VOLTAGE = 7.9;
+        public static final double MAX_VOLTAGE = 6;
 
         /**
          * The maximum angular velocity of the robot in radians per second.
@@ -108,9 +108,9 @@ public final class Constants {
         public static final double MAX_AUTO_RADIANS_PER_SEC = ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 1.5;
         public static final double MAX_AUTO_ACCELERATION_RADIANS = 3;
 
-        public static final double kp_X_CONTROLLER = 0.1; // (https://youtu.be/jIKBWO7ps0w)
-        public static final double kp_Y_CONTROLLER = 0.1;
-        public static final double kp_THETA_CONTROLLER = 0.2;
+        public static final double kp_X_CONTROLLER = 8; // (https://youtu.be/jIKBWO7ps0w) // 0.01
+        public static final double kp_Y_CONTROLLER = 8; // 0.01
+        public static final double kp_THETA_CONTROLLER = 4; // 0.1
 
         public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS = 
                 new TrapezoidProfile.Constraints(
@@ -150,8 +150,8 @@ public final class Constants {
 
         public static final int MAX_SPEED = 6500;
 
-        public static final double kP = 0.000;    // FIXME
-        public static final double kFF = 0.00017; // FIXME
+        public static final double kP = 0.001;    // FIXME: 0.000
+        public static final double kFF = 0.00017; // FIXME: 0.00017
     }
 
     public static final class HoodConstants {
@@ -159,9 +159,9 @@ public final class Constants {
         public static final int HOOD_LIMIT_SWITCH_CHANNEL = 9;
         public static final int[] HOOD_ENCODER_CHANNEL = {1, 2};
 
-        public static final double HOOD_DEADBAND = 200;
+        public static final double HOOD_DEADBAND = 50;
 
-        public static double FORWARD_HOOD_LIMIT = -2650;
+        public static double FORWARD_HOOD_LIMIT = -3200; //-2650
     }
 
     public static final class AugerConstants {

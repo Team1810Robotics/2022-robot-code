@@ -75,12 +75,11 @@ public class VisionSubsystem extends SubsystemBase {
             // Trying to use all threads we have (all 2 of them)
             new Thread(() -> {
                 try {
-                    if (ty <= -12) {
-                        hoodDistance = -80.433 * Math.pow(ty, 2) - 2156.31 * ty - 14451.6;
+                    if (ty <= -8.1) {
+                        hoodDistance = 24.883 * (ty * ty) + 890.06 * ty + 4643;
     
-                        if (hoodDistance > 0) {
-                            // if the calculated hood distance is greater than 0 (AKA it's positive) set it to 0 because the hood cant go positive
-                            hoodDistance = 0;
+                        if (hoodDistance > -900) {
+                            hoodDistance = -900;
                         }
                         
                         if (hoodDistance < HoodConstants.FORWARD_HOOD_LIMIT) {
@@ -88,23 +87,14 @@ public class VisionSubsystem extends SubsystemBase {
                             hoodDistance = HoodConstants.FORWARD_HOOD_LIMIT;
                         } 
                     } else {
-                        hoodDistance = 0;
+                        hoodDistance = -900;
                     }
 
-                    // Jank
-                    if (ty > 1.5) {
-                        shooterSpeed = 0.435;
-                    } else if (ty < 18.0 && ty > -4) {
-                        shooterSpeed = 0.5;
-                    } else if (ty < -4 && ty > -8.5) {
-                        shooterSpeed = 0.6;
-                    } else if (ty < -8.5 && ty > -12) {
-                        shooterSpeed = 0.75;
-                    } else if (ty <= -12) {
-                        shooterSpeed = 1.0;
+                    if (ty <= -0.44) {
+                        shooterSpeed = -0.0039 * (ty * ty * ty) + 0.73 * (ty * ty) - 20.301 * ty + 2532.1;
+                        // shooterSpeed = 0.412 * (ty * ty) - 48.851 * ty + 2495.7;
                     } else {
-                        shooterSpeed = 0.5;
-                        LOG.warn("Shooter Speed unmatched");
+                        shooterSpeed = 2700;
                     }
 
                 } catch (Exception e) {
@@ -115,6 +105,7 @@ public class VisionSubsystem extends SubsystemBase {
 
         return new double[] {hoodDistance, shooterSpeed};
     }
+
     public enum LLMode {    // https://docs.limelightvision.io/en/latest/networktables_api.html
 
         // getEntry("ledMode")
