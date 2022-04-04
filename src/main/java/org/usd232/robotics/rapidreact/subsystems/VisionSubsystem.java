@@ -90,12 +90,12 @@ public class VisionSubsystem extends SubsystemBase {
                         hoodDistance = -900;
                     }
 
-                    if (ty <= -0.44) {
-                        shooterSpeed = -0.0039 * (ty * ty * ty) + 0.73 * (ty * ty) - 20.301 * ty + 2532.1;
+                    shooterSpeed = -0.0029 * (ty * ty * ty) + 0.7476 * (ty * ty) - 20.4 * ty + 2630.6;
+                    /* if (ty <= -0.44) {
                         // shooterSpeed = 0.412 * (ty * ty) - 48.851 * ty + 2495.7;
                     } else {
                         shooterSpeed = 2700;
-                    }
+                    } */
 
                 } catch (Exception e) {
                     LOG.error(e);

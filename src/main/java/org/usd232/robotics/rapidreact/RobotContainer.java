@@ -14,9 +14,10 @@ import org.usd232.robotics.rapidreact.commands.SwerveDrive;
 
 /* Paths */
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLine2;
-// import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLineLeft;
-// import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLineRight;
-// import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLineLeft;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLineRight;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OffLineSpin;
+import org.usd232.robotics.rapidreact.commands.autonomous.paths.OfflineReversed;
 import org.usd232.robotics.rapidreact.commands.autonomous.paths.Shoot;
 /* End of Paths */
 
@@ -101,11 +102,12 @@ public class RobotContainer {
 
 
     /* Auto Path(s) */
-    // private final Command m_offLineReversed = LOG.catchAll(() -> new OfflineReversed(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
-    // private final Command m_offLineLeft = LOG.catchAll(() -> new OffLineLeft(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
-    // private final Command m_offLineRight = LOG.catchAll(() -> new OffLineRight(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
+    private final Command m_offLineReversed = LOG.catchAll(() -> new OfflineReversed(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
+    private final Command m_offLineLeft = LOG.catchAll(() -> new OffLineLeft(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
+    private final Command m_offLineRight = LOG.catchAll(() -> new OffLineRight(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
     private final Command m_offLineTwo = LOG.catchAll(() -> new OffLine2(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
     private final Command m_shoot = LOG.catchAll(() -> new Shoot(m_shooterSubsystem, m_augerSubsystem));
+    private final Command m_offLineSpin = LOG.catchAll(() -> new OffLineSpin(m_driveSubsystem, m_shooterSubsystem, m_augerSubsystem));
 
     /** Turns joystick inputs into speed variables */
     public RobotContainer() {
@@ -124,11 +126,12 @@ public class RobotContainer {
 
         /* Path chooser */
         pathChooser.setDefaultOption("Null", null);
-        // pathChooser.addOption("OffLine Left", m_offLineLeft);
-        // pathChooser.addOption("OffLine Right", m_offLineRight);
-        // pathChooser.addOption("-Shoot & Offline Reversed-", m_offLineReversed);
+        pathChooser.addOption("OffLine Left", m_offLineLeft);
+        pathChooser.addOption("OffLine Right", m_offLineRight);
+        pathChooser.addOption("-Shoot & Offline Reversed-", m_offLineReversed);
         pathChooser.addOption("Off Line 2", m_offLineTwo);
         pathChooser.addOption("Shoot", m_shoot);
+        pathChooser.addOption("Off Line Spin", m_offLineSpin);
         Shuffleboard.getTab("Autonomous").add(pathChooser);
 
         // Configure the button bindings
@@ -149,7 +152,7 @@ public class RobotContainer {
 
         ManipulatorXbox_B.whenHeld(new Auger(m_augerSubsystem, manipulatorController), false);
 
-        ManipulatorXbox_X.toggleWhenActive(new Limelight(m_visionSubsystem), true);
+        ManipulatorXbox_X.toggleWhenActive(new Limelight(m_visionSubsystem, m_hoodSubsystem), true);
 
         ManipulatorXbox_RB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, true));
         ManipulatorXbox_LB.whenHeld(new Intake(m_intakeSubsystem, manipulatorController, false));
