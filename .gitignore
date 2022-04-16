@@ -1,5 +1,4 @@
-# This gitignore has been specially created by the WPILib team.
-# If you remove items from this file, intellisense might break.
+# Created by https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,
 
 # https://drive.google.com/file/d/1g1Y23xKuVZuszMEn4LAaMDdRkvRialOw/view?usp=sharing
 
@@ -159,6 +158,8 @@ gradle-app.setting
 .project
 .settings/
 bin/
+imgui.ini
+pathplanner/
 
 # Simulation GUI and other tools window save file
 *-window.json

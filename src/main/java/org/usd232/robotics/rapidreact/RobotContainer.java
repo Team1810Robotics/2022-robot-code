@@ -23,6 +23,7 @@ import org.usd232.robotics.rapidreact.commands.autonomous.paths.Shoot;
 
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
+import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
@@ -121,7 +122,7 @@ public class RobotContainer {
                 () -> -modifyAxis(movementJoystick.getY()) * ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(movementJoystick.getX()) * ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis((rotationJoystick.getX() / 1.25)) * ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
-                true
+                () -> true
         ));
 
         /* Path chooser */

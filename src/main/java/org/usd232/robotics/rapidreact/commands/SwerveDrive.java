@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 // https://drive.google.com/file/d/1L3HFG1faKJ7LC5MNRQro7GX06wvOmHof/view?usp=sharing
@@ -34,12 +35,12 @@ public class SwerveDrive extends CommandBase {
                                DoubleSupplier translationXSupplier,
                                DoubleSupplier translationYSupplier,
                                DoubleSupplier rotationSupplier,
-                               boolean fieldOriented) {
+                               BooleanSupplier fieldOriented) {
         this.m_driveSubsystem = driveSubsystem;
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
         this.m_rotationSupplier = rotationSupplier;
-        this.fieldOriented = fieldOriented;
+        this.fieldOriented = fieldOriented.getAsBoolean();
 
         addRequirements(driveSubsystem);
     }
