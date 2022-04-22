@@ -173,7 +173,7 @@ public class RobotContainer {
     }
 
     /** Sets the deadzone for the controller/joystick */
-    private static double deadband(double value, double deadband) {
+    /* private static double deadband(double value, double deadband) {
         if (Math.abs(value) > deadband) {
             if (value > 0.0) {
                 return (value - deadband) / (1.0 - deadband);
@@ -183,7 +183,7 @@ public class RobotContainer {
         } else {
             return 0.0;
         }
-    }
+    } */
 
     /** Applies deadband and Copies the sign */
     private static double modifyAxis(double value) {

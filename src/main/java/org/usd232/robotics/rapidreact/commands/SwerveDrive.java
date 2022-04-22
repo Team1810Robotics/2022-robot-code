@@ -44,11 +44,24 @@ public class SwerveDrive extends CommandBase {
         this.m_rotationSupplier = rotationSupplier;
         this.fieldOriented = fieldOriented;
 
-        this.xLimiter = new SlewRateLimiter(ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
-        this.yLimiter = new SlewRateLimiter(ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
-        this.thetaLimiter = new SlewRateLimiter(ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+        this.xLimiter = new SlewRateLimiter(DriveConstants.TELEOP_MAX_ACCELERATION_PER_SEC);
+        this.yLimiter = new SlewRateLimiter(DriveConstants.TELEOP_MAX_ACCELERATION_PER_SEC);
+        this.thetaLimiter = new SlewRateLimiter(DriveConstants.TELEOP_MAX_ANGULAR_ACCELERATION_PER_SEC);
 
         addRequirements(driveSubsystem);
+    }
+
+    /** Sets the deadzone for the controller/joystick */
+    private static double deadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+            if (value > 0.0) {
+                return (value - deadband) / (1.0 - deadband);
+            } else {
+                return (value + deadband) / (1.0 - deadband);
+            }
+        } else {
+            return 0.0;
+        }
     }
 
     /** Sets ChassisSpeeds to the x speed, y speed, and rotation */
@@ -63,10 +76,9 @@ public class SwerveDrive extends CommandBase {
         thetaSpeed = thetaLimiter.calculate(thetaSpeed)
                 * DriveConstants.TELEOP_MAX_RADIANS_PER_SEC;
 
-        // FIXME: remove
-        xSpeed = (xSpeed < OIConstants.DEADBAND) ? 0.0 : xSpeed;
-        ySpeed = (ySpeed < OIConstants.DEADBAND) ? 0.0 : ySpeed;
-        thetaSpeed = (thetaSpeed < OIConstants.DEADBAND) ? 0.0 : thetaSpeed;
+        xSpeed = deadband(xSpeed, OIConstants.DEADBAND);
+        ySpeed = deadband(ySpeed, OIConstants.DEADBAND);
+        thetaSpeed = deadband(thetaSpeed, OIConstants.DEADBAND);
 
          m_driveSubsystem.drive( 
             (fieldOriented) ?

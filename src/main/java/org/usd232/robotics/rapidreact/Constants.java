@@ -69,8 +69,10 @@ public final class Constants {
           new Translation2d(-DriveConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DriveConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0)
         );
 
-        public static final double TELEOP_MAX_SPEED_PER_SEC = 2; // FIXME
-        public static final double TELEOP_MAX_RADIANS_PER_SEC = 45; // FIXME
+        public static final double TELEOP_MAX_ACCELERATION_PER_SEC = 3; // FIXME
+        public static final double TELEOP_MAX_ANGULAR_ACCELERATION_PER_SEC = 3; // FIXME
+        public static final double TELEOP_MAX_SPEED_PER_SEC = ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND / 1; // FIXME
+        public static final double TELEOP_MAX_RADIANS_PER_SEC = ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 1; // FIXME
     }
     
     public static final class ModuleConstants {
