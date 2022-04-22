@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class OfflineReversed extends SequentialCommandGroup {
-    public OfflineReversed(DriveSubsystem driveSubsystem, ShooterSubsystem shooterSubsystem, AugerSubsystem augerSubsystem) {
-        PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("offLineReversed", 3, 2);
+public class BlueKickBall1 extends SequentialCommandGroup {
+    public BlueKickBall1(DriveSubsystem driveSubsystem, ShooterSubsystem shooterSubsystem, AugerSubsystem augerSubsystem) {
+        PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("KickBallB1", 3, 2);
 
         addCommands(
             new InstantCommand(() -> {
@@ -24,7 +24,7 @@ public class OfflineReversed extends SequentialCommandGroup {
             new InstantCommand(() -> augerSubsystem.elevatorOn(true)),
             new WaitCommand(5),
             new InstantCommand(() -> augerSubsystem.elevatorOff()),
-            driveSubsystem.createCommandForTrajectory(trajectory1, true).withTimeout(15).withName("offLineReversed")
+            driveSubsystem.createCommandForTrajectory(trajectory1, false).withTimeout(15).withName("KickBallB1")
         );
     }
 }

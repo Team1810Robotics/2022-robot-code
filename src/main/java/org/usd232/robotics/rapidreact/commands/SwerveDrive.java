@@ -1,8 +1,10 @@
 package org.usd232.robotics.rapidreact.commands;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import static org.usd232.robotics.rapidreact.Constants.*;
 import org.usd232.robotics.rapidreact.log.Logger;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 
@@ -25,6 +27,7 @@ public class SwerveDrive extends CommandBase {
     private final DoubleSupplier m_translationYSupplier;
     private final DoubleSupplier m_rotationSupplier;
     private final boolean fieldOriented;
+    private final SlewRateLimiter xLimiter, yLimiter, thetaLimiter;
 
     /** Makes the robot drive.
     * @param X speed
@@ -41,24 +44,42 @@ public class SwerveDrive extends CommandBase {
         this.m_rotationSupplier = rotationSupplier;
         this.fieldOriented = fieldOriented;
 
+        this.xLimiter = new SlewRateLimiter(ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
+        this.yLimiter = new SlewRateLimiter(ModuleConstants.MAX_VELOCITY_METERS_PER_SECOND);
+        this.thetaLimiter = new SlewRateLimiter(ModuleConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+
         addRequirements(driveSubsystem);
     }
 
     /** Sets ChassisSpeeds to the x speed, y speed, and rotation */
     @Override
     public void execute() {
+        double xSpeed = m_translationXSupplier.getAsDouble();
+        double ySpeed = m_translationYSupplier.getAsDouble();
+        double thetaSpeed = m_rotationSupplier.getAsDouble();
+
+        xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.TELEOP_MAX_SPEED_PER_SEC;
+        ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.TELEOP_MAX_SPEED_PER_SEC;
+        thetaSpeed = thetaLimiter.calculate(thetaSpeed)
+                * DriveConstants.TELEOP_MAX_RADIANS_PER_SEC;
+
+        // FIXME: remove
+        xSpeed = (xSpeed < OIConstants.DEADBAND) ? 0.0 : xSpeed;
+        ySpeed = (ySpeed < OIConstants.DEADBAND) ? 0.0 : ySpeed;
+        thetaSpeed = (thetaSpeed < OIConstants.DEADBAND) ? 0.0 : thetaSpeed;
+
          m_driveSubsystem.drive( 
             (fieldOriented) ?
                 ChassisSpeeds.fromFieldRelativeSpeeds(
-                        m_translationXSupplier.getAsDouble(),
-                        m_translationYSupplier.getAsDouble(),
-                        m_rotationSupplier.getAsDouble(),
+                        xSpeed,
+                        ySpeed,
+                        thetaSpeed,
                         m_driveSubsystem.getGyroscopeRotation()) :
 
                 new ChassisSpeeds(
-                    m_translationXSupplier.getAsDouble(),
-                    m_translationYSupplier.getAsDouble(),
-                    m_rotationSupplier.getAsDouble()));
+                    xSpeed,
+                    ySpeed,
+                    thetaSpeed));
     }
 
     /** Checks if the conditions inside isFinished are true */

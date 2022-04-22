@@ -44,12 +44,12 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param percent the percent you want to run the motor at <p>{@code [-1, 1]}
      */
     public void setShooterVelocity(double percent) { // TODO: Test
-        if (percent > 1) {
+        /* if (percent > 1) {
             percent = 1;
         } else if (percent < -1) {
             percent = -1;
         }
-        percent *= ShooterConstants.MAX_SPEED;
+        percent *= ShooterConstants.MAX_SPEED; */
 
         velocity(percent);
     }

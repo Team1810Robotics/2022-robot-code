@@ -20,7 +20,7 @@ public class Shooter extends CommandBase {
 
     @Override
     public void execute() {
-        shooterSubsystem.setShooterVelocity(percent);
+        shooterSubsystem.shooterOn(percent);
     }
 
     @Override
