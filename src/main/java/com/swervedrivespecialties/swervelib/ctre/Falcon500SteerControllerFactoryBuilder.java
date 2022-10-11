@@ -188,7 +188,9 @@ public final class Falcon500SteerControllerFactoryBuilder {
         }
 
         @Override
-        public void setReferenceAngle(double referenceAngleRadians) {
+        public void setReferenceAngle(double referenceAngleRadians, double speed) {
+            if (speed == 0) return;
+
             double currentAngleRadians = motor.getSelectedSensorPosition() * motorEncoderPositionCoefficient;
 
             // Reset the NEO's encoder periodically when the module is not rotating.

@@ -132,7 +132,7 @@ public final class NeoSteerControllerFactoryBuilder {
         }
 
         @Override
-        public void setReferenceAngle(double referenceAngleRadians) {
+        public void setReferenceAngle(double referenceAngleRadians, double speed) {
             double currentAngleRadians = motorEncoder.getPosition();
 
             // Reset the NEO's encoder periodically when the module is not rotating.

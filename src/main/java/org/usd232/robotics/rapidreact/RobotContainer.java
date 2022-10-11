@@ -23,7 +23,6 @@ import org.usd232.robotics.rapidreact.commands.autonomous.paths.Shoot;
 
 /* Subsystems */
 import org.usd232.robotics.rapidreact.subsystems.AugerSubsystem;
-import org.usd232.robotics.rapidreact.subsystems.ClimbSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.DriveSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.HoodSubsystem;
 import org.usd232.robotics.rapidreact.subsystems.IntakeSubsystem;
