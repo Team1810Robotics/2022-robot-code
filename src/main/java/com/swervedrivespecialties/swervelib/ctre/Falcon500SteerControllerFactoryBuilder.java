@@ -189,7 +189,6 @@ public final class Falcon500SteerControllerFactoryBuilder {
 
         @Override
         public void setReferenceAngle(double referenceAngleRadians, double speed) {
-            if (speed == 0) return;
 
             double currentAngleRadians = motor.getSelectedSensorPosition() * motorEncoderPositionCoefficient;
 
@@ -206,6 +205,9 @@ public final class Falcon500SteerControllerFactoryBuilder {
             } else {
                 resetIteration = 0;
             }
+
+            // Snapback fix?
+            if (speed == 0) return;
 
             double currentAngleRadiansMod = currentAngleRadians % (2.0 * Math.PI);
             if (currentAngleRadiansMod < 0.0) {

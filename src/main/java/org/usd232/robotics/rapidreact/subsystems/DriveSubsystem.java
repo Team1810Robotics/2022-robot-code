@@ -219,7 +219,6 @@ public class DriveSubsystem extends SubsystemBase {
      * @return current module state as a {@link SwerveModuleState} 
      */
     public SwerveModuleState getState(Module modulePosition) {
-        
         switch (modulePosition) {
             case kFL: // Intentional fall through
             case kFrontLeft:
@@ -293,7 +292,7 @@ public class DriveSubsystem extends SubsystemBase {
 
         SmartDashboard.putString("Odometry Pose", getPose().toString());
     }
-    
+
     /** Stops Robot */
     public void stopModules() {
         frontLeft.set(0, 0);

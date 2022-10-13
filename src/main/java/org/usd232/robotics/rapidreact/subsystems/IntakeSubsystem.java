@@ -25,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void rightPneumatic(boolean on) {
         rightSolenoid.set(on);
     }
-    
+
     public void leftMotor(boolean forward) {
         if (!forward) {
             leftIntake.set(Relay.Value.kForward);
@@ -33,7 +33,7 @@ public class IntakeSubsystem extends SubsystemBase {
             leftIntake.set(Relay.Value.kReverse);
         }
     }
-    
+
     public void rightMotor(boolean forward) {
         if (!forward) {
             rightIntake.set(Relay.Value.kForward);
