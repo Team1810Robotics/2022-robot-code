@@ -207,7 +207,8 @@ public final class Falcon500SteerControllerFactoryBuilder {
             }
 
             // Snapback fix?
-            if (speed == 0) return;
+            // https://www.chiefdelphi.com/t/pathplanner-2023-beta/416548/97
+            if (speed < 0.1) return;
 
             double currentAngleRadiansMod = currentAngleRadians % (2.0 * Math.PI);
             if (currentAngleRadiansMod < 0.0) {
